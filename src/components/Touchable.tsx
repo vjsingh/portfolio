@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Touchable = styled.button`
+const Touchable = styled.div`
   cursor: pointer;
-  background-color: white;
+  outline: none;
 `;
 
 export default Touchable;

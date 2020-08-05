@@ -17,5 +17,14 @@ module.exports = {
         path: `${__dirname}/src/data`,
       },
     },
+    {
+      resolve: 'gatsby-plugin-root-import',
+      options: {
+        src: `${__dirname}/src`,
+        components: `${__dirname}/src/components`,
+        pages: `${__dirname}/src/pages`,
+        util: `${__dirname}/src/util`,
+      }
+    }
   ],
 }

@@ -8,7 +8,7 @@ export const PushRight = styled.span`
   margin-left: auto;
 `;
 
-export const Text = styled.text`
+export const MyText = styled.text`
   font-family: CenturyGothic;
 `;
 
@@ -20,7 +20,10 @@ export const PageContainer = (props: any) => (
 );
  */
 
-export const PageContainer = styled.div`
+export const PageContainer = styled.div.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    ['name'].includes(prop) || defaultValidatorFn(prop)
+})<any>`
   display: flex;
   flex-direction: column;
   min-width: 100vw;

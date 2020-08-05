@@ -1,12 +1,12 @@
-import React from "react"
-import { PageProps } from "gatsby"
+import { PageProps } from "gatsby";
+import React from "react";
 import styled from 'styled-components';
-import { Text, PushRight, theme, PageContainer } from '../util/styles';
-import Touchable from "../views/Touchable";
+import NextArrow, { NextArrowBottomRight } from "../components/NextArrow";
+import { MyText, PageContainer, PushRight, theme } from '../util/styles';
 
 export default function Home(props: PageProps) {
   return (
-    <Container>
+    <Container name='home'>
 
       <Header>
         <HeaderText>Work</HeaderText>
@@ -26,9 +26,9 @@ export default function Home(props: PageProps) {
         <BodyText>I’m a creative developer with experience from Silicon Valley to startup CEO. Let me help spin your next vision into digital reality.</BodyText>
       </HeroSection>
 
-      <NextContainer>
-        <NextArrow>V</NextArrow>
-      </NextContainer>
+      <NextArrowBottomRight>
+        <NextArrow nextScreen='venga'/>
+      </NextArrowBottomRight>
 
       <BackgroundRight/>
 
@@ -36,7 +36,7 @@ export default function Home(props: PageProps) {
   )
 }
 
-const Container = styled(PageContainer)`
+const Container = styled(PageContainer)<any>`
   padding-left: 8.4vw;
 `;
 
@@ -45,8 +45,8 @@ const Header = styled.div`
   display: flex;
 `;
 
-const HeaderText = styled(Text)`
-  font-size: 24px;
+const HeaderText = styled(MyText)`
+  font-size: 20px;
   padding-right: 5.5vw;
 `;
 
@@ -57,7 +57,7 @@ export const NameBrand = styled.div`
   display: flex;
 `;
 
-const NameBrandText = styled(Text)`
+const NameBrandText = styled(MyText)`
   font-size: 11vh;
   letter-spacing: 0.05em;
 `;
@@ -79,36 +79,15 @@ const HeroSection = styled.div`
   margin-top: 3.1vh;
 `;
 
-const SubheaderText = styled(Text)`
+const SubheaderText = styled(MyText)`
   font-size: 5.8vh;
   font-weight: bold;
   margin-bottom: 4.3vh;
 `;
 
-const BodyText = styled(Text)`
+const BodyText = styled(MyText)`
   width: 47vw;
   font-size: 2vh;
-`;
-
-const NextContainer = styled(Touchable)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 10vw;
-  bottom: 10vw;
-  width: 80px;
-  height: 80px;
-  border: 1px solid ${theme.orange};
-  border-radius: 40px;
-
-`;
-
-const NextArrow = styled(Text)`
-  transform: rotate(270deg);
-  color: ${theme.orange};
-  font-size: 40px;
-  font-weight: bold;
 `;
 
 const BackgroundRight = styled.div`

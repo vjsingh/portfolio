@@ -1955,6 +1955,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-scroll@^1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.5.5.tgz#3ac574ebc57913cd20ec646bc8c694d6c5931626"
+  integrity sha512-YRV/zcOwGkBqZpXlkmBPPnk+vSJpcJDSKIMkWTtwZe4UcZxoYkRzEt3I+hbn0do+j5iPcQd/sk6XFBGhm5rIyw==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "16.9.44"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.44.tgz#da84b179c031aef67dc92c33bd3401f1da2fa3bc"
@@ -5318,6 +5325,17 @@ eslint-import-resolver-node@^0.3.3:
     debug "^2.6.9"
     resolve "^1.13.1"
 
+eslint-import-resolver-typescript@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.2.0.tgz#f7b261e41a38b690f3044660f6d496cc312323b0"
+  integrity sha512-/NhKEH1gbRlcb9RcaZJe5zRn5eIffGTf1qh3JAyvkEuPli3DEa5HQWWUO5OTfUjj7buUXsDq8lEsdwbbSeqywg==
+  dependencies:
+    debug "^4.1.1"
+    glob "^7.1.6"
+    is-glob "^4.0.1"
+    resolve "^1.17.0"
+    tsconfig-paths "^3.9.0"
+
 eslint-loader@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/eslint-loader/-/eslint-loader-2.2.1.tgz#28b9c12da54057af0845e2a6112701a2f6bf8337"
@@ -6466,6 +6484,11 @@ gatsby-plugin-page-creator@^2.3.19:
     glob "^7.1.6"
     lodash "^4.17.15"
     micromatch "^3.1.10"
+
+gatsby-plugin-root-import@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-root-import/-/gatsby-plugin-root-import-2.0.5.tgz#04e520dc661d67f49aa7950f11b7c780fd2fdbd3"
+  integrity sha512-/yA6rFjfjiFb8D6nCjfFrrGqYQMkOt4J3u2o6s7VYEF/zpA5dw2C9ENJ5fDKkJSCbbwLiEIGVMMee3vMEip2zA==
 
 gatsby-plugin-sharp@^2.6.24:
   version "2.6.24"
@@ -11511,6 +11534,14 @@ react-remove-scroll@^2.3.0:
     use-callback-ref "^1.2.3"
     use-sidecar "^1.0.1"
 
+react-scroll@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-scroll/-/react-scroll-1.8.0.tgz#0280cbe575e4e1a2f103c7cc6143dd38133573bd"
+  integrity sha512-oZfBXPhcxYPR8elI9tC3ORT6+iqiPPJWslsdR9intbNI5PVSa4XoAfC0I/cB3zk5lxQ/NSexCnT+8RqJL8mSZQ==
+  dependencies:
+    lodash.throttle "^4.1.1"
+    prop-types "^15.7.2"
+
 react-style-singleton@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-style-singleton/-/react-style-singleton-2.1.0.tgz#7396885332e9729957f9df51f08cadbfc164e1c4"
@@ -12780,6 +12811,10 @@ squeak@^1.0.0:
     chalk "^1.0.0"
     console-stream "^0.1.1"
     lpad-align "^1.0.1"
+
+"src@link:./src":
+  version "0.0.0"
+  uid ""
 
 sshpk@^1.7.0:
   version "1.16.1"
