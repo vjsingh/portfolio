@@ -9,11 +9,13 @@ import { createGlobalStyle } from "styled-components"
 import GoogleTVM from './projects/GoogleTVM';
 import ScrollMagic from 'scrollmagic';
 import AppContext from 'util/AppContext';
+import LoadingAnimation from 'components/LoadingAnimation';
 // import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
 const App: React.FC<PageProps> = props => {
-    useHorizontal();
     const [controller, setController] = React.useState(null as any);
+    const [loading, setLoading] = React.useState(true);
+    useHorizontal();
 
   // Run on page load.
     React.useEffect(() => {
@@ -30,10 +32,16 @@ const App: React.FC<PageProps> = props => {
     return (
       <AppContext.Provider value={context}>
         <Container id='root'>
-          <GlobalStyle/>
-          <Home {...props}/>
-          <Venga {...props}/>
-          <GoogleTVM {...props}/>
+          {loading ? (
+            <LoadingAnimation onFinishedLoading={() => setLoading(false)}/>
+          ) : (
+            <>
+              <GlobalStyle/>
+              <Home {...props}/>
+              <Venga {...props}/>
+              <GoogleTVM {...props}/>
+            </>
+          )}
         </Container>
       </AppContext.Provider>
     );

@@ -1,8 +1,8 @@
 import { PageProps } from "gatsby";
 import React, { useContext, useEffect } from "react";
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import NextArrow, { NextArrowBottomRight } from "../components/NextArrow";
-import { MyText, PageContainer, PushRight, theme } from '../util/styles';
+import { MyText, PageContainer, PushRight, theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
 import { Link } from "util/textStyles";
 import ScrollMagic from "scrollmagic";
 import AppContext from "util/AppContext";
@@ -25,8 +25,6 @@ const Home: React.FC<PageProps> = props => {
 
   const SCENE_DURATION = 400;
   React.useEffect(() => {
-    console.log('a');
-    console.log(context.scrollMagicController);
     if (!scene && context.scrollMagicController) {
       setScene(new ScrollMagic.Scene({
         // If no triggerElement set, defaults to start.
@@ -39,53 +37,65 @@ const Home: React.FC<PageProps> = props => {
 
   const progress = scrollPos / SCENE_DURATION;
 
-  const rightPosStart = 0;
-  const rightPosEnd = -400;
+  const rightPosStart = BACKGROUND_STRIPE_RIGHT;
+  const rightPosEnd = BACKGROUND_TRIANGLE_RIGHT;
   const rightPos = rightPosStart + (progress * rightPosEnd);
 
-  const widthStart = 200;
-  const widthEnd = 400;
+  const widthStart = BACKGROUND_STRIPE_WIDTH;
+  const widthEnd = BACKGROUND_TRIANGLE_WIDTH;
   const width = widthStart + (progress * widthEnd);
 
   return (
-    <Container name='home'>
+    <>
+      <Container name='home'>
+        <InnerContainer>
+          <Header>
+            <HeaderText>Work</HeaderText>
+            <HeaderText>About</HeaderText>
+            <PushRight>
+              <HeaderText>Contact</HeaderText>
+            </PushRight>
+          </Header>
 
-      <Header>
-        <HeaderText>Work</HeaderText>
-        <HeaderText>About</HeaderText>
-        <PushRight>
-          <HeaderText>Contact</HeaderText>
-        </PushRight>
-      </Header>
+          <NameBrand>
+            <Varun>VARUN</Varun>
+            <Singh>SINGH</Singh>
+          </NameBrand>
 
-      <NameBrand>
-        <Varun>VARUN</Varun>
-        <Singh>SINGH</Singh>
-      </NameBrand>
+          <HeroSection>
+            <SubheaderText>Bringing digital visions to life.</SubheaderText>
+            <BodyText>
+              {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
+              <Link href='/contact'>Currently available </Link>
+              {`for freelance or consulting, let me help spin your next vision into digital reality.`}
+            </BodyText>
+          </HeroSection>
 
-      <HeroSection>
-        <SubheaderText>Bringing digital visions to life.</SubheaderText>
-        <BodyText>
-          {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
-          <Link href='/contact'>Currently available </Link>
-          {`for freelance or consulting, let me help spin your next vision into digital reality.`}
-        </BodyText>
-      </HeroSection>
+          <NextArrowBottomRight>
+            <NextArrow nextScreen='venga'/>
+          </NextArrowBottomRight>
+        </InnerContainer>
 
-      <NextArrowBottomRight>
-        <NextArrow nextScreen='venga'/>
-      </NextArrowBottomRight>
-
-      <BackgroundStripe right={rightPos} width={width}/>
-
-    </Container>
+        <BackgroundStripe right={rightPos} width={width}/>
+      </Container>
+    </>
   )
 }
 
 export default Home;
 
+const fadeInAnimation = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
 const Container = styled(PageContainer)<any>`
   padding-left: 8.4vw;
+`;
+
+const InnerContainer = styled.div`
+  animation-name: ${fadeInAnimation};
+  animation-duration: 2s;
 `;
 
 const Header = styled.div`
@@ -151,15 +161,3 @@ const BackgroundRight = styled.div`
   transform-origin: 100% 0;
 `;
 */
-
-const BackgroundStripe = styled.div<any>`
-  position: absolute;
-  right: ${p => p.right + 'px'};
-  top: 0;
-  bottom: 0;
-  width: ${p => p.width + 'px'};
-  background-color: ${theme.orange};
-  z-index: -1;
-  transform: skew(-20deg);
-  transform-origin: 100% 0;
-`;

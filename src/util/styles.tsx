@@ -38,3 +38,19 @@ export const PageContainerView = styled.div.withConfig({
   box-sizing: border-box;
   overflow: hidden;
 `;
+
+export const BACKGROUND_STRIPE_RIGHT = 0;
+export const BACKGROUND_STRIPE_WIDTH = 200;
+export const BACKGROUND_TRIANGLE_RIGHT = -400;
+export const BACKGROUND_TRIANGLE_WIDTH = 400;
+export const BackgroundStripe = styled.div<any>`
+  position: absolute;
+  right: ${p => (p.right ?? BACKGROUND_STRIPE_RIGHT) + 'px'};
+  top: 0;
+  bottom: 0;
+  width: ${p => (p.width ?? BACKGROUND_STRIPE_WIDTH) + 'px'};
+  background-color: ${theme.orange};
+  z-index: -1;
+  transform: skew(-20deg);
+  transform-origin: 100% 0;
+`;
