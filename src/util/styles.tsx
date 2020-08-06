@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as React from 'react';
 
 export const theme = {
   orange: '#FF6A48',
@@ -12,15 +13,18 @@ export const MyText = styled.text`
   font-family: CenturyGothic;
 `;
 
-/*
-export const PageContainer = (props: any) => (
-  <PageContainerView>
+interface PageContainerProps {
+  name: string;
+}
+
+export const PageContainer: React.FC<PageContainerProps> = props => (
+  <PageContainerView id={props.name} {...props}>
     {props.children}
   </PageContainerView>
 );
- */
 
-export const PageContainer = styled.div.withConfig({
+// NOTE: 'width' is required here for ScrollMagic to work.
+export const PageContainerView = styled.div.withConfig({
   shouldForwardProp: (prop, defaultValidatorFn) =>
     ['name'].includes(prop) || defaultValidatorFn(prop)
 })<any>`
@@ -28,6 +32,7 @@ export const PageContainer = styled.div.withConfig({
   flex-direction: column;
   min-width: 100vw;
   max-width: 100vw;
+  width: 100vw;
   height: 100vh;
   position: relative;
   box-sizing: border-box;

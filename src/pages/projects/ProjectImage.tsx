@@ -17,7 +17,7 @@ const ProjectImage: React.FC<InputProps> = props => {
       <Img
         fluid={data[props.name].childImageSharp.fluid}
         alt="Gatsby Docs are awesome"
-        style={{flex: 1, maxHeight: '80vh', width: '30vw'}}
+        style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
         imgStyle={{ objectFit: "contain" }}
       />
     </ImageContainer>

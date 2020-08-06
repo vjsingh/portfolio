@@ -1,10 +1,11 @@
-import useHorizontal from '@oberon-amsterdam/horizontal/hook';
+// import useHorizontal from '@oberon-amsterdam/horizontal/hook';
 import * as React from 'react';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import NextArrow, { NextArrowBottomRight } from '../../components/NextArrow';
 import { MyText, PageContainer } from '../../util/styles';
 import Touchable from 'components/Touchable';
+import { scrollerArgs } from 'util/constants';
 
 interface InputProps {
   name: string;
@@ -13,33 +14,28 @@ interface InputProps {
 }
 
 const Project: React.FC<InputProps> = props => {
-    useHorizontal();
+  const scrollToHome = () => {
+    scroller.scrollTo('home', {
+      ...scrollerArgs,
+    });
+  };
 
-    const scrollToHome = () => {
-      scroller.scrollTo('home', {
-        duration: 900,
-        delay: 0,
-        smooth: true,
-        horizontal: true,
-      });
-    };
-
-    return (
-      <Container name={props.name}>
-        {props.children}
-        <ProjectBackground color={props.bgColor}/>
-        <HomeTextContainer onClick={scrollToHome}>
-            <HomeText>Home</HomeText>
-        </HomeTextContainer>
-        <NameBrand>
-          <Varun>VARUN</Varun>
-          <Singh>SINGH</Singh>
-        </NameBrand>
-        <NextArrowBottomRight>
-          <NextArrow nextScreen={props.nextScreen}/>
-        </NextArrowBottomRight>
-      </Container>
-    );
+  return (
+    <Container id={props.name} name={props.name}>
+      {props.children}
+      <ProjectBackground color={props.bgColor}/>
+      <HomeTextContainer onClick={scrollToHome}>
+          <HomeText>Home</HomeText>
+      </HomeTextContainer>
+      <NameBrand>
+        <Varun>VARUN</Varun>
+        <Singh>SINGH</Singh>
+      </NameBrand>
+      <NextArrowBottomRight>
+        <NextArrow nextScreen={props.nextScreen}/>
+      </NextArrowBottomRight>
+    </Container>
+  );
 };
 
 export default Project;

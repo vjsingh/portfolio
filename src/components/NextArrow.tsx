@@ -4,6 +4,7 @@ import styled, { keyframes } from 'styled-components';
 import withHover, { InjectHoverProps } from "../components/withHover";
 import { MyText, theme } from '../util/styles';
 import Touchable from './Touchable';
+import { scrollerArgs } from 'util/constants';
 
 interface InputProps extends InjectHoverProps {
   nextScreen: string;
@@ -12,10 +13,7 @@ interface InputProps extends InjectHoverProps {
 const NextArrow: React.FC<InputProps> = props => {
   const doScroll = () => {
     scroller.scrollTo(props.nextScreen, {
-      duration: 900,
-      delay: 0,
-      smooth: true,
-      horizontal: true,
+      ...scrollerArgs,
     });
   };
 
@@ -60,5 +58,5 @@ const Arrow = styled(MyText)<any>`
 export const NextArrowBottomRight = styled.div`
   position: absolute;
   right: 10vw;
-  bottom: 10vw;
+  bottom: 10vh;
 `;

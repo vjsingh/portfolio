@@ -1,4 +1,3 @@
-import useHorizontal from '@oberon-amsterdam/horizontal/hook';
 import { graphql, PageProps, useStaticQuery } from "gatsby";
 import Img from 'gatsby-image';
 import * as React from 'react';
