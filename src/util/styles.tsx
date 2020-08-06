@@ -9,7 +9,7 @@ export const PushRight = styled.span`
   margin-left: auto;
 `;
 
-export const MyText = styled.text`
+export const MyText = styled.span`
   font-family: CenturyGothic;
 `;
 

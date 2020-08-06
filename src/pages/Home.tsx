@@ -1,10 +1,52 @@
 import { PageProps } from "gatsby";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import styled from 'styled-components';
 import NextArrow, { NextArrowBottomRight } from "../components/NextArrow";
 import { MyText, PageContainer, PushRight, theme } from '../util/styles';
+import { Link } from "util/textStyles";
+import ScrollMagic from "scrollmagic";
+import AppContext from "util/AppContext";
 
-export default function Home(props: PageProps) {
+const Home: React.FC<PageProps> = props => {
+  const context = useContext(AppContext);
+  const [scrollPos, setScrollPos] = React.useState(0);
+  const [scene, setScene] = React.useState(null as any);
+
+  const handleScroll = event => {
+    setScrollPos(event.srcElement.documentElement.scrollLeft);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const SCENE_DURATION = 400;
+  React.useEffect(() => {
+    console.log('a');
+    console.log(context.scrollMagicController);
+    if (!scene && context.scrollMagicController) {
+      setScene(new ScrollMagic.Scene({
+        // If no triggerElement set, defaults to start.
+        duration: SCENE_DURATION,
+      })
+      .setPin('#home')
+      .addTo(context.scrollMagicController));
+    }
+  }, [context]);
+
+  const progress = scrollPos / SCENE_DURATION;
+
+  const rightPosStart = 0;
+  const rightPosEnd = -400;
+  const rightPos = rightPosStart + (progress * rightPosEnd);
+
+  const widthStart = 200;
+  const widthEnd = 400;
+  const width = widthStart + (progress * widthEnd);
+
   return (
     <Container name='home'>
 
@@ -23,18 +65,24 @@ export default function Home(props: PageProps) {
 
       <HeroSection>
         <SubheaderText>Bringing digital visions to life.</SubheaderText>
-        <BodyText>I’m a creative developer with experience from Silicon Valley to startup CEO. Let me help spin your next vision into digital reality.</BodyText>
+        <BodyText>
+          {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
+          <Link href='/contact'>Currently available </Link>
+          {`for freelance or consulting, let me help spin your next vision into digital reality.`}
+        </BodyText>
       </HeroSection>
 
       <NextArrowBottomRight>
         <NextArrow nextScreen='venga'/>
       </NextArrowBottomRight>
 
-      <BackgroundRight/>
+      <BackgroundStripe right={rightPos} width={width}/>
 
     </Container>
   )
 }
+
+export default Home;
 
 const Container = styled(PageContainer)<any>`
   padding-left: 8.4vw;
@@ -90,6 +138,7 @@ const BodyText = styled(MyText)`
   font-size: 2vh;
 `;
 
+/*
 const BackgroundRight = styled.div`
   position: absolute;
   right: -400px;
@@ -101,17 +150,16 @@ const BackgroundRight = styled.div`
   transform: skew(-20deg);
   transform-origin: 100% 0;
 `;
+*/
 
-/* Stripe
-const BackgroundRight = styled.div`
+const BackgroundStripe = styled.div<any>`
   position: absolute;
-  right: 0;
+  right: ${p => p.right + 'px'};
   top: 0;
   bottom: 0;
-  width: 200px;
+  width: ${p => p.width + 'px'};
   background-color: ${theme.orange};
   z-index: -1;
-  transform: skew(-30deg);
-  transform-origin:top;
+  transform: skew(-20deg);
+  transform-origin: 100% 0;
 `;
-*/

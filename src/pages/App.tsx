@@ -8,42 +8,38 @@ import Venga from './projects/Venga';
 import { createGlobalStyle } from "styled-components"
 import GoogleTVM from './projects/GoogleTVM';
 import ScrollMagic from 'scrollmagic';
+import AppContext from 'util/AppContext';
 // import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
-export default function App(props: PageProps) {
+const App: React.FC<PageProps> = props => {
     useHorizontal();
-    window.setTimeout(() => {
-      let controller = new ScrollMagic.Controller({
+    const [controller, setController] = React.useState(null as any);
+
+  // Run on page load.
+    React.useEffect(() => {
+      setController(new ScrollMagic.Controller({
         vertical: false,
         container: 'html',
-      });
+      }));
+    }, []);
 
-      var scene = new ScrollMagic.Scene({
-        // Defaults to starting position.
-        duration: 200
-      })
-      .setPin('#home')
-      .addTo(controller);
-
-      var scene2 = (new ScrollMagic.Scene({
-        triggerElement: '#venga',
-        duration: 200,
-        triggerHook: 'onLeave', // Start pinning when the view is fully on screen (or 'about to leave')
-      }) as any)
-      .setPin('#venga')
-      .addTo(controller);
-
-    }, 0);
+    const context = {
+      scrollMagicController: controller,
+    };
 
     return (
-      <Container id='root'>
-        <GlobalStyle/>
-        <Home {...props}/>
-        <Venga {...props}/>
-        <GoogleTVM {...props}/>
-      </Container>
+      <AppContext.Provider value={context}>
+        <Container id='root'>
+          <GlobalStyle/>
+          <Home {...props}/>
+          <Venga {...props}/>
+          <GoogleTVM {...props}/>
+        </Container>
+      </AppContext.Provider>
     );
 };
+
+export default App;
 
 const Container = styled.div`
   display: flex;
