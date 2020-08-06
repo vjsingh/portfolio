@@ -44,7 +44,7 @@ const LoadingAnimation: React.FC<InputProps> = props => {
   }, [screenWipeEl]);
 
   return (
-    <Container>
+    <Container hideCursor={userTriggeredStart}>
       {isScreenWipe ?
         <ScreenWipe ref={onScreenWipeRefChange}/>
       :
@@ -78,7 +78,7 @@ const circleAnimation = keyframes`
   to { transform: scale3d(50, 50, 50); }
 `;
 
-const Container = styled.div`
+const Container = styled.div<any>`
   position: absolute;
   top: 0;
   right: 0;
@@ -87,6 +87,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${p => p.hideCursor && `cursor: none;`}
 `;
 
 // Border-box sets the border to be inside the circle.
