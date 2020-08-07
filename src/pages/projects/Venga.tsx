@@ -22,10 +22,14 @@ const VengaInner: React.FC<ProjectInnerProps> = props => {
   );
 }
 
-const VengaExpanded: React.FC = props => {
+const VengaBackground: React.FC = props => {
   return (
     <>
-      <VengaInner onExpand={() => {}}/>
+      <ProjectImage name='venga'/>
+      <MainContainer>
+        <HeaderText>VENGA CLIMB</HeaderText>
+        <SubheaderText>A digital membership engagement platform for rock climbing gyms.</SubheaderText>
+      </MainContainer>
     </>
   );
 }

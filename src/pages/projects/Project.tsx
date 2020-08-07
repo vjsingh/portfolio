@@ -17,7 +17,7 @@ interface InputProps {
   bgColor: string;
   active: boolean;
   closeProject: () => void;
-  dontMakeScene?: boolean;
+  isExpandedScreen?: boolean;
 }
 
 const Project: React.FC<InputProps> = props => {
@@ -26,7 +26,7 @@ const Project: React.FC<InputProps> = props => {
 
   // Add ScrollMagic Scene.
   useEffect(() => {
-    if (!props.dontMakeScene && context.scrollMagicController) {
+    if (!props.isExpandedScreen && context.scrollMagicController) {
       new ScrollMagic.Scene({
         triggerElement: '#venga',
         duration: 200,
@@ -68,7 +68,7 @@ const Project: React.FC<InputProps> = props => {
   return (
     <Container id={props.name} name={props.name} active={active}>
       {props.children}
-      <ProjectBackground active={active} color={props.bgColor}/>
+      {!props.isExpandedScreen && <ProjectBackground active={active} color={props.bgColor}/>}
       <HomeTextContainer onClick={active ? onBack : scrollToHome}>
           <HomeText>{active ? 'Back' : 'Home'}</HomeText>
       </HomeTextContainer>

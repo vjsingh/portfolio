@@ -49,7 +49,7 @@ const ProjectContainer: React.FC<InputProps> = props => {
               {props.renderPage(() => {})}
             </Project>
             {props.renderExpandedScreens.map(renderScreen => (
-              <Project {...projectProps}>
+              <Project {...projectProps} isExpandedScreen={true}>
                 {renderScreen()}
               </Project>
             ))}
@@ -70,8 +70,8 @@ const Container = styled.div`
   left: 0;
   top: 0;
   right: 0;
-  background-color: ${theme.orange};
   z-index: 10;
+  background-color: white;
 `;
 
 // https://stackoverflow.com/questions/43100350/css-overlay-with-scrolling-content
