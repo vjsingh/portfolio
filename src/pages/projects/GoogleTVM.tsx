@@ -1,20 +1,22 @@
-import { graphql, PageProps, useStaticQuery } from "gatsby";
-import Img from 'gatsby-image';
+import { PageProps } from "gatsby";
 import * as React from 'react';
-import styled from 'styled-components';
-import { MyText, theme } from 'src/util/styles';
-import Project, { ViewProjectButton, MainContainer, HeaderText, SubheaderText } from './Project';
+import Project, { HeaderText, MainContainer, SubheaderText, ViewProjectButton, ProjectPageProps } from './Project';
 import ProjectImage from './ProjectImage';
 
-export default function GoogleTVM(props: PageProps) {
-    return (
-      <Project name='googleTVM' nextScreen='' bgColor={'#813A53'}>
-        <ProjectImage name='googleTVM'/>
-        <MainContainer>
-          <HeaderText>Google Search UI</HeaderText>
-          <SubheaderText>The next generation of immersive mobile experiences at Google.</SubheaderText>
-          <ViewProjectButton/>
-        </MainContainer>
-      </Project>
-    );
+export default function GoogleTVM(props: ProjectPageProps) {
+  const [active, setActive] = React.useState(false);
+
+  return null;
+  /*
+  return (
+    <Project name='googleTVM' nextScreen='' bgColor={'#813A53'} active={active} closeProject={() => {}}>
+      <ProjectImage name='googleTVM'/>
+      <MainContainer>
+        <HeaderText>Google Search UI</HeaderText>
+        <SubheaderText>The next generation of immersive mobile experiences at Google.</SubheaderText>
+        <ViewProjectButton/>
+      </MainContainer>
+    </Project>
+  );
+  */
 }

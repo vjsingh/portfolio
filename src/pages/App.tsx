@@ -10,41 +10,54 @@ import GoogleTVM from './projects/GoogleTVM';
 import ScrollMagic from 'scrollmagic';
 import AppContext from 'util/AppContext';
 import LoadingAnimation from 'components/LoadingAnimation';
+import { useRef, useEffect } from 'react';
+import HorizontalScroll, { Options } from '@oberon-amsterdam/horizontal';
+import ProjectContainer from './projects/ProjectContainer';
 // import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
 const App: React.FC<PageProps> = props => {
-    const [controller, setController] = React.useState(null as any);
-    const [loading, setLoading] = React.useState(false);
-    useHorizontal();
+  const [controller, setController] = React.useState(null as any);
+  const [loading, setLoading] = React.useState(false);
 
-  // Run on page load.
-    React.useEffect(() => {
-      setController(new ScrollMagic.Controller({
-        vertical: false,
-        container: 'html',
-      }));
-    }, []);
+  // Turn vertical scrolling into horizontal scrolling.
+  const horizontal = useRef<HorizontalScroll>();
+  useEffect(() => {
+    horizontal.current = new HorizontalScroll({});
 
-    const context = {
-      scrollMagicController: controller,
+    return () => {
+      if (horizontal.current) horizontal.current.destroy();
     };
+  }, []);
 
-    return (
-      <AppContext.Provider value={context}>
-        <Container id='root'>
-          {loading ? (
-            <LoadingAnimation onFinishedLoading={() => setLoading(false)}/>
-          ) : (
-            <>
-              <GlobalStyle/>
-              <Home {...props}/>
-              <Venga {...props}/>
-              <GoogleTVM {...props}/>
-            </>
-          )}
-        </Container>
-      </AppContext.Provider>
-    );
+  // Initialize ScrolLMagic controller.
+  React.useEffect(() => {
+    setController(new ScrollMagic.Controller({
+      vertical: false,
+      container: 'html',
+    }));
+  }, []);
+
+  // Create global React context so everyone can access the ScrollMagic controller.
+  const context = {
+    scrollMagicController: controller,
+  };
+
+  // <GoogleTVM {...newProps}/>}
+  return (
+    <AppContext.Provider value={context}>
+      <Container id='root'>
+        {loading ? (
+          <LoadingAnimation onFinishedLoading={() => setLoading(false)}/>
+        ) : (
+          <>
+            <GlobalStyle/>
+            <Home {...props}/>
+            <Venga {...props}/>
+          </>
+        )}
+      </Container>
+    </AppContext.Provider>
+  );
 };
 
 export default App;

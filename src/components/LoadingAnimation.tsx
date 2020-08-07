@@ -60,8 +60,10 @@ const LoadingAnimation: React.FC<InputProps> = props => {
 };
 export default LoadingAnimation;
 
+// Doesn't seem to be necessary.
 // From: https://css-tricks.com/controlling-css-animations-transitions-javascript/
-var pfx = ["webkit", "moz", "MS", "o", ""];
+// var pfx = ["webkit", "moz", "MS", "o", ""];
+var pfx = [''];
 function PrefixedEvent(element, type, callback) {
 	for (let p = 0; p < pfx.length; p++) {
 		if (!pfx[p]) type = type.toLowerCase();

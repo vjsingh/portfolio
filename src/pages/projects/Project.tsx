@@ -1,21 +1,42 @@
-// import useHorizontal from '@oberon-amsterdam/horizontal/hook';
+import Touchable from 'components/Touchable';
+import withHover from 'components/withHover';
+import { HOME_SCENE_DURATION } from 'pages/Home';
 import * as React from 'react';
+import { useContext, useEffect } from 'react';
 import { scroller } from 'react-scroll';
+import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
+import AppContext from 'util/AppContext';
+import { scrollerArgs } from 'util/constants';
 import NextArrow, { NextArrowBottomRight } from '../../components/NextArrow';
 import { MyText, PageContainer, theme } from '../../util/styles';
-import Touchable from 'components/Touchable';
-import { scrollerArgs } from 'util/constants';
-import { HOME_SCENE_DURATION } from 'pages/Home';
-import withHover from 'components/withHover';
 
 interface InputProps {
   name: string;
   nextScreen: string;
   bgColor: string;
+  active: boolean;
+  closeProject: () => void;
+  dontMakeScene?: boolean;
 }
 
 const Project: React.FC<InputProps> = props => {
+  const { active } = props;
+  const context = useContext(AppContext);
+
+  // Add ScrollMagic Scene.
+  useEffect(() => {
+    if (!props.dontMakeScene && context.scrollMagicController) {
+      new ScrollMagic.Scene({
+        triggerElement: '#venga',
+        duration: 200,
+        triggerHook: 'onLeave', // Start pinning when the view is fully on screen (or 'about to leave')
+      })
+      .setPin('#venga')
+      .addTo(context.scrollMagicController);
+    }
+  }, [context?.scrollMagicController]);
+
   const scrollToHome = () => {
     scroller.scrollTo('home', {
       ...scrollerArgs,
@@ -23,19 +44,42 @@ const Project: React.FC<InputProps> = props => {
     });
   };
 
+  // Center on the project page when expanding.
+  React.useEffect(() => {
+    if (active) {
+      scroller.scrollTo(props.name, {
+        ...scrollerArgs,
+      });
+    }
+  }, [active]);
+
+  const onBack = () => {
+    props.closeProject();
+    // Scroll immediately back to where we were.
+    // Users can still scroll horizontally when projects are open, even though
+    // it appears you can't because of the fixed position overlay.
+    console.log('scrolling to: ' + props.name);
+    scroller.scrollTo(props.name, {
+      duration: 0,
+      horizontal: true,
+    });
+  };
+
   return (
-    <Container id={props.name} name={props.name}>
+    <Container id={props.name} name={props.name} active={active}>
       {props.children}
-      <ProjectBackground color={props.bgColor}/>
-      <HomeTextContainer onClick={scrollToHome}>
-          <HomeText>Home</HomeText>
+      <ProjectBackground active={active} color={props.bgColor}/>
+      <HomeTextContainer onClick={active ? onBack : scrollToHome}>
+          <HomeText>{active ? 'Back' : 'Home'}</HomeText>
       </HomeTextContainer>
       <NameBrand>
         <Varun>VARUN</Varun>
         <Singh>SINGH</Singh>
       </NameBrand>
       <NextArrowBottomRight>
-        <NextArrow nextScreen={props.nextScreen}/>
+        <NextArrowContainer active={active}>
+          <NextArrow nextScreen={props.nextScreen}/>
+        </NextArrowContainer>
       </NextArrowBottomRight>
     </Container>
   );
@@ -43,8 +87,13 @@ const Project: React.FC<InputProps> = props => {
 
 export default Project;
 
+export interface ProjectPageProps {
+}
+
+export const PROJECT_EXPANDING_DURATION = 1000;
+
 export const ViewProjectButtonBase = props => (
-  <ViewProjectContainer hover={props.hover}>
+  <ViewProjectContainer hover={props.hover} onClick={props.onClick}>
     <ViewProjectText>VIEW PROJECT</ViewProjectText>
   </ViewProjectContainer>
 );
@@ -92,18 +141,26 @@ export const SubheaderText = styled(MyText)`
 `;
 
 const Container = styled(PageContainer)<any>`
+  ${p => p.active ? `
+  ` : ''}
 `;
 
-export const ProjectBackground = styled.div`
+export const ProjectBackground = styled.div<any>`
   position: absolute;
   left: -30vw;
   top: 0;
   bottom: 0;
-  width: 72vw;
+  width: ${p => p.active ? '130vw' : '72vw'};
   background-color: ${p => p.color};
   z-index: -1;
-  transform: skew(10deg);
+  transform: ${p => p.active ? '' : 'skew(10deg)'};
   transform-origin: 100% 0;
+  transition: transform ${PROJECT_EXPANDING_DURATION}ms, width ${PROJECT_EXPANDING_DURATION}ms;
+`;
+
+const NextArrowContainer = styled.div<any>`
+  opacity: ${p => p.active ? 0 : 1};
+  transition: opacity 1s;
 `;
 
 const HomeTextContainer = styled(Touchable)`

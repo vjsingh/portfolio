@@ -11,7 +11,6 @@ export const HOME_SCENE_DURATION = 600;
 const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
-  const [scene, setScene] = React.useState(null as any);
 
   const handleScroll = event => {
     setScrollPos(event.srcElement.documentElement.scrollLeft);
@@ -25,15 +24,15 @@ const Home: React.FC<PageProps> = props => {
   }, []);
 
   React.useEffect(() => {
-    if (!scene && context.scrollMagicController) {
-      setScene(new ScrollMagic.Scene({
+    if (context.scrollMagicController) {
+      new ScrollMagic.Scene({
         // If no triggerElement set, defaults to start.
         duration: HOME_SCENE_DURATION,
       })
       .setPin('#home')
-      .addTo(context.scrollMagicController));
+      .addTo(context.scrollMagicController);
     }
-  }, [context]);
+  }, [context?.scrollMagicController]);
 
   const progress = scrollPos / HOME_SCENE_DURATION;
 
