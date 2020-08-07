@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { scroller } from 'react-scroll';
 import styled, { keyframes } from 'styled-components';
-import withHover, { InjectHoverProps } from "../components/withHover";
+import withHover, { InjectHoverProps } from "components/withHover";
 import { MyText, theme } from '../util/styles';
 import Touchable from './Touchable';
 import { scrollerArgs } from 'util/constants';
