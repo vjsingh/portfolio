@@ -7,6 +7,7 @@ import { ReactNode } from 'react';
 
 interface InputProps {
   renderPage: (onExpand: () => void) => ReactNode;
+  renderExpandedScreens: Array<() => ReactNode>;
   name: string;
   nextScreen: string;
 }
@@ -28,30 +29,30 @@ const ProjectContainer: React.FC<InputProps> = props => {
     setActive(false);
   };
 
+  const projectProps = {
+    name: props.name,
+    nextScreen: props.nextScreen,
+    bgColor: theme.orange,
+    active: expanding || active,
+    closeProject: closeProject,
+  };
+
   return (
     <>
-      <Project
-        name={props.name}
-        nextScreen={props.nextScreen}
-        bgColor={theme.orange}
-        active={expanding || active}
-        closeProject={closeProject}
-      >
+      <Project {...projectProps}>
         {props.renderPage(onExpand)}
       </Project>
       {active &&
         <Container>
           <InnerContainer>
-            <Project
-              name={props.name}
-              nextScreen={props.nextScreen}
-              bgColor={theme.orange}
-              active={expanding || active}
-              closeProject={closeProject}
-              dontMakeScene={true}
-            >
-              {props.renderPage(onExpand)}
+            <Project {...projectProps}>
+              {props.renderPage(() => {})}
             </Project>
+            {props.renderExpandedScreens.map(renderScreen => (
+              <Project {...projectProps}>
+                {renderScreen()}
+              </Project>
+            ))}
           </InnerContainer>
         </Container>
       }
@@ -74,12 +75,13 @@ const Container = styled.div`
 `;
 
 // https://stackoverflow.com/questions/43100350/css-overlay-with-scrolling-content
+// height: 100vh seems to add enough spaces for any number of pages, for some reason.
 const InnerContainer = styled.div`
   overflow-y: scroll;
   height: 200vh;
   &:after {
     content: '';
     display: block;
-    height: 10000px;
+    height: 100vh;
   }
 `;

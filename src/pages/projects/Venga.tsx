@@ -22,32 +22,24 @@ const VengaInner: React.FC<ProjectInnerProps> = props => {
   );
 }
 
+const VengaExpanded: React.FC = props => {
+  return (
+    <>
+      <VengaInner onExpand={() => {}}/>
+    </>
+  );
+}
+
 const Venga: React.FC<PageProps> = props => {
   return (
     <ProjectContainer
       name='venga'
       nextScreen='googleTVM'
       renderPage={onExpand => <VengaInner onExpand={onExpand}/>}
+      renderExpandedScreens={[
+        () => <VengaInner onExpand={() => {}}/>,
+      ]}
     />
   );
 }
 export default Venga;
-
-const Container = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  background-color: blue;
-  z-index: 10;
-`;
-
-const InnerContainer = styled.div`
-  overflow-y: scroll;
-  height: 200vh;
-  &:after {
-    content: '';
-    display: block;
-    height: 10000px;
-  }
-`;
