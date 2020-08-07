@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Touchable = styled.div`
-  cursor: pointer;
+  cursor: crosshair;
   outline: none;
 `;
 

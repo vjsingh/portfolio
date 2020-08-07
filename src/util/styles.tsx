@@ -3,6 +3,8 @@ import * as React from 'react';
 
 export const theme = {
   orange: '#FF6A48',
+  gray50: 'rgba(0, 0, 0, .50)',
+  gray30: 'rgba(0, 0, 0, .30)',
 };
 
 export const PushRight = styled.span`

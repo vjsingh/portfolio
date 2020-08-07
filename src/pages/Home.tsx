@@ -7,6 +7,7 @@ import { Link } from "util/textStyles";
 import ScrollMagic from "scrollmagic";
 import AppContext from "util/AppContext";
 
+export const HOME_SCENE_DURATION = 600;
 const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
@@ -23,19 +24,18 @@ const Home: React.FC<PageProps> = props => {
     };
   }, []);
 
-  const SCENE_DURATION = 400;
   React.useEffect(() => {
     if (!scene && context.scrollMagicController) {
       setScene(new ScrollMagic.Scene({
         // If no triggerElement set, defaults to start.
-        duration: SCENE_DURATION,
+        duration: HOME_SCENE_DURATION,
       })
       .setPin('#home')
       .addTo(context.scrollMagicController));
     }
   }, [context]);
 
-  const progress = scrollPos / SCENE_DURATION;
+  const progress = scrollPos / HOME_SCENE_DURATION;
 
   const rightPosStart = BACKGROUND_STRIPE_RIGHT;
   const rightPosEnd = BACKGROUND_TRIANGLE_RIGHT;

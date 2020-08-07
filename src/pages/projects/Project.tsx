@@ -3,9 +3,11 @@ import * as React from 'react';
 import { scroller } from 'react-scroll';
 import styled from 'styled-components';
 import NextArrow, { NextArrowBottomRight } from '../../components/NextArrow';
-import { MyText, PageContainer } from '../../util/styles';
+import { MyText, PageContainer, theme } from '../../util/styles';
 import Touchable from 'components/Touchable';
 import { scrollerArgs } from 'util/constants';
+import { HOME_SCENE_DURATION } from 'pages/Home';
+import withHover from 'components/withHover';
 
 interface InputProps {
   name: string;
@@ -17,6 +19,7 @@ const Project: React.FC<InputProps> = props => {
   const scrollToHome = () => {
     scroller.scrollTo('home', {
       ...scrollerArgs,
+      offset: -HOME_SCENE_DURATION,
     });
   };
 
@@ -40,18 +43,20 @@ const Project: React.FC<InputProps> = props => {
 
 export default Project;
 
-export const ViewProjectButton = props => (
-  <ViewProjectContainer>
+export const ViewProjectButtonBase = props => (
+  <ViewProjectContainer hover={props.hover}>
     <ViewProjectText>VIEW PROJECT</ViewProjectText>
   </ViewProjectContainer>
 );
+export const ViewProjectButton = withHover(ViewProjectButtonBase);
 
-const ViewProjectContainer = styled.div`
+const ViewProjectContainer = styled(Touchable)<any>`
   display: flex;
   align-items: center;
   height: 7.5vh;
   border: 1px solid black;
   padding: 0 2vw;
+  background-color: ${p => p.hover ? theme.gray30 : 'white'};
 `;
 
 const ViewProjectText = styled(MyText)`

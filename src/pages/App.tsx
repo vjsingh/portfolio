@@ -14,7 +14,7 @@ import LoadingAnimation from 'components/LoadingAnimation';
 
 const App: React.FC<PageProps> = props => {
     const [controller, setController] = React.useState(null as any);
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
     useHorizontal();
 
   // Run on page load.

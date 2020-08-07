@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { keyframes } from 'styled-components';
 import withHover from "../components/withHover";
-import { theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH } from '../util/styles';
+import { theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, MyText } from '../util/styles';
 import { useRef, useEffect, useState, useCallback } from 'react';
 
 interface InputProps {
@@ -51,7 +51,9 @@ const LoadingAnimation: React.FC<InputProps> = props => {
       isExpandingCircle ?
         <CircleExpanding ref={onRefChange}/>
       :
-        <CircleBreathing hover={userTriggeredStart} ref={circleBreathingRef} onMouseEnter={() => setUserTriggeredStart(true)}/>
+        <CircleBreathing hover={userTriggeredStart} ref={circleBreathingRef} onMouseEnter={() => setUserTriggeredStart(true)}>
+          <StartText>Start</StartText>
+        </CircleBreathing>
       }
     </Container>
   );
@@ -69,7 +71,7 @@ function PrefixedEvent(element, type, callback) {
 
 const breatheAnimation = keyframes`
   from { transform: scale3d(1, 1, 1); }
-  50% { transform: scale3d(1.10, 1.10, 1.10); }
+  50% { transform: scale3d(1.20, 1.20, 1.20); }
   to { transform: scale3d(1, 1, 1); }
 `;
 
@@ -102,6 +104,9 @@ const Circle = styled.div`
 `;
 
 const CircleBreathing = styled(Circle)<any>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: ${p => p.hover ? circleBorder : '0px'};
   animation-name: ${breatheAnimation};
   animation-duration: 2s;
@@ -132,4 +137,9 @@ const ScreenWipe = styled(BackgroundStripe)`
   background-color: ${theme.orange};
   animation-name: ${screenWipeAnimation};
   animation-duration: 1s;
+`;
+
+const StartText = styled(MyText)`
+  color: white;
+  font-size: 10;
 `;
