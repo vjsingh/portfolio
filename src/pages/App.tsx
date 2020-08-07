@@ -1,18 +1,13 @@
-import useHorizontal from '@oberon-amsterdam/horizontal/hook';
-import { PageProps } from "gatsby"
-import * as React from 'react';
-import { render } from 'react-dom';
-import Home from './Home';
-import styled from 'styled-components';
-import Venga from './projects/Venga';
-import { createGlobalStyle } from "styled-components"
-import GoogleTVM from './projects/GoogleTVM';
-import ScrollMagic from 'scrollmagic';
-import AppContext from 'util/AppContext';
+import HorizontalScroll from '@oberon-amsterdam/horizontal';
 import LoadingAnimation from 'components/LoadingAnimation';
-import { useRef, useEffect } from 'react';
-import HorizontalScroll, { Options } from '@oberon-amsterdam/horizontal';
-import ProjectContainer from './projects/ProjectContainer';
+import { PageProps } from "gatsby";
+import * as React from 'react';
+import { useEffect, useRef } from 'react';
+import ScrollMagic from 'scrollmagic';
+import styled, { createGlobalStyle } from 'styled-components';
+import AppContext from 'util/AppContext';
+import Home from './Home';
+import Venga from './projects/Venga';
 // import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
 const App: React.FC<PageProps> = props => {

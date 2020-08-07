@@ -13,51 +13,57 @@ interface InputProps {
 }
 
 const ProjectContainer: React.FC<InputProps> = props => {
-  const [expanding, setExpanding] = React.useState(false);
-  const [active, setActive] = React.useState(false);
+  const { renderPage } = props;
 
-  const onExpand = () => {
-    setExpanding(true);
-    setTimeout(() => {
+  if (renderPage) { // Gatsby won't build without this... not sure why.
+    const [expanding, setExpanding] = React.useState(false);
+    const [active, setActive] = React.useState(false);
+
+    const onExpand = () => {
+      setExpanding(true);
+      setTimeout(() => {
+        setExpanding(false);
+        setActive(true);
+      }, PROJECT_EXPANDING_DURATION);
+    }
+
+    const closeProject = () => {
       setExpanding(false);
-      setActive(true);
-    }, PROJECT_EXPANDING_DURATION);
+      setActive(false);
+    };
+
+    const projectProps = {
+      name: props.name,
+      nextScreen: props.nextScreen,
+      bgColor: theme.orange,
+      active: expanding || active,
+      closeProject: closeProject,
+    };
+
+    return (
+      <>
+        <Project {...projectProps}>
+          {renderPage(onExpand)}
+        </Project>
+        {active &&
+          <Container>
+            <InnerContainer>
+              <Project {...projectProps}>
+                {renderPage(() => {})}
+              </Project>
+              {props.renderExpandedScreens.map(renderScreen => (
+                <Project {...projectProps} isExpandedScreen={true}>
+                  {renderScreen()}
+                </Project>
+              ))}
+            </InnerContainer>
+          </Container>
+        }
+      </>
+    );
   }
 
-  const closeProject = () => {
-    setExpanding(false);
-    setActive(false);
-  };
-
-  const projectProps = {
-    name: props.name,
-    nextScreen: props.nextScreen,
-    bgColor: theme.orange,
-    active: expanding || active,
-    closeProject: closeProject,
-  };
-
-  return (
-    <>
-      <Project {...projectProps}>
-        {props.renderPage(onExpand)}
-      </Project>
-      {active &&
-        <Container>
-          <InnerContainer>
-            <Project {...projectProps}>
-              {props.renderPage(() => {})}
-            </Project>
-            {props.renderExpandedScreens.map(renderScreen => (
-              <Project {...projectProps} isExpandedScreen={true}>
-                {renderScreen()}
-              </Project>
-            ))}
-          </InnerContainer>
-        </Container>
-      }
-    </>
-  );
+  return null;
 }
 export default ProjectContainer;
 
