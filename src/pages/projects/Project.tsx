@@ -7,9 +7,9 @@ import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
 import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
-import { getNextPage, scrollToHome, getPreviousPage } from 'util/pageUtil';
+import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
-import NextArrow, { NextArrowBottomRight } from '../../components/NextArrow';
+import NextArrow, { NextArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
 import { MyText, PageContainer, theme } from '../../util/styles';
 
 interface InputProps {
@@ -70,11 +70,15 @@ const Project: React.FC<InputProps> = props => {
         <Singh>SINGH</Singh>
       </NameBrand>
       <NextArrowBottomRight>
-        <NextArrowContainer active={active}>
-          <div style={{marginRight: '24px'}}>
-            <NextArrow nextPage={getPreviousPage(props.name)} isLeft={true}/>
-          </div>
-          <NextArrow nextPage={getNextPage(props.name)}/>
+        <NextArrowContainer>
+          <PreviousArrowContainer active={active}>
+            <NextArrow nextPage={getPreviousPage(props.name)} orientation={ORIENTATION.LEFT}/>
+          </PreviousArrowContainer>
+          <NextArrow
+            nextPage={getNextPage(props.name)}
+            orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
+            onScroll={!active ? undefined : scrollDownOnePage}
+          />
         </NextArrowContainer>
       </NextArrowBottomRight>
     </Container>
@@ -89,7 +93,7 @@ export interface ProjectPageProps {
 export const PROJECT_EXPANDING_DURATION = 1000;
 
 export const ViewProjectButtonBase = props => (
-  <ViewProjectContainer hover={props.hover} onClick={props.onClick}>
+  <ViewProjectContainer {...props}>
     <ButtonText>VIEW PROJECT</ButtonText>
   </ViewProjectContainer>
 );
@@ -102,6 +106,8 @@ const ViewProjectContainer = styled(Touchable)<any>`
   border: 1px solid black;
   padding: 0 2vw;
   background-color: ${p => p.hover ? theme.gray30 : 'white'};
+  opacity: ${p => p.visible ? 1 : 0};
+  transition: opacity 1s;
 `;
 
 export const MainContainer = styled.div`
@@ -146,11 +152,15 @@ export const ProjectBackground = styled.div<any>`
   transition: transform ${PROJECT_EXPANDING_DURATION}ms, width ${PROJECT_EXPANDING_DURATION}ms;
 `;
 
+const PreviousArrowContainer = styled.div<any>`
+  margin-right: 24px;
+  opacity: ${p => p.active ? 0 : 1};
+  transition: opacity 1s;
+`;
+
 const NextArrowContainer = styled.div<any>`
   flex-direction: row;
   display: flex;
-  opacity: ${p => p.active ? 0 : 1};
-  transition: opacity 1s;
 `;
 
 const HomeTextContainer = styled(Touchable)`

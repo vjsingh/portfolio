@@ -1,4 +1,4 @@
-import { scroller } from "react-scroll";
+import { scroller, animateScroll } from "react-scroll";
 import { scrollerArgs } from "./constants";
 import { HOME_SCENE_DURATION } from "pages/Home";
 
@@ -38,4 +38,14 @@ export function scrollToHome() {
     ...scrollerArgs,
     offset: -HOME_SCENE_DURATION,
   });
+}
+
+export function scrollDownOnePage() {
+  if (window) {
+    animateScroll.scrollTo(window.innerHeight, {
+      ...scrollerArgs,
+      horizontal: false,
+      containerId: 'ProjectContainer',
+    });
+  }
 }

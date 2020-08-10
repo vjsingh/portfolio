@@ -6,7 +6,7 @@ import ProjectImage from "./ProjectImage";
 import { ReactNode } from 'react';
 
 interface InputProps {
-  renderPage: (onExpand: () => void) => ReactNode;
+  renderPage: (onExpand: () => void, active: boolean) => ReactNode;
   renderExpandedScreens: Array<() => ReactNode>;
   name: string;
 }
@@ -41,13 +41,13 @@ const ProjectContainer: React.FC<InputProps> = props => {
     return (
       <>
         <Project {...projectProps}>
-          {renderPage(onExpand)}
+          {renderPage(onExpand, expanding || active)}
         </Project>
         {active &&
           <Container>
-            <InnerContainer>
+            <InnerContainer id='ProjectContainer'>
               <Project {...projectProps}>
-                {renderPage(() => {})}
+                {renderPage(() => {}, expanding || active)}
               </Project>
               {props.renderExpandedScreens.map(renderScreen => (
                 <Project {...projectProps} isExpandedScreen={true}>
@@ -67,6 +67,7 @@ export default ProjectContainer;
 
 export interface ProjectInnerProps {
   onExpand: () => void;
+  active: boolean;
 }
 
 const Container = styled.div`

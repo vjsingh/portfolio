@@ -9,14 +9,30 @@ import { doScroll } from 'util/pageUtil';
 
 interface InputProps extends InjectHoverProps {
   nextPage: string;
-  isLeft?: boolean;
+  orientation?: ORIENTATION;
   isLarge?: boolean;
+  onScroll?: () => void;
 }
 
+export enum ORIENTATION { LEFT, RIGHT, DOWN, };
+
 const NextArrow: React.FC<InputProps> = props => {
+  const orientation = props.orientation ?? ORIENTATION.RIGHT;
+  let onScroll = props.onScroll;
+  if (!onScroll) {
+    onScroll = () => {
+      doScroll(props.nextPage);
+    };
+  }
+
   return (
-    <Container onClick={() => doScroll(props.nextPage)} hover={props.hover} isLeft={props.isLeft} isLarge={props.isLarge}>
-      <Arrow hover={props.hover} isLeft={props.isLeft} isLarge={props.isLarge}>V</Arrow>
+    <Container
+      onClick={onScroll}
+      hover={props.hover}
+      animate={orientation === ORIENTATION.RIGHT}
+      isLarge={props.isLarge}
+    >
+      <Arrow hover={props.hover} {...props}>V</Arrow>
     </Container>
   );
 };
@@ -33,11 +49,11 @@ const Container = styled(Touchable)<any>`
   justify-content: center;
   align-items: center;
   width: ${p => p.isLarge ? '80px' : '60px'};
-  height: 60px;
+  height: ${p => p.isLarge ? '80px' : '60px'};
   border: 1px solid ${p => p.hover ? 'white' : theme.orange};
   border-radius: 40px;
   background-color: ${p => p.hover ? theme.orange : 'white'};
-  animation-name: ${p => p.isLeft ? null : breatheAnimation};
+  animation-name: ${p => p.animate ? breatheAnimation : null};
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
@@ -45,11 +61,15 @@ const Container = styled(Touchable)<any>`
 `;
 
 const Arrow = styled(MyText)<any>`
-  transform: rotate(${p => p.isLeft ? '90deg' : '270deg'});
+  transform: rotate(${p =>
+    p.orientation === ORIENTATION.LEFT ? '90deg' :
+    p.orientation === ORIENTATION.DOWN ? '720deg' :
+    '270deg'
+  });
   color: ${p => p.hover ? 'white' : theme.orange};
   font-size: ${p => p.isLarge ? '40px' : '34px'};
   font-weight: bold;
-  transition: color 1s;
+  transition: color 1s, transform 1s;
 `;
 
 export const NextArrowBottomRight = styled.div`

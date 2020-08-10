@@ -10,27 +10,28 @@ import AppContext from "util/AppContext";
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 
 const VengaInner: React.FC<ProjectInnerProps> = props => {
+  console.log(props.active);
   return (
     <>
       <ProjectImage name='venga'/>
       <MainContainer>
         <HeaderText>VENGA CLIMB</HeaderText>
         <SubheaderText>A digital membership engagement platform for rock climbing gyms.</SubheaderText>
-        <ViewProjectButton onClick={props.onExpand}/>
+        <ViewProjectButton visible={!props.active} onClick={props.onExpand}/>
       </MainContainer>
     </>
   );
 }
 
-const VengaBackground: React.FC = props => {
+const VengaOverview: React.FC = props => {
   return (
-    <>
+    <div id='venga-overview'>
       <ProjectImage name='venga'/>
       <MainContainer>
         <HeaderText>VENGA CLIMB</HeaderText>
         <SubheaderText>A digital membership engagement platform for rock climbing gyms.</SubheaderText>
       </MainContainer>
-    </>
+    </div>
   );
 }
 
@@ -38,9 +39,9 @@ const Venga: React.FC<PageProps> = props => {
   return (
     <ProjectContainer
       name='venga'
-      renderPage={onExpand => <VengaInner onExpand={onExpand}/>}
+      renderPage={(onExpand, active) => <VengaInner onExpand={onExpand} active={active}/>}
       renderExpandedScreens={[
-        () => <VengaInner onExpand={() => {}}/>,
+        () => <VengaOverview/>,
       ]}
     />
   );

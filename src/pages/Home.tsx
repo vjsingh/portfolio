@@ -74,7 +74,7 @@ const Home: React.FC<PageProps> = props => {
           </HeroSection>
 
           <NextArrowBottomRight>
-            <NextArrow nextPage={getNextPage('home')}/>
+            <NextArrow isLarge nextPage={getNextPage('home')}/>
           </NextArrowBottomRight>
         </InnerContainer>
 
