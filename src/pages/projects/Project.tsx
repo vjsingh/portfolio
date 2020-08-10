@@ -7,9 +7,9 @@ import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
 import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
-import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage } from 'util/pageUtil';
+import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
-import NextArrow, { NextArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
+import NextArrow, { ArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
 import { MyText, PageContainer, theme } from '../../util/styles';
 
 interface InputProps {
@@ -28,11 +28,11 @@ const Project: React.FC<InputProps> = props => {
   useEffect(() => {
     if (!props.isExpandedScreen && context.scrollMagicController) {
       new ScrollMagic.Scene({
-        triggerElement: '#venga',
+        triggerElement: '#' + props.name,
         duration: 200,
         triggerHook: 'onLeave', // Start pinning when the view is fully on screen (or 'about to leave')
       })
-      .setPin('#venga')
+      .setPin('#' + props.name)
       .addTo(context.scrollMagicController);
     }
   }, [context?.scrollMagicController]);
@@ -51,7 +51,6 @@ const Project: React.FC<InputProps> = props => {
     // Scroll immediately back to where we were.
     // Users can still scroll horizontally when projects are open, even though
     // it appears you can't because of the fixed position overlay.
-    console.log('scrolling to: ' + props.name);
     scroller.scrollTo(props.name, {
       duration: 0,
       horizontal: true,
@@ -62,25 +61,37 @@ const Project: React.FC<InputProps> = props => {
     <Container id={props.name} name={props.name} active={active}>
       {props.children}
       {!props.isExpandedScreen && <ProjectBackground active={active} color={props.bgColor}/>}
-      <HomeTextContainer onClick={active ? onBack : scrollToHome}>
+      {!props.isExpandedScreen &&
+        <HomeTextContainer onClick={active ? onBack : scrollToHome}>
           <HomeText>{active ? 'Back' : 'Home'}</HomeText>
-      </HomeTextContainer>
-      <NameBrand>
-        <Varun>VARUN</Varun>
-        <Singh>SINGH</Singh>
-      </NameBrand>
-      <NextArrowBottomRight>
-        <NextArrowContainer>
-          <PreviousArrowContainer active={active}>
-            <NextArrow nextPage={getPreviousPage(props.name)} orientation={ORIENTATION.LEFT}/>
+        </HomeTextContainer>
+      }
+      {!props.isExpandedScreen &&
+        <NameBrand>
+          <Varun>VARUN</Varun>
+          <Singh>SINGH</Singh>
+        </NameBrand>
+      }
+      <ArrowBottomRight>
+        <ArrowContainer>
+          <PreviousArrowContainer hidden={!props.isExpandedScreen && active}>
+            <NextArrow
+              nextPage={getPreviousPage(props.name)}
+              orientation={props.isExpandedScreen ? ORIENTATION.UP : ORIENTATION.LEFT}
+              onScroll={!active ? undefined : scrollUpOnePage}
+            />
           </PreviousArrowContainer>
-          <NextArrow
-            nextPage={getNextPage(props.name)}
-            orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
-            onScroll={!active ? undefined : scrollDownOnePage}
-          />
-        </NextArrowContainer>
-      </NextArrowBottomRight>
+          {!isLastPage(props.name) &&
+            <NextArrowContainer hidden={!props.isExpandedScreen && active}>
+              <NextArrow
+                nextPage={getNextPage(props.name)}
+                orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
+                onScroll={!active ? undefined : scrollDownOnePage}
+              />
+            </NextArrowContainer>
+          }
+        </ArrowContainer>
+      </ArrowBottomRight>
     </Container>
   );
 };
@@ -93,20 +104,20 @@ export interface ProjectPageProps {
 export const PROJECT_EXPANDING_DURATION = 1000;
 
 export const ViewProjectButtonBase = props => (
-  <ViewProjectContainer {...props}>
+  <ButtonContainer {...props}>
     <ButtonText>VIEW PROJECT</ButtonText>
-  </ViewProjectContainer>
+  </ButtonContainer>
 );
 export const ViewProjectButton = withHover(ViewProjectButtonBase);
 
-const ViewProjectContainer = styled(Touchable)<any>`
+const ButtonContainer = styled(Touchable)<any>`
   display: flex;
   align-items: center;
   height: 7.5vh;
   border: 1px solid black;
   padding: 0 2vw;
   background-color: ${p => p.hover ? theme.gray30 : 'white'};
-  opacity: ${p => p.visible ? 1 : 0};
+  opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
 `;
 
@@ -153,16 +164,31 @@ export const ProjectBackground = styled.div<any>`
 `;
 
 const PreviousArrowContainer = styled.div<any>`
-  margin-right: 24px;
-  opacity: ${p => p.active ? 0 : 1};
+  opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
 `;
 
 const NextArrowContainer = styled.div<any>`
+  margin-left: 24px;
+`;
+
+const ArrowContainer = styled.div<any>`
   flex-direction: row;
   display: flex;
 `;
 
+const HomeTextContainer = styled(ButtonContainer)`
+  position: absolute;
+  left: 5.7vw;
+  top: 4.8vh;
+  height: calc(40px + 0.3vh);
+`;
+
+const HomeText = styled(ButtonText)`
+  letter-spacing: 0.1em;
+`;
+
+/*
 const HomeTextContainer = styled(Touchable)`
   position: absolute;
   left: 5.7vw;
@@ -175,6 +201,7 @@ const HomeText = styled(MyText)`
   cursor: pointer;
   font-size: 24px;
 `;
+*/
 
 export const NameBrand = styled.div`
   position: absolute;

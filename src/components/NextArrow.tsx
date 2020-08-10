@@ -14,7 +14,7 @@ interface InputProps extends InjectHoverProps {
   onScroll?: () => void;
 }
 
-export enum ORIENTATION { LEFT, RIGHT, DOWN, };
+export enum ORIENTATION { UP, RIGHT, DOWN, LEFT };
 
 const NextArrow: React.FC<InputProps> = props => {
   const orientation = props.orientation ?? ORIENTATION.RIGHT;
@@ -29,7 +29,7 @@ const NextArrow: React.FC<InputProps> = props => {
     <Container
       onClick={onScroll}
       hover={props.hover}
-      animate={orientation === ORIENTATION.RIGHT}
+      animate={orientation === ORIENTATION.RIGHT || orientation === ORIENTATION.DOWN}
       isLarge={props.isLarge}
     >
       <Arrow hover={props.hover} {...props}>V</Arrow>
@@ -63,6 +63,7 @@ const Container = styled(Touchable)<any>`
 const Arrow = styled(MyText)<any>`
   transform: rotate(${p =>
     p.orientation === ORIENTATION.LEFT ? '90deg' :
+    p.orientation === ORIENTATION.UP ? '180deg' :
     p.orientation === ORIENTATION.DOWN ? '720deg' :
     '270deg'
   });
@@ -72,7 +73,7 @@ const Arrow = styled(MyText)<any>`
   transition: color 1s, transform 1s;
 `;
 
-export const NextArrowBottomRight = styled.div`
+export const ArrowBottomRight = styled.div`
   position: absolute;
   right: 10vw;
   bottom: 10vh;

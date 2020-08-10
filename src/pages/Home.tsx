@@ -1,7 +1,7 @@
 import { PageProps } from "gatsby";
 import React, { useContext, useEffect } from "react";
 import styled, { keyframes } from 'styled-components';
-import NextArrow, { NextArrowBottomRight } from "../components/NextArrow";
+import NextArrow, { ArrowBottomRight } from "../components/NextArrow";
 import { MyText, PageContainer, PushRight, theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
 import { Link, H2, NavText, NameBrandText, BodyRegular } from "util/textStyles";
 import ScrollMagic from "scrollmagic";
@@ -73,9 +73,9 @@ const Home: React.FC<PageProps> = props => {
             </BodyText>
           </HeroSection>
 
-          <NextArrowBottomRight>
+          <ArrowBottomRight>
             <NextArrow isLarge nextPage={getNextPage('home')}/>
-          </NextArrowBottomRight>
+          </ArrowBottomRight>
         </InnerContainer>
 
         <BackgroundStripe right={rightPos} width={width}/>

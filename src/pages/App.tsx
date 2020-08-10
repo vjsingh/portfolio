@@ -7,6 +7,7 @@ import ScrollMagic from 'scrollmagic';
 import styled, { createGlobalStyle } from 'styled-components';
 import AppContext from 'util/AppContext';
 import Home from './Home';
+import GoogleTVM from './projects/GoogleTVM';
 import Venga from './projects/Venga';
 // import 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators'
 
@@ -37,7 +38,6 @@ const App: React.FC<PageProps> = props => {
     scrollMagicController: controller,
   };
 
-  // <GoogleTVM {...newProps}/>}
   return (
     <AppContext.Provider value={context}>
       <Container id='root'>
@@ -48,6 +48,7 @@ const App: React.FC<PageProps> = props => {
             <GlobalStyle/>
             <Home {...props}/>
             <Venga {...props}/>
+            <GoogleTVM {...props}/>
           </>
         )}
       </Container>

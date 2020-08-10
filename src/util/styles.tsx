@@ -5,6 +5,7 @@ export const theme = {
   orange: '#FF6A48',
   gray50: 'rgba(0, 0, 0, .50)',
   gray30: 'rgba(0, 0, 0, .30)',
+  purple: '#6319ff',
 };
 
 export const PushRight = styled.span`

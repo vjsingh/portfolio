@@ -24,6 +24,10 @@ export function getNextPage(currPage: string): string {
   return PAGES[getNextPageIx(currPage)];
 }
 
+export function isLastPage(page: string): boolean {
+  return PAGES.indexOf(page) === (PAGES.length - 1);
+}
+
 export function doScroll(page: string) {
   if (page === 'home') scrollToHome();
   else {
@@ -42,7 +46,17 @@ export function scrollToHome() {
 
 export function scrollDownOnePage() {
   if (window) {
-    animateScroll.scrollTo(window.innerHeight, {
+    animateScroll.scrollMore(window.innerHeight, {
+      ...scrollerArgs,
+      horizontal: false,
+      containerId: 'ProjectContainer',
+    });
+  }
+}
+
+export function scrollUpOnePage() {
+  if (window) {
+    animateScroll.scrollMore(-window.innerHeight, {
       ...scrollerArgs,
       horizontal: false,
       containerId: 'ProjectContainer',

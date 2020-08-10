@@ -9,6 +9,7 @@ interface InputProps {
   renderPage: (onExpand: () => void, active: boolean) => ReactNode;
   renderExpandedScreens: Array<() => ReactNode>;
   name: string;
+  bgColor: string;
 }
 
 const ProjectContainer: React.FC<InputProps> = props => {
@@ -33,16 +34,20 @@ const ProjectContainer: React.FC<InputProps> = props => {
 
     const projectProps = {
       name: props.name,
-      bgColor: theme.orange,
+      bgColor: props.bgColor,
       active: expanding || active,
       closeProject: closeProject,
     };
 
     return (
       <>
-        <Project {...projectProps}>
-          {renderPage(onExpand, expanding || active)}
-        </Project>
+        {/* Note: This container div is needed because of an interaction between */}
+        {/* ScrollMagic and the setTimeout above. */}
+        <div>
+          <Project {...projectProps}>
+            {renderPage(onExpand, expanding || active)}
+          </Project>
+        </div>
         {active &&
           <Container>
             <InnerContainer id='ProjectContainer'>
