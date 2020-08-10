@@ -1,6 +1,5 @@
 import Touchable from 'components/Touchable';
 import withHover from 'components/withHover';
-import { HOME_SCENE_DURATION } from 'pages/Home';
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { scroller } from 'react-scroll';
@@ -8,12 +7,13 @@ import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
 import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
+import { getNextPage, scrollToHome, getPreviousPage } from 'util/pageUtil';
+import { ButtonText, H1, H3 } from 'util/textStyles';
 import NextArrow, { NextArrowBottomRight } from '../../components/NextArrow';
 import { MyText, PageContainer, theme } from '../../util/styles';
 
 interface InputProps {
   name: string;
-  nextScreen: string;
   bgColor: string;
   active: boolean;
   closeProject: () => void;
@@ -36,13 +36,6 @@ const Project: React.FC<InputProps> = props => {
       .addTo(context.scrollMagicController);
     }
   }, [context?.scrollMagicController]);
-
-  const scrollToHome = () => {
-    scroller.scrollTo('home', {
-      ...scrollerArgs,
-      offset: -HOME_SCENE_DURATION,
-    });
-  };
 
   // Center on the project page when expanding.
   React.useEffect(() => {
@@ -78,7 +71,10 @@ const Project: React.FC<InputProps> = props => {
       </NameBrand>
       <NextArrowBottomRight>
         <NextArrowContainer active={active}>
-          <NextArrow nextScreen={props.nextScreen}/>
+          <div style={{marginRight: '24px'}}>
+            <NextArrow nextPage={getPreviousPage(props.name)} isLeft={true}/>
+          </div>
+          <NextArrow nextPage={getNextPage(props.name)}/>
         </NextArrowContainer>
       </NextArrowBottomRight>
     </Container>
@@ -94,7 +90,7 @@ export const PROJECT_EXPANDING_DURATION = 1000;
 
 export const ViewProjectButtonBase = props => (
   <ViewProjectContainer hover={props.hover} onClick={props.onClick}>
-    <ViewProjectText>VIEW PROJECT</ViewProjectText>
+    <ButtonText>VIEW PROJECT</ButtonText>
   </ViewProjectContainer>
 );
 export const ViewProjectButton = withHover(ViewProjectButtonBase);
@@ -106,11 +102,6 @@ const ViewProjectContainer = styled(Touchable)<any>`
   border: 1px solid black;
   padding: 0 2vw;
   background-color: ${p => p.hover ? theme.gray30 : 'white'};
-`;
-
-const ViewProjectText = styled(MyText)`
-  font-size: 2vw;
-  letter-spacing: .3em;
 `;
 
 export const MainContainer = styled.div`
@@ -126,16 +117,13 @@ export const MainContainer = styled.div`
   width: 50vw;
 `;
 
-export const HeaderText = styled(MyText)`
-  font-size: 5.5vw;
-  letter-spacing: 0.2em;
+export const HeaderText = styled(H1)`
   text-align: right;
   margin-bottom: 4vh;
 `;
 
-export const SubheaderText = styled(MyText)`
-  font-size: 2vw;
-  letter-spacing: 0.2em;
+
+export const SubheaderText = styled(H3)`
   text-align: right;
   margin-bottom: 5vh;
 `;
@@ -159,6 +147,8 @@ export const ProjectBackground = styled.div<any>`
 `;
 
 const NextArrowContainer = styled.div<any>`
+  flex-direction: row;
+  display: flex;
   opacity: ${p => p.active ? 0 : 1};
   transition: opacity 1s;
 `;

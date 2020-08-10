@@ -9,7 +9,6 @@ interface InputProps {
   renderPage: (onExpand: () => void) => ReactNode;
   renderExpandedScreens: Array<() => ReactNode>;
   name: string;
-  nextScreen: string;
 }
 
 const ProjectContainer: React.FC<InputProps> = props => {
@@ -34,7 +33,6 @@ const ProjectContainer: React.FC<InputProps> = props => {
 
     const projectProps = {
       name: props.name,
-      nextScreen: props.nextScreen,
       bgColor: theme.orange,
       active: expanding || active,
       closeProject: closeProject,

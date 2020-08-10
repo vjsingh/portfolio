@@ -38,7 +38,6 @@ const Venga: React.FC<PageProps> = props => {
   return (
     <ProjectContainer
       name='venga'
-      nextScreen='googleTVM'
       renderPage={onExpand => <VengaInner onExpand={onExpand}/>}
       renderExpandedScreens={[
         () => <VengaInner onExpand={() => {}}/>,

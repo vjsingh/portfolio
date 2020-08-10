@@ -3,9 +3,10 @@ import React, { useContext, useEffect } from "react";
 import styled, { keyframes } from 'styled-components';
 import NextArrow, { NextArrowBottomRight } from "../components/NextArrow";
 import { MyText, PageContainer, PushRight, theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
-import { Link } from "util/textStyles";
+import { Link, H2, NavText, NameBrandText, BodyRegular } from "util/textStyles";
 import ScrollMagic from "scrollmagic";
 import AppContext from "util/AppContext";
+import { PAGES, getNextPage } from "util/pageUtil";
 
 export const HOME_SCENE_DURATION = 600;
 const Home: React.FC<PageProps> = props => {
@@ -51,10 +52,10 @@ const Home: React.FC<PageProps> = props => {
       <Container name='home'>
         <InnerContainer>
           <Header>
-            <HeaderText>Work</HeaderText>
-            <HeaderText>About</HeaderText>
+            <NavText>Work</NavText>
+            <NavText>About</NavText>
             <PushRight>
-              <HeaderText>Contact</HeaderText>
+              <NavText>Contact</NavText>
             </PushRight>
           </Header>
 
@@ -73,7 +74,7 @@ const Home: React.FC<PageProps> = props => {
           </HeroSection>
 
           <NextArrowBottomRight>
-            <NextArrow nextScreen='venga'/>
+            <NextArrow nextPage={getNextPage('home')}/>
           </NextArrowBottomRight>
         </InnerContainer>
 
@@ -104,21 +105,11 @@ const Header = styled.div`
   display: flex;
 `;
 
-const HeaderText = styled(MyText)`
-  font-size: 20px;
-  padding-right: 5.5vw;
-`;
-
 
 export const NameBrand = styled.div`
   margin-top: 17vh;
   flex-direction: column;
   display: flex;
-`;
-
-const NameBrandText = styled(MyText)`
-  font-size: 11vh;
-  letter-spacing: 0.05em;
 `;
 
 export const Varun = styled(NameBrandText)`
@@ -138,15 +129,12 @@ const HeroSection = styled.div`
   margin-top: 3.1vh;
 `;
 
-const SubheaderText = styled(MyText)`
-  font-size: 5.8vh;
-  font-weight: bold;
+const SubheaderText = styled(H2)`
   margin-bottom: 4.3vh;
 `;
 
-const BodyText = styled(MyText)`
+const BodyText = styled(BodyRegular)`
   width: 47vw;
-  font-size: 2vh;
 `;
 
 /*
