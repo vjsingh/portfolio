@@ -51,11 +51,11 @@ const ProjectContainer: React.FC<InputProps> = props => {
         {active &&
           <Container>
             <InnerContainer id='ProjectContainer'>
-              <Project {...projectProps}>
+              <Project {...projectProps} dontMakeScene={true}>
                 {renderPage(() => {}, expanding || active)}
               </Project>
-              {props.renderExpandedScreens.map(renderScreen => (
-                <Project {...projectProps} isExpandedScreen={true}>
+              {props.renderExpandedScreens.map((renderScreen, ix)=> (
+                <Project {...projectProps} isExpandedScreen={true} key={ix}>
                   {renderScreen()}
                 </Project>
               ))}

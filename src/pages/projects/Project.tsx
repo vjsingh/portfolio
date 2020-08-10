@@ -18,6 +18,7 @@ interface InputProps {
   active: boolean;
   closeProject: () => void;
   isExpandedScreen?: boolean;
+  dontMakeScene?: boolean;
 }
 
 const Project: React.FC<InputProps> = props => {
@@ -26,8 +27,9 @@ const Project: React.FC<InputProps> = props => {
 
   // Add ScrollMagic Scene.
   useEffect(() => {
-    if (!props.isExpandedScreen && context.scrollMagicController) {
-      new ScrollMagic.Scene({
+    let scene;
+    if (!props.isExpandedScreen && !props.dontMakeScene && context.scrollMagicController) {
+      scene = new ScrollMagic.Scene({
         triggerElement: '#' + props.name,
         duration: 200,
         triggerHook: 'onLeave', // Start pinning when the view is fully on screen (or 'about to leave')
@@ -35,6 +37,10 @@ const Project: React.FC<InputProps> = props => {
       .setPin('#' + props.name)
       .addTo(context.scrollMagicController);
     }
+
+    return () => {
+      scene?.destroy();
+    };
   }, [context?.scrollMagicController]);
 
   // Center on the project page when expanding.
