@@ -8,13 +8,14 @@ import ScrollMagic from "scrollmagic";
 import AppContext from "util/AppContext";
 import { PAGES, getNextPage } from "util/pageUtil";
 import anime from 'animejs/lib/anime.es.js';
-import { useBounceInEffect } from "util/animations";
+import { useBounceInEffect, useFlyInEffect } from "util/animations";
 
 export const HOME_SCENE_DURATION = 600;
 const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
   const subheaderEl = useRef(null);
+  const lifeTextEl = useRef(null);
 
   const handleScroll = event => {
     setScrollPos(event.srcElement.documentElement.scrollLeft);
@@ -51,6 +52,7 @@ const Home: React.FC<PageProps> = props => {
   const width = widthStart + (progress * widthEnd);
 
   useBounceInEffect(subheaderEl);
+  useFlyInEffect(lifeTextEl, 1100);
 
   return (
     <>
@@ -70,7 +72,11 @@ const Home: React.FC<PageProps> = props => {
           </NameBrand>
 
           <HeroSection>
-            <SubheaderText ref={subheaderEl}>Bringing digital visions to life.</SubheaderText>
+            <Subheader>
+              <SubheaderText ref={subheaderEl}>Bringing digital visions to</SubheaderText>
+              <SubheaderText>&nbsp;</SubheaderText>
+              <LifeText ref={lifeTextEl}>{' life.'}</LifeText>
+            </Subheader>
             <BodyText>
               {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
               <Link href='/contact'>Currently available </Link>
@@ -134,8 +140,15 @@ const HeroSection = styled.div`
   margin-top: 3.1vh;
 `;
 
-const SubheaderText = styled(H2)`
+const Subheader = styled.div`
   margin-bottom: 4.3vh;
+  display: flex;
+`;
+
+const SubheaderText = styled(H2)`
+`;
+
+const LifeText = styled(SubheaderText)`
 `;
 
 const BodyText = styled(BodyRegular)`

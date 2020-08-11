@@ -24,3 +24,20 @@ export function useBounceInEffect(elRef) {
     }
   }, [elRef]);
 }
+
+export function useFlyInEffect(elRef, delay) {
+  useEffect(() => {
+    if (!!elRef.current) {
+      let el = elRef.current as any;
+
+      anime({
+        targets: elRef.current,
+        scale: [12,1],
+        opacity: [0,1],
+        easing: "easeOutCirc",
+        duration: 700,
+        delay,
+      });
+    }
+  }, [elRef]);
+}
