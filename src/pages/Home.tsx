@@ -1,5 +1,5 @@
 import { PageProps } from "gatsby";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled, { keyframes } from 'styled-components';
 import NextArrow, { ArrowBottomRight } from "../components/NextArrow";
 import { MyText, PageContainer, PushRight, theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
@@ -7,11 +7,14 @@ import { Link, H2, NavText, NameBrandText, BodyRegular } from "util/textStyles";
 import ScrollMagic from "scrollmagic";
 import AppContext from "util/AppContext";
 import { PAGES, getNextPage } from "util/pageUtil";
+import anime from 'animejs/lib/anime.es.js';
+import { useBounceInEffect } from "util/animations";
 
 export const HOME_SCENE_DURATION = 600;
 const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
+  const subheaderEl = useRef(null);
 
   const handleScroll = event => {
     setScrollPos(event.srcElement.documentElement.scrollLeft);
@@ -47,6 +50,8 @@ const Home: React.FC<PageProps> = props => {
   const widthEnd = BACKGROUND_TRIANGLE_WIDTH;
   const width = widthStart + (progress * widthEnd);
 
+  useBounceInEffect(subheaderEl);
+
   return (
     <>
       <Container name='home'>
@@ -65,7 +70,7 @@ const Home: React.FC<PageProps> = props => {
           </NameBrand>
 
           <HeroSection>
-            <SubheaderText>Bringing digital visions to life.</SubheaderText>
+            <SubheaderText ref={subheaderEl}>Bringing digital visions to life.</SubheaderText>
             <BodyText>
               {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
               <Link href='/contact'>Currently available </Link>

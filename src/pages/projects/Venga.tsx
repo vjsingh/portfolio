@@ -29,7 +29,7 @@ const VengaOverview: React.FC = props => {
       <TimelineHeaderText>Timeline</TimelineHeaderText>
       <Img
         fluid={data['vengaTimeline']?.childImageSharp.fluid}
-        alt="Gatsby Docs are awesome"
+        alt="Venga Timeline"
         style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
         imgStyle={{ objectFit: "contain" }}
       />
@@ -44,6 +44,7 @@ const Venga: React.FC<PageProps> = props => {
       bgColor={theme.orange}
       renderPage={(onExpand, active) => <VengaInner onExpand={onExpand} active={active}/>}
       renderExpandedScreens={[
+        () => <VengaOverview/>,
         () => <VengaOverview/>,
       ]}
     />

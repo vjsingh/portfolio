@@ -51,9 +51,10 @@ const LoadingAnimation: React.FC<InputProps> = props => {
       isExpandingCircle ?
         <CircleExpanding ref={onRefChange}/>
       :
-        <CircleBreathing hover={userTriggeredStart} ref={circleBreathingRef} onMouseEnter={() => setUserTriggeredStart(true)}>
-          <StartText>Start</StartText>
-        </CircleBreathing>
+        <>
+          <CircleBreathing hover={userTriggeredStart} ref={circleBreathingRef} onMouseEnter={() => setUserTriggeredStart(true)}/>
+          <StartText hidden={userTriggeredStart}>Start</StartText>
+        </>
       }
     </Container>
   );
@@ -141,7 +142,20 @@ const ScreenWipe = styled(BackgroundStripe)`
   animation-duration: 1s;
 `;
 
-const StartText = styled(MyText)`
+const StartText = styled(MyText)<any>`
   color: white;
   font-size: 10;
+  pointer-events: none;
+  opacity: ${p => p.hidden ? 0 : 1};
+  transition: opacity 1s;
+
+  /* Position in center of page */
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

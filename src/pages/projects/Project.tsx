@@ -88,7 +88,7 @@ const Project: React.FC<InputProps> = props => {
             />
           </PreviousArrowContainer>
           {!isLastPage(props.name) &&
-            <NextArrowContainer hidden={!props.isExpandedScreen && active}>
+            <NextArrowContainer>
               <NextArrow
                 nextPage={getNextPage(props.name)}
                 orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
@@ -169,16 +169,16 @@ export const ProjectBackground = styled.div<any>`
   transition: transform ${PROJECT_EXPANDING_DURATION}ms, width ${PROJECT_EXPANDING_DURATION}ms;
 `;
 
-const PreviousArrowContainer = styled.div<any>`
+export const PreviousArrowContainer = styled.div<any>`
   opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
 `;
 
-const NextArrowContainer = styled.div<any>`
+export const NextArrowContainer = styled.div<any>`
   margin-left: 24px;
 `;
 
-const ArrowContainer = styled.div<any>`
+export const ArrowContainer = styled.div<any>`
   flex-direction: row;
   display: flex;
 `;

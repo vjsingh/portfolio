@@ -8,7 +8,7 @@ import { scrollerArgs } from 'util/constants';
 import { doScroll } from 'util/pageUtil';
 
 interface InputProps extends InjectHoverProps {
-  nextPage: string;
+  nextPage?: string; // TODO: Should just pass this in using onScroll.
   orientation?: ORIENTATION;
   isLarge?: boolean;
   onScroll?: () => void;
@@ -20,9 +20,11 @@ const NextArrow: React.FC<InputProps> = props => {
   const orientation = props.orientation ?? ORIENTATION.RIGHT;
   let onScroll = props.onScroll;
   if (!onScroll) {
-    onScroll = () => {
-      doScroll(props.nextPage);
-    };
+    if (!!props.nextPage) {
+      onScroll = () => {
+        doScroll(props.nextPage ?? '');
+      };
+    }
   }
 
   return (

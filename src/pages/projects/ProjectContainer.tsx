@@ -4,6 +4,7 @@ import { theme } from '../../util/styles';
 import Project, { HeaderText, MainContainer, ProjectPageProps, PROJECT_EXPANDING_DURATION, SubheaderText, ViewProjectButton } from './Project';
 import ProjectImage from "./ProjectImage";
 import { ReactNode } from 'react';
+import ProjectScreen from './ProjectScreen';
 
 interface InputProps {
   renderPage: (onExpand: () => void, active: boolean) => ReactNode;
@@ -55,9 +56,9 @@ const ProjectContainer: React.FC<InputProps> = props => {
                 {renderPage(() => {}, expanding || active)}
               </Project>
               {props.renderExpandedScreens.map((renderScreen, ix)=> (
-                <Project {...projectProps} isExpandedScreen={true} key={ix}>
+                <ProjectScreen {...projectProps} isLastScreen={ix === props.renderExpandedScreens.length - 1} key={ix}>
                   {renderScreen()}
-                </Project>
+                </ProjectScreen>
               ))}
             </InnerContainer>
           </Container>
