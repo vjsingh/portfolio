@@ -9,26 +9,17 @@ import AppContext from "util/AppContext";
 import { PAGES, getNextPage } from "util/pageUtil";
 import anime from 'animejs/lib/anime.es.js';
 import { useBounceInEffect, useFlyInEffect } from "util/animations";
+import { useHandleScroll } from "util/effects";
 
 export const HOME_SCENE_DURATION = 600;
+
 const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
   const subheaderEl = useRef(null);
   const lifeTextEl = useRef(null);
 
-  const handleScroll = event => {
-    setScrollPos(event.srcElement.documentElement.scrollLeft);
-  };
-
-  useEffect(() => {
-    if (typeof window !== `undefined`) { // Required by Gatsby.
-      window.addEventListener('scroll', handleScroll);
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, []);
+  useHandleScroll(setScrollPos);
 
   React.useEffect(() => {
     if (context.scrollMagicController) {

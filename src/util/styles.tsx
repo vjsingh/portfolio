@@ -13,7 +13,7 @@ export const PushRight = styled.span`
 `;
 
 export const MyText = styled.span`
-  font-family: CenturyGothic;
+  font-family: CenturyGothic, century-gothic, sans-serif;
 `;
 
 interface PageContainerProps {
@@ -57,3 +57,35 @@ export const BackgroundStripe = styled.div<any>`
   transform: skew(-20deg);
   transform-origin: 100% 0;
 `;
+
+// From: https://gist.github.com/jedfoster/7939513
+export function mixColors(c1, c2, weight) {
+  if (!c1 || !c2) {
+    return '';
+  }
+
+  // Remove any '#'s
+  c1 = c1.replace(/#/g , '');
+  c2 = c2.replace(/#/g , '');
+
+  function d2h(d) { return d.toString(16); }  // convert a decimal value to hex
+  function h2d(h) { return parseInt(h, 16); } // convert a hex value to decimal 
+  weight = (typeof(weight) !== 'undefined') ? weight : 50; // set the weight to 50%, if that argument is omitted
+  weight = 100 - weight; // Weight was backwards for some reason
+
+  var color = "#";
+
+  for(var i = 0; i <= 5; i += 2) { // loop through each of the 3 hex pairs—red, green, and blue
+    var v1 = h2d(c1.substr(i, 2)), // extract the current pairs
+        v2 = h2d(c2.substr(i, 2)),
+        
+        // combine the current pairs from each source color, according to the specified weight
+        val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0))); 
+
+    while(val.length < 2) { val = '0' + val; } // prepend a '0' if val results in a single digit
+    
+    color += val; // concatenate val to our new color string
+  }
+    
+  return color; // PROFIT!
+};

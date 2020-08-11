@@ -1,28 +1,33 @@
 import Touchable from 'components/Touchable';
 import withHover from 'components/withHover';
 import * as React from 'react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { scroller } from 'react-scroll';
 import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
 import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
-import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage } from 'util/pageUtil';
+import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage, PAGE_COLORS, getNextPageIx, getPageIx } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
 import NextArrow, { ArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
-import { MyText, PageContainer, theme } from '../../util/styles';
+import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
 
 interface InputProps {
   name: string;
-  bgColor: string;
   active: boolean;
   closeProject: () => void;
   isExpandedScreen?: boolean;
   dontMakeScene?: boolean;
 }
 
+export const PROJECT_SCENE_DURATION = 600;
+
 const Project: React.FC<InputProps> = props => {
+  const [scene, setScene] = React.useState(null);
+  const containerEl = useRef(null);
+
   const { active } = props;
+
   const context = useContext(AppContext);
 
   // Add ScrollMagic Scene.
@@ -31,17 +36,33 @@ const Project: React.FC<InputProps> = props => {
     if (!props.isExpandedScreen && !props.dontMakeScene && context.scrollMagicController) {
       scene = new ScrollMagic.Scene({
         triggerElement: '#' + props.name,
-        duration: 200,
+        duration: isLastPage(props.name) ? 1 : PROJECT_SCENE_DURATION,
         triggerHook: 'onLeave', // Start pinning when the view is fully on screen (or 'about to leave')
       })
       .setPin('#' + props.name)
       .addTo(context.scrollMagicController);
+
+      setScene(scene);
     }
 
     return () => {
       scene?.destroy();
     };
   }, [context?.scrollMagicController]);
+
+  useEffect(() => {
+  }, [containerEl]);
+
+  let progress = scene?.progress();
+  let bgColor = PAGE_COLORS[getPageIx(props.name)];
+
+  if (!isLastPage(props.name)) {
+    bgColor = mixColors(PAGE_COLORS[getPageIx(props.name)], PAGE_COLORS[getNextPageIx(props.name)], progress * 100);
+  }
+
+  const leftPos = PROJECT_BACKGROUND_LEFT_START + (progress * (95 - PROJECT_BACKGROUND_LEFT_START));
+  const angle = PROJECT_BACKGROUND_ANGLE_START - (progress * (0 + PROJECT_BACKGROUND_ANGLE_START));
+
 
   // Center on the project page when expanding.
   React.useEffect(() => {
@@ -64,9 +85,11 @@ const Project: React.FC<InputProps> = props => {
   };
 
   return (
-    <Container id={props.name} name={props.name} active={active}>
+    <Container id={props.name} name={props.name} active={active} ref={containerEl}>
       {props.children}
-      {!props.isExpandedScreen && <ProjectBackground active={active} color={props.bgColor}/>}
+      {!props.isExpandedScreen &&
+        <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
+      }
       {!props.isExpandedScreen &&
         <HomeTextContainer onClick={active ? onBack : scrollToHome}>
           <HomeText>{active ? 'Back' : 'Home'}</HomeText>
@@ -156,16 +179,22 @@ const Container = styled(PageContainer)<any>`
   ` : ''}
 `;
 
+const PROJECT_BACKGROUND_LEFT_START = -20;
+const PROJECT_BACKGROUND_ANGLE_START = 10;
 export const ProjectBackground = styled.div<any>`
   position: absolute;
-  left: -30vw;
+  left: ${p => p.left + 'vw'};
   top: 0;
   bottom: 0;
   width: ${p => p.active ? '130vw' : '72vw'};
   background-color: ${p => p.color};
   z-index: -1;
-  transform: ${p => p.active ? '' : 'skew(10deg)'};
+  transform: ${p => `skew(${p.angle}deg)`};
   transform-origin: 100% 0;
+  transition: width ${PROJECT_EXPANDING_DURATION}ms;
+`;
+
+export const ProjectBackgroundExpanding = styled.div<any>`
   transition: transform ${PROJECT_EXPANDING_DURATION}ms, width ${PROJECT_EXPANDING_DURATION}ms;
 `;
 

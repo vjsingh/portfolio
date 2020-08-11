@@ -6,6 +6,7 @@ import { MyText, theme } from '../util/styles';
 import Touchable from './Touchable';
 import { scrollerArgs } from 'util/constants';
 import { doScroll } from 'util/pageUtil';
+import { PROJECT_SCENE_DURATION } from 'pages/projects/Project';
 
 interface InputProps extends InjectHoverProps {
   nextPage?: string; // TODO: Should just pass this in using onScroll.
@@ -22,7 +23,7 @@ const NextArrow: React.FC<InputProps> = props => {
   if (!onScroll) {
     if (!!props.nextPage) {
       onScroll = () => {
-        doScroll(props.nextPage ?? '');
+        doScroll(props.nextPage ?? '', props.orientation === ORIENTATION.LEFT ? -PROJECT_SCENE_DURATION : undefined);
       };
     }
   }

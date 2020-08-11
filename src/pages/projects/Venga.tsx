@@ -41,7 +41,6 @@ const Venga: React.FC<PageProps> = props => {
   return (
     <ProjectContainer
       name='venga'
-      bgColor={theme.orange}
       renderPage={(onExpand, active) => <VengaInner onExpand={onExpand} active={active}/>}
       renderExpandedScreens={[
         () => <VengaOverview/>,
