@@ -11,6 +11,7 @@ import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUp
 import { ButtonText, H1, H3 } from 'util/textStyles';
 import NextArrow, { ArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
 import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
+import { useHandleScroll } from 'util/effects';
 
 interface InputProps {
   name: string;
@@ -24,6 +25,7 @@ export const PROJECT_SCENE_DURATION = 600;
 
 const Project: React.FC<InputProps> = props => {
   const [scene, setScene] = React.useState(null);
+  const [scroll, setScroll] = React.useState(null);
   const containerEl = useRef(null);
 
   const { active } = props;
@@ -49,6 +51,8 @@ const Project: React.FC<InputProps> = props => {
       scene?.destroy();
     };
   }, [context?.scrollMagicController]);
+
+  useHandleScroll(setScroll); // Re-render the view on scroll.
 
   useEffect(() => {
   }, [containerEl]);
