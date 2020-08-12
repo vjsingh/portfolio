@@ -17,7 +17,6 @@ interface InputProps {
   name: string;
   active: boolean;
   closeProject: () => void;
-  isExpandedScreen?: boolean;
   dontMakeScene?: boolean;
 }
 
@@ -35,7 +34,7 @@ const Project: React.FC<InputProps> = props => {
   // Add ScrollMagic Scene.
   useEffect(() => {
     let scene;
-    if (!props.isExpandedScreen && !props.dontMakeScene && context.scrollMagicController) {
+    if (!props.dontMakeScene && context.scrollMagicController) {
       scene = new ScrollMagic.Scene({
         triggerElement: '#' + props.name,
         duration: isLastPage(props.name) ? 1 : PROJECT_SCENE_DURATION,
@@ -60,7 +59,7 @@ const Project: React.FC<InputProps> = props => {
   let progress = scene?.progress();
   let bgColor = PAGE_COLORS[getPageIx(props.name)];
 
-  if (!isLastPage(props.name)) {
+  if (!isLastPage(props.name) && !active) {
     bgColor = mixColors(PAGE_COLORS[getPageIx(props.name)], PAGE_COLORS[getNextPageIx(props.name)], progress * 100);
   }
 
@@ -91,26 +90,20 @@ const Project: React.FC<InputProps> = props => {
   return (
     <Container id={props.name} name={props.name} active={active} ref={containerEl}>
       {props.children}
-      {!props.isExpandedScreen &&
-        <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
-      }
-      {!props.isExpandedScreen &&
-        <HomeTextContainer onClick={active ? onBack : scrollToHome}>
-          <HomeText>{active ? 'Back' : 'Home'}</HomeText>
-        </HomeTextContainer>
-      }
-      {!props.isExpandedScreen &&
-        <NameBrand>
-          <Varun>VARUN</Varun>
-          <Singh>SINGH</Singh>
-        </NameBrand>
-      }
+      <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
+      <HomeTextContainer onClick={active ? onBack : scrollToHome}>
+        <HomeText>{active ? 'Back' : 'Home'}</HomeText>
+      </HomeTextContainer>
+      <NameBrand>
+        <Varun>VARUN</Varun>
+        <Singh>SINGH</Singh>
+      </NameBrand>
       <ArrowBottomRight>
         <ArrowContainer>
-          <PreviousArrowContainer hidden={!props.isExpandedScreen && active}>
+          <PreviousArrowContainer hidden={active}>
             <Arrow
               nextPage={getPreviousPage(props.name)}
-              orientation={props.isExpandedScreen ? ORIENTATION.UP : ORIENTATION.LEFT}
+              orientation={ORIENTATION.LEFT}
               onScroll={!active ? undefined : scrollUpOnePage}
             />
           </PreviousArrowContainer>
