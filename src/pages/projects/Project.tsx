@@ -16,6 +16,7 @@ import { useHandleScroll } from 'util/effects';
 interface InputProps {
   name: string;
   active: boolean;
+  collapsing: boolean;
   closeProject: () => void;
   dontMakeScene?: boolean;
 }
@@ -89,7 +90,7 @@ const Project: React.FC<InputProps> = props => {
 
   return (
     <Container id={props.name} name={props.name} active={active} ref={containerEl}>
-      <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
+      <ProjectBackground active={active} collapsing={props.collapsing} color={bgColor} left={leftPos} angle={angle}/>
       <ContainerInner>
         {props.children}
         <HomeContainer active={active}>
@@ -135,6 +136,7 @@ export interface ProjectPageProps {
 }
 
 export const PROJECT_EXPANDING_DURATION = 1000;
+export const PROJECT_COLLAPSING_DURATION = 1000;
 export const PROJECT_MARGIN_LEFT = 5.7;
 export const PROJECT_MARGIN_RIGHT = 10;
 
@@ -189,7 +191,7 @@ const PROJECT_BACKGROUND_LEFT_START = -20;
 const PROJECT_BACKGROUND_ANGLE_START = 10;
 export const ProjectBackground = styled.div<any>`
   position: absolute;
-  left: ${p => p.left + 'vw'};
+  left: ${p => p.active ? `${PROJECT_BACKGROUND_LEFT_START}vw` : `${p.left}vw`};
   top: 0;
   bottom: 0;
   width: ${p => p.active ? '130vw' : '72vw'};
@@ -197,11 +199,7 @@ export const ProjectBackground = styled.div<any>`
   z-index: 0;
   transform: ${p => `skew(${p.angle}deg)`};
   transform-origin: 100% 0;
-  transition: width ${PROJECT_EXPANDING_DURATION}ms;
-`;
-
-export const ProjectBackgroundExpanding = styled.div<any>`
-  transition: transform ${PROJECT_EXPANDING_DURATION}ms, width ${PROJECT_EXPANDING_DURATION}ms;
+  transition: width ${PROJECT_EXPANDING_DURATION}ms ${p => p.active || p.collapsing ? `, left ${PROJECT_EXPANDING_DURATION}ms` : ''};
 `;
 
 export const PreviousArrowContainer = styled.div<any>`

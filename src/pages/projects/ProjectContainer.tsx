@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { theme } from '../../util/styles';
-import Project, { HeaderText, MainContainer, ProjectPageProps, PROJECT_EXPANDING_DURATION, SubheaderText, ViewProjectButton } from './Project';
+import Project, { HeaderText, MainContainer, ProjectPageProps, PROJECT_EXPANDING_DURATION, SubheaderText, ViewProjectButton, PROJECT_COLLAPSING_DURATION } from './Project';
 import ProjectImage from "./ProjectImage";
 import { ReactNode } from 'react';
 import ProjectScreen from './ProjectScreen';
@@ -17,6 +17,7 @@ const ProjectContainer: React.FC<InputProps> = props => {
 
   if (renderPage) { // Gatsby won't build without this... not sure why.
     const [expanding, setExpanding] = React.useState(false);
+    const [collapsing, setCollapsing] = React.useState(false);
     const [active, setActive] = React.useState(false);
 
     const onExpand = () => {
@@ -28,13 +29,17 @@ const ProjectContainer: React.FC<InputProps> = props => {
     }
 
     const closeProject = () => {
-      setExpanding(false);
+      setCollapsing(true);
       setActive(false);
+      setTimeout(() => {
+        setCollapsing(false);
+      }, PROJECT_COLLAPSING_DURATION);
     };
 
     const projectProps = {
       name: props.name,
       active: expanding || active,
+      collapsing: collapsing,
       closeProject: closeProject,
     };
 
