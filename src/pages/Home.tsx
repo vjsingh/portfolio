@@ -50,11 +50,8 @@ const Home: React.FC<PageProps> = props => {
       <Container name='home'>
         <InnerContainer>
           <Header>
-            <NavText>Work</NavText>
+            <NavText active>Work</NavText>
             <NavText>About</NavText>
-            <PushRight>
-              <NavText>Contact</NavText>
-            </PushRight>
           </Header>
 
           <NameBrand>
@@ -144,6 +141,7 @@ const LifeText = styled(SubheaderText)`
 
 const BodyText = styled(BodyRegular)`
   width: 47vw;
+  letter-spacing: 0.06em;
 `;
 
 /*

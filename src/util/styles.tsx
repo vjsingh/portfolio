@@ -12,8 +12,9 @@ export const PushRight = styled.span`
   margin-left: auto;
 `;
 
+// font-family: CenturyGothic, century-gothic, sans-serif;
 export const MyText = styled.span`
-  font-family: CenturyGothic, century-gothic, sans-serif;
+  font-family: freight-big-pro, sans-serif;
 `;
 
 interface PageContainerProps {
