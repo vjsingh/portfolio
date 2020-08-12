@@ -27,14 +27,14 @@ const ProjectScreen: React.FC<InputProps> = props => {
           <PreviousArrowContainer>
             <Arrow
               orientation={ORIENTATION.UP}
-              onScroll={scrollUpOnePage}
+              onClick={scrollUpOnePage}
             />
           </PreviousArrowContainer>
           {!props.isLastScreen &&
             <ArrowInnerContainer>
               <Arrow
                 orientation={ORIENTATION.DOWN}
-                onScroll={scrollDownOnePage}
+                onClick={scrollDownOnePage}
               />
             </ArrowInnerContainer>
           }

@@ -9,7 +9,7 @@ import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
 import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage, PAGE_COLORS, getNextPageIx, getPageIx } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
-import Arrow, { ArrowBottomRight, ORIENTATION } from '../../components/Arrow';
+import Arrow, { ArrowBottomRight, ORIENTATION, ICON_SIZE } from '../../components/Arrow';
 import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
 import { useHandleScroll } from 'util/effects';
 
@@ -92,9 +92,14 @@ const Project: React.FC<InputProps> = props => {
       <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
       <ContainerInner>
         {props.children}
-        <HomeTextContainer onClick={active ? onBack : scrollToHome}>
-          <HomeText>{active ? 'Back' : 'Home'}</HomeText>
-        </HomeTextContainer>
+        <HomeContainer active={active}>
+          <Arrow
+            orientation={ORIENTATION.LEFT}
+            onClick={active ? onBack : scrollToHome}
+            isDouble={active ? false : true}
+            isX={active ? true : false}
+          />
+        </HomeContainer>
         <NameBrand>
           <Varun>VARUN</Varun>
           <Singh>SINGH</Singh>
@@ -103,8 +108,9 @@ const Project: React.FC<InputProps> = props => {
           <ArrowContainer>
             <PreviousArrowContainer hidden={active}>
               <Arrow
-                nextPage={getPreviousPage(props.name)} orientation={ORIENTATION.LEFT}
-                onScroll={!active ? undefined : scrollUpOnePage}
+                nextPage={getPreviousPage(props.name)}
+                orientation={ORIENTATION.LEFT}
+                onClick={!active ? undefined : scrollUpOnePage}
               />
             </PreviousArrowContainer>
             {!isLastPage(props.name) &&
@@ -112,7 +118,7 @@ const Project: React.FC<InputProps> = props => {
                 <Arrow
                   nextPage={getNextPage(props.name)}
                   orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
-                  onScroll={!active ? undefined : scrollDownOnePage}
+                  onClick={!active ? undefined : scrollDownOnePage}
                 />
               </ArrowInnerContainer>
             }
@@ -129,6 +135,8 @@ export interface ProjectPageProps {
 }
 
 export const PROJECT_EXPANDING_DURATION = 1000;
+export const PROJECT_MARGIN_LEFT = 5.7;
+export const PROJECT_MARGIN_RIGHT = 10;
 
 export const ViewProjectButtonBase = props => (
   <ButtonContainer {...props}>
@@ -141,11 +149,11 @@ const ButtonContainer = styled(Touchable)<any>`
   display: flex;
   align-items: center;
   height: 7.5vh;
-  border: 1px solid black;
-  padding: 0 2vw;
+  padding: 0 3em;
   background-color: ${p => p.hover ? theme.gray30 : 'white'};
   opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
+  border-radius: 40px;
 `;
 
 export const MainContainer = styled.div`
@@ -157,7 +165,7 @@ export const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  margin-right: 7.7vw;
+  margin-right: ${PROJECT_MARGIN_RIGHT}vw;
   width: 50vw;
 `;
 
@@ -211,21 +219,22 @@ export const ArrowInnerContainer = styled.div<any>`
   display: flex;
 `;
 
-const HomeTextContainer = styled(ButtonContainer)`
+const HomeContainer = styled.div<any>`
   position: absolute;
-  left: 5.7vw;
+  left: ${p => p.active ? `calc(${100 - PROJECT_MARGIN_RIGHT}% - ${ICON_SIZE}px)` : `${PROJECT_MARGIN_LEFT}vw`};
   top: 4.8vh;
-  height: calc(40px + 0.3vh);
+  transition: left 1s; right 1s;
 `;
 
 const HomeText = styled(ButtonText)`
   letter-spacing: 0.1em;
 `;
 
+
 /*
 const HomeTextContainer = styled(Touchable)`
   position: absolute;
-  left: 5.7vw;
+  left: ${PROJECT_MARGIN_LEFT}vw;
   top: 4.8vh;
   width: 100px;
   height: 50px;
@@ -239,7 +248,7 @@ const HomeText = styled(MyText)`
 
 export const NameBrand = styled.div`
   position: absolute;
-  left: 5.7vw;
+  left: ${PROJECT_MARGIN_LEFT}vw;
   bottom: 4.8vh;
   display: flex;
   flex-direction: column;

@@ -1,44 +1,56 @@
 import * as React from 'react';
 import { scroller } from 'react-scroll';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import withHover, { InjectHoverProps } from "components/withHover";
 import { MyText, theme } from '../util/styles';
 import Touchable from './Touchable';
 import { scrollerArgs } from 'util/constants';
 import { doScroll } from 'util/pageUtil';
-import { PROJECT_SCENE_DURATION } from 'pages/projects/Project';
+import { PROJECT_SCENE_DURATION, PROJECT_MARGIN_RIGHT } from 'pages/projects/Project';
 import ArrowIcon from 'src/data/svgs/arrow.svg';
+import ArrowDoubleIcon from 'src/data/svgs/arrowDouble.svg';
+import xIcon from 'src/data/svgs/x.svg';
 
 interface InputProps extends InjectHoverProps {
-  nextPage?: string; // TODO: Should just pass this in using onScroll.
   orientation?: ORIENTATION;
   isLarge?: boolean;
-  onScroll?: () => void;
+  isDouble?: boolean;
+  isX?: boolean;
+
+  // Pass in either an onClick handler directly, or the nextPage for the default
+  // interaction, which is to scroll to that page.
+  onClick?: () => void;
+  nextPage?: string;
 }
 
 export enum ORIENTATION { UP, RIGHT, DOWN, LEFT };
 
 const Arrow: React.FC<InputProps> = props => {
   const orientation = props.orientation ?? ORIENTATION.RIGHT;
-  let onScroll = props.onScroll;
-  if (!onScroll) {
+  let onClick = props.onClick;
+  if (!onClick) {
     if (!!props.nextPage) {
-      onScroll = () => {
+      onClick = () => {
         doScroll(props.nextPage ?? '', props.orientation === ORIENTATION.LEFT ? -PROJECT_SCENE_DURATION : undefined);
       };
     }
   }
 
-  const iconSize = props.isLarge ? 20 : 15;
+  const iconSize = props.isLarge || props.isDouble ? 20 : 15;
 
   return (
     <Container
-      onClick={onScroll}
+      onClick={onClick}
       hover={props.hover}
       animate={orientation === ORIENTATION.RIGHT || orientation === ORIENTATION.DOWN}
       isLarge={props.isLarge}
     >
-      <ArrowIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+      {props.isDouble ?
+        <ArrowDoubleIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+        : props.isX ?
+        <XIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+        : <ArrowIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+      }
     </Container>
   );
 };
@@ -49,6 +61,8 @@ const breatheAnimation = keyframes`
   50% { transform: scale3d(1.30, 1.30, 1.30); }
   to { transform: scale3d(1, 1, 1); }
 `;
+
+export const ICON_SIZE = 40;
 
 const Container = styled(Touchable)<any>`
   display: flex;
@@ -77,11 +91,11 @@ const ArrowText = styled(MyText)<any>`
 
 export const ArrowBottomRight = styled.div`
   position: absolute;
-  right: 10vw;
+  right: ${PROJECT_MARGIN_RIGHT}vw;
   bottom: 10vh;
 `;
 
-const ArrowIconStyled = styled(ArrowIcon)<any>`
+const ArrowIconCss = css<any>`
   fill: ${p => p.hover ? 'white' : 'black'};
   transform: rotate(${p =>
     p.orientation === ORIENTATION.LEFT ? '180deg' :
@@ -90,4 +104,16 @@ const ArrowIconStyled = styled(ArrowIcon)<any>`
     '0deg'
   });
   transition: fill 1s, transform 1s;
+`;
+
+const ArrowIconStyled = styled(ArrowIcon)<any>`
+  ${ArrowIconCss}
+`;
+
+const ArrowDoubleIconStyled = styled(ArrowDoubleIcon)<any>`
+  ${ArrowIconCss}
+`;
+
+const XIconStyled = styled(xIcon)<any>`
+  ${ArrowIconCss}
 `;

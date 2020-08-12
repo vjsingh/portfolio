@@ -34,8 +34,10 @@ export const BodyRegular = styled(MyText)`
 `;
 
 export const ButtonText = styled(MyText)`
-  font-size: calc(12px + 0.5vw);
-  letter-spacing: .3em;
+  font-size: calc(12px + 0.2vw);
+  letter-spacing: 0.01em;
+  font-weight: bold;
+  transform: scaleY(1.1);
 `;
 
 interface NavTextProps extends InjectHoverProps {

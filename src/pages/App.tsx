@@ -14,7 +14,7 @@ import { theme } from 'util/styles';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
-  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? true : true);
+  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? false : true);
 
   // Turn vertical scrolling into horizontal scrolling.
   const horizontal = useRef<HorizontalScroll>();
