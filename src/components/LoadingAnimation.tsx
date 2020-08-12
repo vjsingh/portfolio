@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ArrowIcon from 'src/data/svgs/arrow.svg';
 import styled, { keyframes } from 'styled-components';
 import withHover from "../components/withHover";
 import { theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, MyText } from '../util/styles';
@@ -53,11 +54,14 @@ const LoadingAnimation: React.FC<InputProps> = props => {
       :
         <>
           <CircleBreathing hover={userTriggeredStart} ref={circleBreathingRef} onMouseEnter={() => setUserTriggeredStart(true)}/>
-          <StartText hidden={userTriggeredStart}>Start</StartText>
+          <StartIconContainer>
+            <ArrowIconStyled width={26} hidden={userTriggeredStart}/>
+          </StartIconContainer>
         </>
       }
     </Container>
   );
+  // <StartText hidden={userTriggeredStart}>Start</StartText>
 };
 export default LoadingAnimation;
 
@@ -93,24 +97,26 @@ const Container = styled.div<any>`
   align-items: center;
   justify-content: center;
   ${p => p.hideCursor && `cursor: none;`}
+  background-color: ${theme.bgColor};
 `;
 
 // Border-box sets the border to be inside the circle.
 const circleBorder = '1px solid #000';
 const Circle = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 80px;
   box-sizing: border-box;
   background-color: ${theme.orange};
   border: ${circleBorder};
 `;
 
+// border: ${p => p.hover ? circleBorder : '0px'};
 const CircleBreathing = styled(Circle)<any>`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: ${p => p.hover ? circleBorder : '0px'};
+  border: 0px;
   animation-name: ${breatheAnimation};
   animation-duration: 2s;
   animation-iteration-count: infinite;
@@ -120,7 +126,7 @@ const CircleBreathing = styled(Circle)<any>`
 const CircleExpanding = styled(Circle)<any>`
   border: 0px;
   animation-name: ${circleAnimation};
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
 `;
@@ -140,11 +146,28 @@ const ScreenWipe = styled(BackgroundStripe)`
   background-color: ${theme.orange};
   animation-name: ${screenWipeAnimation};
   animation-duration: 1s;
+  animation-timing-function: ease-out;
+`;
+
+const StartIconContainer = styled.div`
+  pointer-events: none;
+
+  /* Position in center of page */
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StartText = styled(MyText)<any>`
   color: white;
-  font-size: 10;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  font-family: century-gothic;
   pointer-events: none;
   opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
@@ -158,4 +181,11 @@ const StartText = styled(MyText)<any>`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const ArrowIconStyled = styled(ArrowIcon)<any>`
+  fill: white;
+  opacity: ${p => p.hidden ? 0 : 1};
+  transform: rotate(${p => p.hidden ? '1080deg' : '0deg'});
+  transition: opacity 1s, transform 1s;
 `;

@@ -10,10 +10,11 @@ import Home from './Home';
 import GoogleTVM from './projects/GoogleTVM';
 import Venga from './projects/Venga';
 import { IS_DEVELOPMENT } from 'util/constants';
+import { theme } from 'util/styles';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
-  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? false : true);
+  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? true : true);
 
   // Turn vertical scrolling into horizontal scrolling.
   const horizontal = useRef<HorizontalScroll>();
@@ -61,6 +62,7 @@ export default App;
 const Container = styled.div`
   display: flex;
   height: 100vh;
+  background-color: ${theme.bgColor};
 `;
 
 const GlobalStyle = createGlobalStyle`

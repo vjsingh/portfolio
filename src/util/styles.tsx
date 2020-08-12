@@ -6,6 +6,7 @@ export const theme = {
   gray50: 'rgba(0, 0, 0, .50)',
   gray30: 'rgba(0, 0, 0, .30)',
   purple: '#6319ff',
+  bgColor: '#b4b4b4',
 };
 
 export const PushRight = styled.span`
@@ -41,6 +42,7 @@ export const PageContainerView = styled.div.withConfig({
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+  background-color: ${theme.bgColor};
 `;
 
 export const BACKGROUND_STRIPE_RIGHT = 0;
@@ -54,7 +56,7 @@ export const BackgroundStripe = styled.div<any>`
   bottom: 0;
   width: ${p => (p.width ?? BACKGROUND_STRIPE_WIDTH) + 'px'};
   background-color: ${theme.orange};
-  z-index: -1;
+  z-index: 0;
   transform: skew(-20deg);
   transform-origin: 100% 0;
 `;

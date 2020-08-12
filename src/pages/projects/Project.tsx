@@ -89,35 +89,36 @@ const Project: React.FC<InputProps> = props => {
 
   return (
     <Container id={props.name} name={props.name} active={active} ref={containerEl}>
-      {props.children}
       <ProjectBackground active={active} color={bgColor} left={leftPos} angle={angle}/>
-      <HomeTextContainer onClick={active ? onBack : scrollToHome}>
-        <HomeText>{active ? 'Back' : 'Home'}</HomeText>
-      </HomeTextContainer>
-      <NameBrand>
-        <Varun>VARUN</Varun>
-        <Singh>SINGH</Singh>
-      </NameBrand>
-      <ArrowBottomRight>
-        <ArrowContainer>
-          <PreviousArrowContainer hidden={active}>
-            <Arrow
-              nextPage={getPreviousPage(props.name)}
-              orientation={ORIENTATION.LEFT}
-              onScroll={!active ? undefined : scrollUpOnePage}
-            />
-          </PreviousArrowContainer>
-          {!isLastPage(props.name) &&
-            <ArrowInnerContainer>
+      <ContainerInner>
+        {props.children}
+        <HomeTextContainer onClick={active ? onBack : scrollToHome}>
+          <HomeText>{active ? 'Back' : 'Home'}</HomeText>
+        </HomeTextContainer>
+        <NameBrand>
+          <Varun>VARUN</Varun>
+          <Singh>SINGH</Singh>
+        </NameBrand>
+        <ArrowBottomRight>
+          <ArrowContainer>
+            <PreviousArrowContainer hidden={active}>
               <Arrow
-                nextPage={getNextPage(props.name)}
-                orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
-                onScroll={!active ? undefined : scrollDownOnePage}
+                nextPage={getPreviousPage(props.name)} orientation={ORIENTATION.LEFT}
+                onScroll={!active ? undefined : scrollUpOnePage}
               />
-            </ArrowInnerContainer>
-          }
-        </ArrowContainer>
-      </ArrowBottomRight>
+            </PreviousArrowContainer>
+            {!isLastPage(props.name) &&
+              <ArrowInnerContainer>
+                <Arrow
+                  nextPage={getNextPage(props.name)}
+                  orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
+                  onScroll={!active ? undefined : scrollDownOnePage}
+                />
+              </ArrowInnerContainer>
+            }
+          </ArrowContainer>
+        </ArrowBottomRight>
+      </ContainerInner>
     </Container>
   );
 };
@@ -185,7 +186,7 @@ export const ProjectBackground = styled.div<any>`
   bottom: 0;
   width: ${p => p.active ? '130vw' : '72vw'};
   background-color: ${p => p.color};
-  z-index: -1;
+  z-index: 0;
   transform: ${p => `skew(${p.angle}deg)`};
   transform-origin: 100% 0;
   transition: width ${PROJECT_EXPANDING_DURATION}ms;
@@ -258,4 +259,8 @@ export const Singh = styled(NameBrandText)`
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: .03em;
   -webkit-text-stroke-color: black;
+`;
+
+const ContainerInner = styled.div`
+  z-index: 1;
 `;

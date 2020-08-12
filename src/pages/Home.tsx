@@ -97,6 +97,7 @@ const Container = styled(PageContainer)<any>`
 const InnerContainer = styled.div`
   animation-name: ${fadeInAnimation};
   animation-duration: 2s;
+  z-index: 1;
 `;
 
 const Header = styled.div`
