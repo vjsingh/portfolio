@@ -7,6 +7,7 @@ import Touchable from './Touchable';
 import { scrollerArgs } from 'util/constants';
 import { doScroll } from 'util/pageUtil';
 import { PROJECT_SCENE_DURATION } from 'pages/projects/Project';
+import ArrowIcon from 'src/data/svgs/arrow.svg';
 
 interface InputProps extends InjectHoverProps {
   nextPage?: string; // TODO: Should just pass this in using onScroll.
@@ -17,7 +18,7 @@ interface InputProps extends InjectHoverProps {
 
 export enum ORIENTATION { UP, RIGHT, DOWN, LEFT };
 
-const NextArrow: React.FC<InputProps> = props => {
+const Arrow: React.FC<InputProps> = props => {
   const orientation = props.orientation ?? ORIENTATION.RIGHT;
   let onScroll = props.onScroll;
   if (!onScroll) {
@@ -28,6 +29,8 @@ const NextArrow: React.FC<InputProps> = props => {
     }
   }
 
+  const iconSize = props.isLarge ? 20 : 15;
+
   return (
     <Container
       onClick={onScroll}
@@ -35,24 +38,25 @@ const NextArrow: React.FC<InputProps> = props => {
       animate={orientation === ORIENTATION.RIGHT || orientation === ORIENTATION.DOWN}
       isLarge={props.isLarge}
     >
-      <Arrow hover={props.hover} {...props}>V</Arrow>
+      <ArrowIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
     </Container>
   );
 };
-export default withHover(NextArrow);
+export default withHover(Arrow);
 
 const breatheAnimation = keyframes`
   from { transform: scale3d(1, 1, 1); }
-  50% { transform: scale3d(1.10, 1.10, 1.10); }
+  50% { transform: scale3d(1.30, 1.30, 1.30); }
   to { transform: scale3d(1, 1, 1); }
 `;
 
 const Container = styled(Touchable)<any>`
   display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
-  width: ${p => p.isLarge ? '80px' : '60px'};
-  height: ${p => p.isLarge ? '80px' : '60px'};
+  width: ${p => p.isLarge ? '60px' : '40px'};
+  height: ${p => p.isLarge ? '60px' : '40px'};
   border: 1px solid ${p => p.hover ? 'white' : theme.orange};
   border-radius: 40px;
   background-color: ${p => p.hover ? theme.orange : 'white'};
@@ -61,15 +65,10 @@ const Container = styled(Touchable)<any>`
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   transition: background-color 1s, border 1s;
+  margin-left: 24px;
 `;
 
-const Arrow = styled(MyText)<any>`
-  transform: rotate(${p =>
-    p.orientation === ORIENTATION.LEFT ? '90deg' :
-    p.orientation === ORIENTATION.UP ? '180deg' :
-    p.orientation === ORIENTATION.DOWN ? '720deg' :
-    '270deg'
-  });
+const ArrowText = styled(MyText)<any>`
   color: ${p => p.hover ? 'white' : theme.orange};
   font-size: ${p => p.isLarge ? '40px' : '34px'};
   font-weight: bold;
@@ -80,4 +79,15 @@ export const ArrowBottomRight = styled.div`
   position: absolute;
   right: 10vw;
   bottom: 10vh;
+`;
+
+const ArrowIconStyled = styled(ArrowIcon)<any>`
+  fill: ${p => p.hover ? 'white' : 'black'};
+  transform: rotate(${p =>
+    p.orientation === ORIENTATION.LEFT ? '180deg' :
+    p.orientation === ORIENTATION.UP ? '270deg' :
+    p.orientation === ORIENTATION.DOWN ? '450deg' :
+    '0deg'
+  });
+  transition: fill 1s, transform 1s;
 `;

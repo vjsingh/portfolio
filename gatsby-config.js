@@ -26,6 +26,14 @@ module.exports = {
         pages: `${__dirname}/src/pages`,
         util: `${__dirname}/src/util`,
       }
+    },
+    {
+    resolve: "gatsby-plugin-react-svg",
+    options: {
+      rule: {
+        include: `${__dirname}/src/data/svgs/`
+      }
     }
+  }
   ],
 }

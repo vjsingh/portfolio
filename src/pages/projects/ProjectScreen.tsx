@@ -9,9 +9,9 @@ import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
 import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
-import NextArrow, { ArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
+import Arrow, { ArrowBottomRight, ORIENTATION } from '../../components/Arrow';
 import { MyText, PageContainer, theme } from '../../util/styles';
-import { ArrowContainer, PreviousArrowContainer, NextArrowContainer } from './Project';
+import { ArrowContainer, PreviousArrowContainer, ArrowInnerContainer } from './Project';
 
 interface InputProps {
   name: string;
@@ -25,18 +25,18 @@ const ProjectScreen: React.FC<InputProps> = props => {
       <ArrowBottomRight>
         <ArrowContainer>
           <PreviousArrowContainer>
-            <NextArrow
+            <Arrow
               orientation={ORIENTATION.UP}
               onScroll={scrollUpOnePage}
             />
           </PreviousArrowContainer>
           {!props.isLastScreen &&
-            <NextArrowContainer>
-              <NextArrow
+            <ArrowInnerContainer>
+              <Arrow
                 orientation={ORIENTATION.DOWN}
                 onScroll={scrollDownOnePage}
               />
-            </NextArrowContainer>
+            </ArrowInnerContainer>
           }
         </ArrowContainer>
       </ArrowBottomRight>

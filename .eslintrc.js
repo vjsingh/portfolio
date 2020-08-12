@@ -5,7 +5,8 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'plugin:react-svg/recommended'
   ],
   settings: {
     react: {
@@ -22,7 +23,7 @@ module.exports = {
     node: true,
     es6: true
   },
-  plugins: ['@typescript-eslint', 'react'],
+  plugins: ['@typescript-eslint', 'react', 'react-svg'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true

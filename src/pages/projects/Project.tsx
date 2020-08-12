@@ -9,7 +9,7 @@ import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
 import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage, PAGE_COLORS, getNextPageIx, getPageIx } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
-import NextArrow, { ArrowBottomRight, ORIENTATION } from '../../components/NextArrow';
+import Arrow, { ArrowBottomRight, ORIENTATION } from '../../components/Arrow';
 import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
 import { useHandleScroll } from 'util/effects';
 
@@ -108,20 +108,20 @@ const Project: React.FC<InputProps> = props => {
       <ArrowBottomRight>
         <ArrowContainer>
           <PreviousArrowContainer hidden={!props.isExpandedScreen && active}>
-            <NextArrow
+            <Arrow
               nextPage={getPreviousPage(props.name)}
               orientation={props.isExpandedScreen ? ORIENTATION.UP : ORIENTATION.LEFT}
               onScroll={!active ? undefined : scrollUpOnePage}
             />
           </PreviousArrowContainer>
           {!isLastPage(props.name) &&
-            <NextArrowContainer>
-              <NextArrow
+            <ArrowInnerContainer>
+              <Arrow
                 nextPage={getNextPage(props.name)}
                 orientation={active ? ORIENTATION.DOWN : ORIENTATION.RIGHT}
                 onScroll={!active ? undefined : scrollDownOnePage}
               />
-            </NextArrowContainer>
+            </ArrowInnerContainer>
           }
         </ArrowContainer>
       </ArrowBottomRight>
@@ -207,11 +207,12 @@ export const PreviousArrowContainer = styled.div<any>`
   transition: opacity 1s;
 `;
 
-export const NextArrowContainer = styled.div<any>`
+export const ArrowContainer = styled.div<any>`
+  display: flex;
   margin-left: 24px;
 `;
 
-export const ArrowContainer = styled.div<any>`
+export const ArrowInnerContainer = styled.div<any>`
   flex-direction: row;
   display: flex;
 `;
