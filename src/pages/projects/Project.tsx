@@ -146,7 +146,7 @@ export const PROJECT_MARGIN_RIGHT = 10;
 
 export const ViewProjectButtonBase = props => (
   <ButtonContainer {...props}>
-    <ButtonText>VIEW PROJECT</ButtonText>
+    <ButtonTextStyled>VIEW PROJECT</ButtonTextStyled>
   </ButtonContainer>
 );
 export const ViewProjectButton = withHover(ViewProjectButtonBase);
@@ -155,12 +155,16 @@ const ButtonContainer = styled(Touchable)<any>`
   display: flex;
   align-items: center;
   height: 7.5vh;
+  background-color: ${p => p.hover ? theme.gray30 : p.color};
   padding: 0 3em;
-  background-color: ${p => p.hover ? theme.gray30 : 'white'};
   opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
   ${p => p.hidden ? 'pointer-events: none;' : ''}
   border-radius: 40px;
+`;
+
+const ButtonTextStyled = styled(ButtonText)`
+  color: white;
 `;
 
 export const MainContainer = styled.div`
@@ -169,11 +173,21 @@ export const MainContainer = styled.div`
   top: 0;
   bottom: 0;
   display: flex;
+  width: 55vw;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: ${PROJECT_MARGIN_RIGHT}vw;
+`;
+
+export const MainContainerInner = styled.div`
+  width: 100%;
+  display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
-  margin-right: ${PROJECT_MARGIN_RIGHT}vw;
-  width: 40vw;
+  align-items: center;
+  background-color: white;
+  padding-top: 40px;
+  padding-bottom: 40px;
 `;
 
 export const HeaderText = styled(H1)`
@@ -183,7 +197,8 @@ export const HeaderText = styled(H1)`
 
 
 export const SubheaderText = styled(H3)`
-  text-align: right;
+  width: 40vw;
+  text-align: center;
   margin-bottom: 4vh;
 `;
 
@@ -199,7 +214,7 @@ export const ProjectBackground = styled.div<any>`
   left: ${p => p.active ? `${PROJECT_BACKGROUND_LEFT_START}vw` : `${p.left}vw`};
   top: 0;
   bottom: 0;
-  width: ${p => p.active ? '130vw' : '72vw'};
+  width: ${p => p.active ? '130vw' : '62vw'};
   background-color: ${p => p.color};
   z-index: 0;
   transform: ${p => `skew(${p.angle}deg)`};
@@ -292,9 +307,11 @@ export function makeProjectInner(name, headerText, subheaderText) {
     <>
       <ProjectImage name={name}/>
       <MainContainer>
-        <HeaderText>{headerText}</HeaderText>
-        <SubheaderText>{subheaderText}</SubheaderText>
-        <ViewProjectButton hidden={props.active} onClick={props.onExpand}/>
+        <MainContainerInner>
+          <HeaderText>{headerText}</HeaderText>
+          <SubheaderText>{subheaderText}</SubheaderText>
+          <ViewProjectButton hidden={props.active} onClick={props.onExpand} color={theme.orange}/>
+        </MainContainerInner>
       </MainContainer>
     </>
   );
