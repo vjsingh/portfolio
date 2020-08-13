@@ -10,7 +10,7 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
 const name = 'virion';
 const headerText = 'Virion';
-const subheaderText = 'Immersive online biology game';
+const subheaderText = 'Immersive online immunology game';
 
 const Virion: React.FC<PageProps> = props => {
   const ProjectInner = makeProjectInner(name, headerText, subheaderText);

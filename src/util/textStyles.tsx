@@ -9,7 +9,7 @@ export const Link = styled.a`
 `;
 
 export const H1 = styled(MyText)`
-  font-size: calc(20px + 1vw);
+  font-size: 5vw;
   letter-spacing: 0.2em;
 `;
 

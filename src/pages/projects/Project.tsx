@@ -7,7 +7,7 @@ import ScrollMagic from 'scrollmagic';
 import styled from 'styled-components';
 import AppContext from 'util/AppContext';
 import { scrollerArgs } from 'util/constants';
-import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage, PAGE_COLORS, getNextPageIx, getPageIx } from 'util/pageUtil';
+import { getNextPage, scrollToHome, getPreviousPage, scrollDownOnePage, scrollUpOnePage, isLastPage, PAGE_COLORS, getNextPageIx, getPageIx, getPageColor, getNextPageColor } from 'util/pageUtil';
 import { ButtonText, H1, H3 } from 'util/textStyles';
 import Arrow, { ArrowBottomRight, ORIENTATION, ICON_SIZE } from '../../components/Arrow';
 import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
@@ -60,10 +60,10 @@ const Project: React.FC<InputProps> = props => {
   }, [containerEl]);
 
   let progress = scene?.progress();
-  let bgColor = PAGE_COLORS[getPageIx(props.name)];
+  let bgColor = getPageColor(props.name);
 
   if (!isLastPage(props.name) && !active) {
-    bgColor = mixColors(PAGE_COLORS[getPageIx(props.name)], PAGE_COLORS[getNextPageIx(props.name)], progress * 100);
+    bgColor = mixColors(getPageColor(props.name), getNextPageColor(props.name), progress * 100);
   }
 
   const leftPos = PROJECT_BACKGROUND_LEFT_START + (progress * (95 - PROJECT_BACKGROUND_LEFT_START));
@@ -146,7 +146,7 @@ export const PROJECT_MARGIN_RIGHT = 10;
 
 export const ViewProjectButtonBase = props => (
   <ButtonContainer {...props}>
-    <ButtonTextStyled>VIEW PROJECT</ButtonTextStyled>
+    <ButtonTextStyled {...props}>VIEW PROJECT</ButtonTextStyled>
   </ButtonContainer>
 );
 export const ViewProjectButton = withHover(ViewProjectButtonBase);
@@ -163,17 +163,18 @@ const ButtonContainer = styled(Touchable)<any>`
   border-radius: 40px;
 `;
 
-const ButtonTextStyled = styled(ButtonText)`
-  color: white;
+const ButtonTextStyled = styled(ButtonText)<any>`
+  color: ${p => p.hover ? 'white' : 'white'};
 `;
 
-export const MainContainer = styled.div`
+// width: 55vw;
+// right: 0;
+export const MainContainer = styled.div<any>`
   position: absolute;
-  right: 0;
-  top: 0;
+  top: ${p => p.isHorizontal ? '10vw' : 0};
+  left: 30vw;
   bottom: 0;
   display: flex;
-  width: 55vw;
   align-items: center;
   justify-content: flex-end;
   margin-right: ${PROJECT_MARGIN_RIGHT}vw;
@@ -181,13 +182,14 @@ export const MainContainer = styled.div`
 
 export const MainContainerInner = styled.div`
   width: 100%;
+  min-width: 30vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   background-color: white;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding: 40px 24px 40px 40px;
+  border-radius: 4px;
 `;
 
 export const HeaderText = styled(H1)`
@@ -197,8 +199,7 @@ export const HeaderText = styled(H1)`
 
 
 export const SubheaderText = styled(H3)`
-  width: 40vw;
-  text-align: center;
+  text-align: right;
   margin-bottom: 4vh;
 `;
 
@@ -302,15 +303,15 @@ export const ProjectPlaceholder: React.FC = props => {
   );
 };
 
-export function makeProjectInner(name, headerText, subheaderText) {
+export function makeProjectInner(name, headerText, subheaderText, isHorizontal?) {
   const ProjectInner: React.FC<ProjectInnerProps> = props => (
     <>
-      <ProjectImage name={name}/>
-      <MainContainer>
+      <ProjectImage name={name} isHorizontal={isHorizontal}/>
+      <MainContainer isHorizontal={isHorizontal}>
         <MainContainerInner>
           <HeaderText>{headerText}</HeaderText>
           <SubheaderText>{subheaderText}</SubheaderText>
-          <ViewProjectButton hidden={props.active} onClick={props.onExpand} color={theme.orange}/>
+          <ViewProjectButton hidden={props.active} onClick={props.onExpand} color={getPageColor(name)}/>
         </MainContainerInner>
       </MainContainer>
     </>

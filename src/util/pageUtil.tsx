@@ -10,6 +10,7 @@ export const PAGES = [
   'googleTVM',
   'virion',
   'clog',
+  'dataTourism',
 ];
 
 // Note: Must be a 6-digit Hex! For mixing.
@@ -19,11 +20,12 @@ export const PAGE_COLORS = [
   '#813A53',
   '#870308',
   '#000000',
+  '#8D8D8D',
 ];
 
-export function getPageIx(currPage: string): number {
-  return PAGES.indexOf(currPage);
-}
+export const getPageIx = (page: string) => PAGES.indexOf(page);
+export const getPageColor = (page: string) => PAGE_COLORS[getPageIx(page)];
+export const getNextPageColor = (page: string) => PAGE_COLORS[getNextPageIx(page)];
 
 export function getNextPageIx(currPage: string): number {
   if (isLastPage(currPage)) {

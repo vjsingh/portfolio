@@ -13,6 +13,7 @@ import { IS_DEVELOPMENT } from 'util/constants';
 import { theme } from 'util/styles';
 import Virion from './projects/Virion';
 import Clog from './projects/Clog';
+import DataTourism from './projects/dataTourism';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
@@ -54,6 +55,7 @@ const App: React.FC<PageProps> = props => {
             <GoogleTVM {...props}/>
             <Virion {...props}/>
             <Clog {...props}/>
+            <DataTourism {...props}/>
           </>
         )}
       </Container>

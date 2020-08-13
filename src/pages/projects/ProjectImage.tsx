@@ -7,18 +7,19 @@ import Project from './Project';
 
 interface InputProps {
   name: string;
+  isHorizontal?: boolean;
 }
 
 const ProjectImage: React.FC<InputProps> = props => {
   const data = useStaticQuery(query);
 
   return (
-    <Container>
-      <ImageContainer>
+    <Container isHorizontal={props.isHorizontal}>
+      <ImageContainer isHorizontal={props.isHorizontal}>
         <Img
           fluid={data[props.name]?.childImageSharp.fluid}
           alt={props.name}
-          style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
+          style={{flex: 1, maxHeight: '70vh', width: props.isHorizontal ? '50vw' : '30vw'}}
           imgStyle={{ objectFit: "contain" }}
         />
       </ImageContainer>
@@ -48,21 +49,24 @@ export const query = graphql`
     clog: file(relativePath: { eq: "images/clog.png" }) {
       ...projectImage
     }
+    dataTourism: file(relativePath: { eq: "images/dataTourism.png" }) {
+      ...projectImage
+    }
   }
 `;
 
-const Container = styled.div`
+const Container = styled.div<any>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50vw;
+  width: ${p => p.isHorizontal ? '70vw' : '50vw'};
   height: 100vh;
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.div<any>`
   position: absolute;
   top: 0;
-  bottom: 0;
+  bottom: ${p => p.isHorizontal ? '10vh' : 0};
   display: flex;
   justify-content: center;
   align-items: center;

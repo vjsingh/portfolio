@@ -8,12 +8,12 @@ import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
-const name = 'googleTVM';
-const headerText = 'Google Search UI';
-const subheaderText = 'Next generation Knowledge Exploration';
+const name = 'dataTourism';
+const headerText = 'Data Tourism';
+const subheaderText = 'When you add data, what do you subtract?';
 
-const GoogleTVM: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+const DataTourism: React.FC<PageProps> = props => {
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText, true);
 
   return (
     <ProjectContainer
@@ -25,4 +25,5 @@ const GoogleTVM: React.FC<PageProps> = props => {
     />
   );
 }
-export default GoogleTVM;
+export default DataTourism;
+
