@@ -1,4 +1,5 @@
 import Touchable from 'components/Touchable';
+import ExternalLinkIcon from 'src/data/svgs/externalLink.svg';
 import withHover from 'components/withHover';
 import * as React from 'react';
 import { useContext, useEffect, useRef } from 'react';
@@ -151,10 +152,11 @@ export const ViewProjectButtonBase = props => (
 );
 export const ViewProjectButton = withHover(ViewProjectButtonBase);
 
+const BUTTON_HEIGHT = '7.5vh';
 const ButtonContainer = styled(Touchable)<any>`
   display: flex;
   align-items: center;
-  height: 7.5vh;
+  height: ${BUTTON_HEIGHT};
   background-color: ${p => p.hover ? theme.gray30 : p.color};
   padding: 0 3em;
   opacity: ${p => p.hidden ? 0 : 1};
@@ -304,7 +306,7 @@ export const ProjectPlaceholder: React.FC = props => {
   );
 };
 
-export function makeProjectInner(name, headerText, subheaderText, isHorizontal?) {
+export function makeProjectInner(name, headerText, subheaderText, linkHref?, isHorizontal?) {
   const ProjectInner: React.FC<ProjectInnerProps> = props => (
     <>
       <ProjectImage name={name} isHorizontal={isHorizontal}/>
@@ -312,7 +314,15 @@ export function makeProjectInner(name, headerText, subheaderText, isHorizontal?)
         <MainContainerInner>
           <HeaderText>{headerText}</HeaderText>
           <SubheaderText>{subheaderText}</SubheaderText>
-          <ViewProjectButton hidden={props.active} onClick={props.onExpand} color={getPageColor(name)}/>
+          <BottomContainer active={props.active} short={props.active && !linkHref}>
+            <ViewProjectButton hidden={props.active} onClick={props.onExpand} color={getPageColor(name)}/>
+            {!!linkHref &&
+              <ExternalLinkContainer hidden={!props.active} onClick={!linkHref ? () => {} : () => window.open(linkHref, '_blank')}>
+                <ExternalLinkText>VISIT</ExternalLinkText>
+                <ExternalLinkIcon width={24} height={24} fill='black'/>
+              </ExternalLinkContainer>
+            }
+          </BottomContainer>
         </MainContainerInner>
       </MainContainer>
     </>
@@ -320,3 +330,28 @@ export function makeProjectInner(name, headerText, subheaderText, isHorizontal?)
 
   return ProjectInner;
 }
+
+const ExternalLinkContainer = styled(Touchable)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  width: 300px;
+  opacity: ${p => p.hidden ? 0 : 1};
+  transition: opacity 1s;
+  ${p => p.hidden ? 'pointer-events: none;' : ''}
+`;
+
+export const ExternalLinkText = styled(H3)`
+  text-align: right;
+  color: blue;
+  padding-right: 8px;
+  font-size: 18px;
+`;
+
+const BottomContainer = styled.div<any>`
+  position: relative;
+  height: ${p => p.short ? '0' : p.active ? '40px' : BUTTON_HEIGHT};
+  transition: height 1s;
+`;

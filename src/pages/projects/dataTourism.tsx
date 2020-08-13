@@ -11,9 +11,10 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 const name = 'dataTourism';
 const headerText = 'Data Tourism';
 const subheaderText = 'When you add data, what do you subtract?';
+const linkHref = 'http://whatisdatatourism.com';
 
 const DataTourism: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText, true);
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText, linkHref, true);
 
   return (
     <ProjectContainer

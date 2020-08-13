@@ -11,9 +11,10 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 const name = 'transcriptionHub';
 const headerText = 'Transcription Hub';
 const subheaderText = 'Online database of jazz solo transcriptions';
+const linkHref = 'http://transcription-hub.com';
 
 const TranscriptionHub: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText, linkHref);
 
   return (
     <ProjectContainer

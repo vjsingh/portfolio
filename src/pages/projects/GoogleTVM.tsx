@@ -11,9 +11,10 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 const name = 'googleTVM';
 const headerText = 'Google Search UI';
 const subheaderText = 'Next generation Knowledge Exploration';
+const linkHref = 'https://www.google.com/search?q=coen+brothers+movies';
 
 const GoogleTVM: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText, linkHref);
 
   return (
     <ProjectContainer

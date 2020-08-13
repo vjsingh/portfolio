@@ -11,9 +11,10 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 const name = 'clog';
 const headerText = 'Clog the Internet';
 const subheaderText = 'Subversive online protesting tool';
+const linkHref = 'http://www.clogtheinternet.com';
 
 const Clog: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText, linkHref);
 
   return (
     <ProjectContainer

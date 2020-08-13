@@ -24,7 +24,7 @@ export const PAGE_COLORS = [
   '#000000',
   '#8D8D8D',
   '#C75528',
-  '#ffed18', // '#fec43f',
+  '#e8d600', 
 ];
 
 export const getPageIx = (page: string) => PAGES.indexOf(page);
