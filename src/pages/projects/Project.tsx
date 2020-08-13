@@ -175,6 +175,7 @@ export const MainContainer = styled.div<any>`
   left: 30vw;
   bottom: 0;
   display: flex;
+  min-width: 50vw;
   align-items: center;
   justify-content: flex-end;
   margin-right: ${PROJECT_MARGIN_RIGHT}vw;

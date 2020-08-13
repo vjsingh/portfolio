@@ -8,12 +8,12 @@ import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
-const name = 'dataTourism';
-const headerText = 'Data Tourism';
-const subheaderText = 'When you add data, what do you subtract?';
+const name = 'pansaari';
+const headerText = 'Pansaari';
+const subheaderText = 'A slice of Rajasthan in Washington DC';
 
-const DataTourism: React.FC<PageProps> = props => {
-  const ProjectInner = makeProjectInner(name, headerText, subheaderText, true);
+const Pansaari: React.FC<PageProps> = props => {
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
 
   return (
     <ProjectContainer
@@ -26,4 +26,4 @@ const DataTourism: React.FC<PageProps> = props => {
   );
 }
 
-export default DataTourism;
+export default Pansaari;

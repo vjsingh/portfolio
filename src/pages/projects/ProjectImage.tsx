@@ -52,6 +52,12 @@ export const query = graphql`
     dataTourism: file(relativePath: { eq: "images/dataTourism.png" }) {
       ...projectImage
     }
+    pansaari: file(relativePath: { eq: "images/pansaari.png" }) {
+      ...projectImage
+    }
+    transcriptionHub: file(relativePath: { eq: "images/transcriptionHub.png" }) {
+      ...projectImage
+    }
   }
 `;
 

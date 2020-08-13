@@ -14,6 +14,8 @@ import { theme } from 'util/styles';
 import Virion from './projects/Virion';
 import Clog from './projects/Clog';
 import DataTourism from './projects/dataTourism';
+import Pansaari from './projects/Pansaari';
+import TranscriptionHub from './projects/TranscriptionHub';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
@@ -56,6 +58,8 @@ const App: React.FC<PageProps> = props => {
             <Virion {...props}/>
             <Clog {...props}/>
             <DataTourism {...props}/>
+            <Pansaari {...props}/>
+            <TranscriptionHub {...props}/>
           </>
         )}
       </Container>
