@@ -296,7 +296,7 @@ const ContainerInner = styled.div`
 export const ProjectPlaceholder: React.FC = props => {
   return (
     <>
-      <MainContainer>
+      <MainContainer style={{right: 0}}>
         <HeaderText>Coming Soon</HeaderText>
       </MainContainer>
     </>
