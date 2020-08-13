@@ -12,6 +12,8 @@ import { ButtonText, H1, H3 } from 'util/textStyles';
 import Arrow, { ArrowBottomRight, ORIENTATION, ICON_SIZE } from '../../components/Arrow';
 import { MyText, PageContainer, theme, mixColors } from '../../util/styles';
 import { useHandleScroll } from 'util/effects';
+import ProjectImage from './ProjectImage';
+import { ProjectInnerProps } from './ProjectContainer';
 
 interface InputProps {
   name: string;
@@ -284,3 +286,18 @@ export const ProjectPlaceholder: React.FC = props => {
     </>
   );
 };
+
+export function makeProjectInner(name, headerText, subheaderText) {
+  const ProjectInner: React.FC<ProjectInnerProps> = props => (
+    <>
+      <ProjectImage name={name}/>
+      <MainContainer>
+        <HeaderText>{headerText}</HeaderText>
+        <SubheaderText>{subheaderText}</SubheaderText>
+        <ViewProjectButton hidden={props.active} onClick={props.onExpand}/>
+      </MainContainer>
+    </>
+  );
+
+  return ProjectInner;
+}

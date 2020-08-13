@@ -12,6 +12,7 @@ import Venga from './projects/Venga';
 import { IS_DEVELOPMENT } from 'util/constants';
 import { theme } from 'util/styles';
 import Virion from './projects/Virion';
+import Clog from './projects/Clog';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
@@ -52,6 +53,7 @@ const App: React.FC<PageProps> = props => {
             <Venga {...props}/>
             <GoogleTVM {...props}/>
             <Virion {...props}/>
+            <Clog {...props}/>
           </>
         )}
       </Container>

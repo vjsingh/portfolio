@@ -8,11 +8,11 @@ import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
-const name = 'virion';
-const headerText = 'Virion';
-const subheaderText = 'Immersive online biology game';
+const name = 'clog';
+const headerText = 'Clog the Internet';
+const subheaderText = 'Subversive online protesting tool';
 
-const Virion: React.FC<PageProps> = props => {
+const Clog: React.FC<PageProps> = props => {
   const ProjectInner = makeProjectInner(name, headerText, subheaderText);
 
   return (
@@ -25,4 +25,4 @@ const Virion: React.FC<PageProps> = props => {
     />
   );
 }
-export default Virion;
+export default Clog;

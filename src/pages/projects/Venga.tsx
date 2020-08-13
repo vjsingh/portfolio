@@ -4,22 +4,29 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { H1 } from "util/textStyles";
 import { theme } from '../../util/styles';
-import { HeaderText, MainContainer, SubheaderText, ViewProjectButton } from './Project';
+import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, makeProjectInner } from './Project';
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 
-const VengaInner: React.FC<ProjectInnerProps> = props => {
+const name = 'venga';
+const headerText = 'VENGA CLIMB';
+const subheaderText = 'Digital membership engagement platform for rock climbing gyms';
+
+const Venga: React.FC<PageProps> = props => {
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+
   return (
-    <>
-      <ProjectImage name='venga'/>
-      <MainContainer>
-        <HeaderText>VENGA CLIMB</HeaderText>
-        <SubheaderText>A digital membership engagement platform for rock climbing gyms.</SubheaderText>
-        <ViewProjectButton hidden={props.active} onClick={props.onExpand}/>
-      </MainContainer>
-    </>
+    <ProjectContainer
+      name='venga'
+      renderPage={(onExpand, active) => <ProjectInner onExpand={onExpand} active={active}/>}
+      renderExpandedScreens={[
+        () => <VengaOverview/>,
+        () => <VengaOverview/>,
+      ]}
+    />
   );
 }
+export default Venga;
 
 const VengaOverview: React.FC = props => {
   const data = useStaticQuery(query);
@@ -36,20 +43,6 @@ const VengaOverview: React.FC = props => {
     </OverviewContainer>
   );
 }
-
-const Venga: React.FC<PageProps> = props => {
-  return (
-    <ProjectContainer
-      name='venga'
-      renderPage={(onExpand, active) => <VengaInner onExpand={onExpand} active={active}/>}
-      renderExpandedScreens={[
-        () => <VengaOverview/>,
-        () => <VengaOverview/>,
-      ]}
-    />
-  );
-}
-export default Venga;
 
 const OverviewContainer = styled.div`
   flex: 1;

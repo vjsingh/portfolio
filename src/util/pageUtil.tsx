@@ -9,13 +9,16 @@ export const PAGES = [
   'venga',
   'googleTVM',
   'virion',
+  'clog',
 ];
 
+// Note: Must be a 6-digit Hex! For mixing.
 export const PAGE_COLORS = [
   null,
   theme.orange,
   '#813A53',
   '#870308',
+  '#000000',
 ];
 
 export function getPageIx(currPage: string): number {

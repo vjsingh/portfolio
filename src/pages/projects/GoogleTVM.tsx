@@ -3,27 +3,18 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { H1 } from "util/textStyles";
 import { theme } from '../../util/styles';
-import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, ProjectPlaceholder } from './Project';
+import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, ProjectPlaceholder, makeProjectInner } from './Project';
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
 const name = 'googleTVM';
-
-const ProjectInner: React.FC<ProjectInnerProps> = props => {
-  return (
-    <>
-      <ProjectImage name={name}/>
-      <MainContainer>
-        <HeaderText>Google Search UI</HeaderText>
-        <SubheaderText>The next generation of immersive mobile experiences at Google.</SubheaderText>
-        <ViewProjectButton hidden={props.active} onClick={props.onExpand}/>
-      </MainContainer>
-    </>
-  );
-}
+const headerText = 'Google Search UI';
+const subheaderText = 'Immersive knowledge exploration at Google';
 
 const GoogleTVM: React.FC<PageProps> = props => {
+  const ProjectInner = makeProjectInner(name, headerText, subheaderText);
+
   return (
     <ProjectContainer
       name={name}

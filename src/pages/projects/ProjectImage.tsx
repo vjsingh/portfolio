@@ -45,6 +45,9 @@ export const query = graphql`
     virion: file(relativePath: { eq: "images/virion.png" }) {
       ...projectImage
     }
+    clog: file(relativePath: { eq: "images/clog.png" }) {
+      ...projectImage
+    }
   }
 `;
 
