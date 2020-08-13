@@ -4,7 +4,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { H1 } from "util/textStyles";
 import { theme } from '../../util/styles';
-import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, makeProjectInner } from './Project';
+import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, makeProjectInner, ProjectPlaceholder } from './Project';
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 
@@ -22,7 +22,7 @@ const Venga: React.FC<PageProps> = props => {
       renderPage={(onExpand, active) => <ProjectInner onExpand={onExpand} active={active}/>}
       renderExpandedScreens={[
         () => <VengaOverview/>,
-        () => <VengaOverview/>,
+        () => <ProjectPlaceholder/>,
       ]}
     />
   );

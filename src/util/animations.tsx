@@ -6,6 +6,8 @@ export function useBounceInEffect(elRef) {
     if (!!elRef.current) {
       let el = elRef.current as any;
 
+      el.style.visibility = 'visible';
+
       // Hide letters before they are animated in.
       el.style.overflow = 'hidden';
 

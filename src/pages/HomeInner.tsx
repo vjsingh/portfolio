@@ -47,7 +47,7 @@ const HomeInner: React.FC<PageProps> = props => {
     <>
       <HeroSection>
         <Subheader>
-          <SubheaderText ref={subheaderEl}>Bringing digital visions to</SubheaderText>
+          <SubheaderText style={{visibility: 'hidden'}}ref={subheaderEl}>Bringing digital visions to</SubheaderText>
           <SubheaderText>&nbsp;</SubheaderText>
           <LifeText ref={lifeTextEl}>{' life.'}</LifeText>
         </Subheader>

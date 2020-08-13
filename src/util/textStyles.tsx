@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MyText } from './styles';
 import withHover, { InjectHoverProps } from 'components/withHover';
 import Touchable from 'components/Touchable';
@@ -51,12 +51,16 @@ export const NavTextBase: React.FC<NavTextProps> = props => (
 
 export const NavText = withHover(NavTextBase);
 
+export const scaleOnHover = css<any>`
+  transform: ${p => p.hover ? 'scaleY(1.1) translateY(-.1em)' : ''};
+  display: inline-block; /* Necessary for transform to work */
+`;
+
 export const NavTextInner = styled(MyText)<any>`
   font-size: 20px;
   padding-right: 5.5vw;
   opacity: ${p => p.active ? 1 : 0.5};
   transition: opacity 1s;
-  transform: ${p => p.hover ? 'scaleY(1.1) translateY(-.1em)' : ''};
-  display: inline-block; /* Necessary for transform to work */
   color: black;
+  ${scaleOnHover}
 `;
