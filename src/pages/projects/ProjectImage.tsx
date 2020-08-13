@@ -13,14 +13,16 @@ const ProjectImage: React.FC<InputProps> = props => {
   const data = useStaticQuery(query);
 
   return (
-    <ImageContainer>
-      <Img
-        fluid={data[props.name]?.childImageSharp.fluid}
-        alt={props.name}
-        style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
-        imgStyle={{ objectFit: "contain" }}
-      />
-    </ImageContainer>
+    <Container>
+      <ImageContainer>
+        <Img
+          fluid={data[props.name]?.childImageSharp.fluid}
+          alt={props.name}
+          style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
+          imgStyle={{ objectFit: "contain" }}
+        />
+      </ImageContainer>
+    </Container>
   );
 }
 export default ProjectImage
@@ -40,15 +42,25 @@ export const query = graphql`
     googleTVM: file(relativePath: { eq: "images/googleTVM.png" }) {
       ...projectImage
     }
+    virion: file(relativePath: { eq: "images/virion.png" }) {
+      ...projectImage
+    }
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  height: 100vh;
 `;
 
 const ImageContainer = styled.div`
   position: absolute;
-  left: 0;
   top: 0;
   bottom: 0;
   display: flex;
+  justify-content: center;
   align-items: center;
-  padding-left: 5vw;
 `;

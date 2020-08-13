@@ -9,7 +9,7 @@ export const Link = styled.a`
 `;
 
 export const H1 = styled(MyText)`
-  font-size: calc(40px + 1vw);
+  font-size: calc(20px + 1vw);
   letter-spacing: 0.2em;
 `;
 
@@ -19,8 +19,8 @@ export const H2 = styled(MyText)`
 `;
 
 export const H3 = styled(MyText)`
-  font-size: calc(12px + 1vw);
-  letter-spacing: 0.2em;
+  font-size: calc(12px + 0.5vw);
+  letter-spacing: 0.15em;
 `;
 
 export const NameBrandText = styled(MyText)`

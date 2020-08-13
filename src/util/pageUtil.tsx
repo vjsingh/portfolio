@@ -8,12 +8,14 @@ export const PAGES = [
   'home',
   'venga',
   'googleTVM',
+  'virion',
 ];
 
 export const PAGE_COLORS = [
   null,
   theme.orange,
   '#813A53',
+  '#870308',
 ];
 
 export function getPageIx(currPage: string): number {

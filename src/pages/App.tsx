@@ -11,6 +11,7 @@ import GoogleTVM from './projects/GoogleTVM';
 import Venga from './projects/Venga';
 import { IS_DEVELOPMENT } from 'util/constants';
 import { theme } from 'util/styles';
+import Virion from './projects/Virion';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
@@ -50,6 +51,7 @@ const App: React.FC<PageProps> = props => {
             <Home {...props}/>
             <Venga {...props}/>
             <GoogleTVM {...props}/>
+            <Virion {...props}/>
           </>
         )}
       </Container>

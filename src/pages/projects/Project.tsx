@@ -88,6 +88,8 @@ const Project: React.FC<InputProps> = props => {
     });
   };
 
+  const isLast = isLastPage(props.name);
+
   return (
     <Container id={props.name} name={props.name} active={active} ref={containerEl}>
       <ProjectBackground active={active} collapsing={props.collapsing} color={bgColor} left={leftPos} angle={angle}/>
@@ -107,14 +109,14 @@ const Project: React.FC<InputProps> = props => {
         </NameBrand>
         <ArrowBottomRight>
           <ArrowContainer>
-            <PreviousArrowContainer hidden={active}>
+            <PreviousArrowContainer hidden={active && !isLast}>
               <Arrow
                 nextPage={getPreviousPage(props.name)}
-                orientation={ORIENTATION.LEFT}
-                onClick={!active ? undefined : scrollUpOnePage}
+                orientation={(active && isLast) ? ORIENTATION.DOWN : ORIENTATION.LEFT}
+                onClick={!active ? undefined : scrollDownOnePage}
               />
             </PreviousArrowContainer>
-            {!isLastPage(props.name) &&
+            {!isLast &&
               <ArrowInnerContainer>
                 <Arrow
                   nextPage={getNextPage(props.name)}
@@ -155,6 +157,7 @@ const ButtonContainer = styled(Touchable)<any>`
   background-color: ${p => p.hover ? theme.gray30 : 'white'};
   opacity: ${p => p.hidden ? 0 : 1};
   transition: opacity 1s;
+  ${p => p.hidden ? 'pointer-events: none;' : ''}
   border-radius: 40px;
 `;
 
@@ -168,7 +171,7 @@ export const MainContainer = styled.div`
   justify-content: center;
   align-items: flex-end;
   margin-right: ${PROJECT_MARGIN_RIGHT}vw;
-  width: 50vw;
+  width: 40vw;
 `;
 
 export const HeaderText = styled(H1)`
@@ -179,7 +182,7 @@ export const HeaderText = styled(H1)`
 
 export const SubheaderText = styled(H3)`
   text-align: right;
-  margin-bottom: 5vh;
+  margin-bottom: 4vh;
 `;
 
 const Container = styled(PageContainer)<any>`
@@ -271,3 +274,13 @@ export const Singh = styled(NameBrandText)`
 const ContainerInner = styled.div`
   z-index: 1;
 `;
+
+export const ProjectPlaceholder: React.FC = props => {
+  return (
+    <>
+      <MainContainer>
+        <HeaderText>Coming Soon</HeaderText>
+      </MainContainer>
+    </>
+  );
+};

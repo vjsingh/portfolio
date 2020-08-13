@@ -2,28 +2,28 @@ import { graphql, PageProps } from "gatsby";
 import * as React from 'react';
 import styled from 'styled-components';
 import { H1 } from "util/textStyles";
-import { theme } from '../../util/styles';
+import { theme } from 'util/styles';
 import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, ProjectPlaceholder } from './Project';
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
 import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
-const name = 'googleTVM';
+const name = 'virion';
 
 const ProjectInner: React.FC<ProjectInnerProps> = props => {
   return (
     <>
       <ProjectImage name={name}/>
       <MainContainer>
-        <HeaderText>Google Search UI</HeaderText>
-        <SubheaderText>The next generation of immersive mobile experiences at Google.</SubheaderText>
+        <HeaderText>Virion</HeaderText>
+        <SubheaderText>Immersive online biology game.</SubheaderText>
         <ViewProjectButton hidden={props.active} onClick={props.onExpand}/>
       </MainContainer>
     </>
   );
 }
 
-const GoogleTVM: React.FC<PageProps> = props => {
+const Virion: React.FC<PageProps> = props => {
   return (
     <ProjectContainer
       name={name}
@@ -34,4 +34,4 @@ const GoogleTVM: React.FC<PageProps> = props => {
     />
   );
 }
-export default GoogleTVM;
+export default Virion;
