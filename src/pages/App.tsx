@@ -21,16 +21,6 @@ const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
   const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? false : true);
 
-  // Turn vertical scrolling into horizontal scrolling.
-  const horizontal = useRef<HorizontalScroll>();
-  useEffect(() => {
-    horizontal.current = new HorizontalScroll({});
-
-    return () => {
-      if (horizontal.current) horizontal.current.destroy();
-    };
-  }, []);
-
   // Initialize ScrolLMagic controller.
   React.useEffect(() => {
     setController(new ScrollMagic.Controller({
@@ -75,7 +65,7 @@ const Container = styled.div`
   background-color: ${theme.bgColor};
 `;
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
   }

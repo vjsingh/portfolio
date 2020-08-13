@@ -4,10 +4,6 @@ import { MyText } from './styles';
 import withHover, { InjectHoverProps } from 'components/withHover';
 import Touchable from 'components/Touchable';
 
-export const Link = styled.a`
-  color: inherit;
-`;
-
 export const H1 = styled(MyText)`
   font-size: 5vw;
   letter-spacing: 0.2em;
@@ -42,10 +38,11 @@ export const ButtonText = styled(MyText)`
 
 interface NavTextProps extends InjectHoverProps {
   active?: boolean;
+  onClick?: () => void;
 }
 
 export const NavTextBase: React.FC<NavTextProps> = props => (
-  <Touchable>
+  <Touchable onClick={props.onClick}>
     <NavTextInner {...props}>
       {props.children}
     </NavTextInner>
@@ -61,4 +58,5 @@ export const NavTextInner = styled(MyText)<any>`
   transition: opacity 1s;
   transform: ${p => p.hover ? 'scaleY(1.1) translateY(-.1em)' : ''};
   display: inline-block; /* Necessary for transform to work */
+  color: black;
 `;

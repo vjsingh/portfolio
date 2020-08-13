@@ -1,89 +1,72 @@
-import { PageProps } from "gatsby";
+import { Link, PageProps } from "gatsby";
 import React, { useContext, useEffect, useRef } from "react";
 import styled, { keyframes } from 'styled-components';
-import Arrow, { ArrowBottomRight } from "../components/Arrow";
-import { MyText, PageContainer, PushRight, theme, BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
-import { Link, H2, NavText, NameBrandText, BodyRegular } from "util/textStyles";
-import ScrollMagic from "scrollmagic";
+import { NameBrandText, NavText } from "util/textStyles";
+import { PageContainer } from '../util/styles';
+import HomeInner from "./HomeInner";
+import About from "./About";
 import AppContext from "util/AppContext";
-import { PAGES, getNextPage } from "util/pageUtil";
-import anime from 'animejs/lib/anime.es.js';
-import { useBounceInEffect, useFlyInEffect } from "util/animations";
-import { useHandleScroll } from "util/effects";
+import HorizontalScroll from "@oberon-amsterdam/horizontal";
 
 export const HOME_SCENE_DURATION = 600;
 
 const Home: React.FC<PageProps> = props => {
+  const [activePage, setActivePageInternal] = React.useState('home'); // 'home' or 'about'.
   const context = useContext(AppContext);
-  const [scrollPos, setScrollPos] = React.useState(0);
-  const subheaderEl = useRef(null);
-  const lifeTextEl = useRef(null);
 
-  useHandleScroll(setScrollPos);
+  const horizontalController = useRef(null);
 
-  React.useEffect(() => {
-    if (context.scrollMagicController) {
-      new ScrollMagic.Scene({
-        // If no triggerElement set, defaults to start.
-        duration: HOME_SCENE_DURATION,
-      })
-      .setPin('#home')
-      .addTo(context.scrollMagicController);
+  // Turn vertical scrolling into horizontal scrolling.
+  useEffect(() => {
+    horizontalController.current = new HorizontalScroll({});
+
+    return () => {
+      if (horizontalController) horizontalController?.current?.destroy();
+    };
+  }, []);
+
+  const setActivePage = page => {
+    // We need to remove the HorizontalScroll plugin in About, otherwise
+    // we aren't able to prevent scrolling on the About page.
+    if (page === 'about') {
+      horizontalController?.current?.destroy();
+    } else if (page === 'home') {
+      horizontalController?.current?.destroy();
+      horizontalController.current = new HorizontalScroll({});
     }
-  }, [context?.scrollMagicController]);
+    setActivePageInternal(page);
+  };
 
-  const progress = scrollPos / HOME_SCENE_DURATION;
-
-  const rightPosStart = BACKGROUND_STRIPE_RIGHT;
-  const rightPosEnd = BACKGROUND_TRIANGLE_RIGHT;
-  const rightPos = rightPosStart + (progress * rightPosEnd);
-
-  const widthStart = BACKGROUND_STRIPE_WIDTH;
-  const widthEnd = BACKGROUND_TRIANGLE_WIDTH;
-  const width = widthStart + (progress * widthEnd);
-
-  useBounceInEffect(subheaderEl);
-  useFlyInEffect(lifeTextEl, 1100);
 
   return (
     <>
+
       <Container name='home'>
         <InnerContainer>
-          <Header>
-            <NavText active>Work</NavText>
-            <NavText>About</NavText>
-          </Header>
-
           <NameBrand>
             <Varun>VARUN</Varun>
             <Singh>SINGH</Singh>
           </NameBrand>
-
-          <HeroSection>
-            <Subheader>
-              <SubheaderText ref={subheaderEl}>Bringing digital visions to</SubheaderText>
-              <SubheaderText>&nbsp;</SubheaderText>
-              <LifeText ref={lifeTextEl}>{' life.'}</LifeText>
-            </Subheader>
-            <BodyText>
-              {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
-              <Link href='/contact'>Currently available </Link>
-              {`for freelance or consulting, let me help spin your next vision into digital reality.`}
-            </BodyText>
-          </HeroSection>
-
-          <ArrowBottomRight>
-            <Arrow isLarge nextPage={getNextPage('home')}/>
-          </ArrowBottomRight>
+          {activePage === 'home' && <HomeInner {...props}/> }
         </InnerContainer>
-
-        <BackgroundStripe right={rightPos} width={width}/>
       </Container>
+
+      {activePage === 'about' &&
+        <About {...props}/>
+      }
+
+      <Header>
+        <NavText active={activePage === 'home'} onClick={() => setActivePage('home')}>Work</NavText>
+        <NavText active={activePage === 'about'} onClick={() => setActivePage('about')}>About</NavText>
+      </Header>
+
     </>
   )
 }
 
 export default Home;
+
+const MARGIN_LEFT = '8.4vw';
 
 const fadeInAnimation = keyframes`
   from { opacity: 0; }
@@ -91,7 +74,8 @@ const fadeInAnimation = keyframes`
 `;
 
 const Container = styled(PageContainer)<any>`
-  padding-left: 8.4vw;
+  padding-left: ${MARGIN_LEFT};
+  background-color: white;
 `;
 
 const InnerContainer = styled.div`
@@ -100,9 +84,13 @@ const InnerContainer = styled.div`
   z-index: 1;
 `;
 
+// padding: 5.8vh 5.8vw 0 0;
 const Header = styled.div`
-  padding: 5.8vh 5.8vw 0 0;
+  position: absolute;
+  top: 5.8vh;
+  left: ${MARGIN_LEFT};
   display: flex;
+  z-index: 20;
 `;
 
 
@@ -122,39 +110,3 @@ export const Singh = styled(NameBrandText)`
   -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: black;
 `;
-
-const HeroSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 3.1vh;
-`;
-
-const Subheader = styled.div`
-  margin-bottom: 4.3vh;
-  display: flex;
-`;
-
-const SubheaderText = styled(H2)`
-`;
-
-const LifeText = styled(SubheaderText)`
-`;
-
-const BodyText = styled(BodyRegular)`
-  width: 47vw;
-  letter-spacing: 0.06em;
-`;
-
-/*
-const BackgroundRight = styled.div`
-  position: absolute;
-  right: -400px;
-  top: 0;
-  bottom: 0;
-  width: 400px;
-  background-color: ${theme.orange};
-  z-index: -1;
-  transform: skew(-20deg);
-  transform-origin: 100% 0;
-`;
-*/
