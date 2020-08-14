@@ -179,8 +179,6 @@ const Container = styled(PageContainer)<any>`
 `;
 
 const InnerContainer = styled.div`
-  animation-name: ${fadeInAnimation};
-  animation-duration: 2s;
   z-index: 1;
 `;
 
@@ -191,13 +189,17 @@ const Header = styled.div`
   left: ${MARGIN_LEFT};
   display: flex;
   z-index: 20;
+  animation-name: ${fadeInAnimation};
+  animation-duration: 2s;
 `;
 
 
-export const NameBrand = styled.div`
+const NameBrand = styled.div`
   margin-top: 17vh;
   flex-direction: column;
   display: flex;
+  animation-name: ${fadeInAnimation};
+  animation-duration: 2s;
 `;
 
 export const Varun = styled(NameBrandText)`

@@ -2,7 +2,7 @@ import { Link, PageProps } from "gatsby";
 import React, { useContext, useRef } from "react";
 import ScrollMagic from "scrollmagic";
 import styled from 'styled-components';
-import { useBounceInEffect, useFlyInEffect } from "util/animations";
+import { useBounceInEffect, useFlyInEffect, fadeInAnimation } from "util/animations";
 import AppContext from "util/AppContext";
 import { useHandleScroll } from "util/effects";
 import { getNextPage } from "util/pageUtil";
@@ -63,9 +63,9 @@ const HomeInner: React.FC<InputProps> = props => {
         </BodyText>
       </HeroSection>
 
-      <ArrowBottomRight>
+      <ArrowBottomRightStyled>
         <Arrow isLarge nextPage={getNextPage('home')}/>
-      </ArrowBottomRight>
+      </ArrowBottomRightStyled>
 
       <BackgroundStripe right={rightPos} width={width}/>
     </>
@@ -78,6 +78,8 @@ const HeroSection = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 3.1vh;
+  animation-name: ${fadeInAnimation};
+  animation-duration: 2s;
 `;
 
 const Subheader = styled.div`
@@ -94,4 +96,9 @@ const LifeText = styled(SubheaderText)`
 const BodyText = styled(BodyRegular)`
   width: 47vw;
   letter-spacing: 0.06em;
+`;
+
+const ArrowBottomRightStyled = styled(ArrowBottomRight)`
+  animation-name: ${fadeInAnimation};
+  animation-duration: 2s;
 `;

@@ -21,7 +21,7 @@ import Mobile from './Mobile';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
-  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? false : true);
+  const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? true : true);
   const [size, setSize] = React.useState(null);
   const sizeFromEffect = useWindowSize();
 
