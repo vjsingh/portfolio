@@ -37,6 +37,8 @@ const Home: React.FC<PageProps> = props => {
     setActivePageInternal(page);
   };
 
+  const goToAbout = () => setActivePage('about');
+
 
   return (
     <>
@@ -47,7 +49,7 @@ const Home: React.FC<PageProps> = props => {
             <Varun>VARUN</Varun>
             <Singh>SINGH</Singh>
           </NameBrand>
-          {activePage === 'home' && <HomeInner {...props}/> }
+          {activePage === 'home' && <HomeInner {...props} goToAbout={goToAbout}/> }
         </InnerContainer>
       </Container>
 

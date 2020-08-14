@@ -9,9 +9,14 @@ import { getNextPage } from "util/pageUtil";
 import Arrow, { ArrowBottomRight } from "../components/Arrow";
 import { BackgroundStripe, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH } from '../util/styles';
 import { HOME_SCENE_DURATION } from "./Home";
-import { BodyRegular, H2 } from "util/textStyles";
+import { BodyRegular, H2, LinkText } from "util/textStyles";
+import Touchable from "components/Touchable";
 
-const HomeInner: React.FC<PageProps> = props => {
+interface InputProps extends PageProps {
+  goToAbout: () => void;
+};
+
+const HomeInner: React.FC<InputProps> = props => {
   const context = useContext(AppContext);
   const [scrollPos, setScrollPos] = React.useState(0);
   const subheaderEl = useRef(null);
@@ -53,8 +58,8 @@ const HomeInner: React.FC<PageProps> = props => {
         </Subheader>
         <BodyText>
           {`I’m a creative developer with experience from Silicon Valley to startup CEO. `}
-          <Link to='/about'>Currently available </Link>
-          {`for freelance or consulting, let me help spin your next vision into digital reality.`}
+          <LinkText onClick={props.goToAbout}>{`Currently available`}</LinkText>
+          {` for freelance or consulting, let me help spin your next vision into digital reality.`}
         </BodyText>
       </HeroSection>
 

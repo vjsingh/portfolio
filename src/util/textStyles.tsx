@@ -64,3 +64,16 @@ export const NavTextInner = styled(MyText)<any>`
   color: black;
   ${scaleOnHover}
 `;
+
+export const LinkText = props => (
+  <Touchable onClick={props.onClick} style={{display: 'inline-block'}}>
+    <LinkTextInner>
+      {props.children}
+    </LinkTextInner>
+  </Touchable>
+);
+
+const LinkTextInner = styled(MyText)`
+  color: blue;
+  text-decoration: underline;
+`;
