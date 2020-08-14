@@ -42,7 +42,6 @@ const App: React.FC<PageProps> = props => {
     setSize(sizeFromEffect);
   }, [sizeFromEffect]);
 
-  console.log(size);
   if (size?.width < 550) {
     return (
       <>

@@ -7,6 +7,7 @@ export const theme = {
   gray30: 'rgba(0, 0, 0, .30)',
   purple: '#6319ff',
   bgColor: '#b4b4b4',
+  bgColorAbout: '#cecece',
   bgColorHome: '#ffffff',
 };
 
@@ -50,6 +51,7 @@ export const BACKGROUND_STRIPE_RIGHT = 0;
 export const BACKGROUND_STRIPE_WIDTH = 200;
 export const BACKGROUND_TRIANGLE_RIGHT = -400;
 export const BACKGROUND_TRIANGLE_WIDTH = 400;
+export const BACKGROUND_STRIPE_SKEW = '-20deg';
 export const BackgroundStripe = styled.div<any>`
   position: absolute;
   right: ${p => (p.right ?? BACKGROUND_STRIPE_RIGHT) + 'px'};
@@ -57,8 +59,8 @@ export const BackgroundStripe = styled.div<any>`
   bottom: 0;
   width: ${p => (p.width ?? BACKGROUND_STRIPE_WIDTH) + 'px'};
   background-color: ${theme.orange};
-  z-index: -1;
-  transform: skew(-20deg);
+  zindex: ${p => p.zindex ? p.zindex : -1};
+  transform: skew(${BACKGROUND_STRIPE_SKEW});
   transform-origin: 100% 0;
 `;
 

@@ -1,5 +1,6 @@
 import anime from 'animejs/lib/anime.es.js';
 import { useEffect } from 'react';
+import { keyframes } from 'styled-components';
 
 export function useBounceInEffect(elRef) {
   useEffect(() => {
@@ -43,3 +44,8 @@ export function useFlyInEffect(elRef, delay) {
     }
   }, [elRef]);
 }
+
+export const fadeInAnimation = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;

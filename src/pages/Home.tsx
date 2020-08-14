@@ -1,17 +1,21 @@
 import { Link, PageProps } from "gatsby";
+import anime from 'animejs/lib/anime.es.js';
 import React, { useContext, useEffect, useRef } from "react";
 import styled, { keyframes } from 'styled-components';
 import { NameBrandText, NavText } from "util/textStyles";
-import { PageContainer, theme } from '../util/styles';
+import { PageContainer, theme, BackgroundStripe, BACKGROUND_STRIPE_WIDTH, BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_SKEW } from '../util/styles';
 import HomeInner from "./HomeInner";
-import About from "./About";
+import About, { ABOUT_PAGE_MARGIN } from "./About";
 import AppContext from "util/AppContext";
 import HorizontalScroll from "@oberon-amsterdam/horizontal";
+import { fadeInAnimation } from "util/animations";
 
 export const HOME_SCENE_DURATION = 600;
 
 const Home: React.FC<PageProps> = props => {
   const [activePage, setActivePageInternal] = React.useState('home'); // 'home' or 'about'.
+  const [isTransitioning, setIsTransitioning] = React.useState(false); // 'home' or 'about'.
+  const stripeRef = useRef();
   const context = useContext(AppContext);
 
   const horizontalController = useRef(null);
@@ -25,20 +29,103 @@ const Home: React.FC<PageProps> = props => {
     };
   }, []);
 
+  // Animate stripe when going to about page.
+  const doStripeAnimation = () => {
+    if (!!stripeRef.current) {
+      let el = stripeRef.current as any;
+
+      anime({
+        targets: el,
+        scale: window.innerWidth / BACKGROUND_STRIPE_WIDTH,
+        skew: [BACKGROUND_STRIPE_SKEW, 0],
+        easing: "easeOutCirc",
+        duration: PAGE_TRANSITION_DURATION / 2,
+      });
+
+      setTimeout(() => {
+        let el = stripeRef.current as any;
+        el.style.width = 'auto';
+        anime({
+          targets: el,
+          backgroundColor: theme.bgColorAbout,
+          easing: "easeOutCirc",
+          top: [0, ABOUT_PAGE_MARGIN + 'px'],
+          left: [0, ABOUT_PAGE_MARGIN + 'px'],
+          right: [0, ABOUT_PAGE_MARGIN + 'px'],
+          bottom: [0, ABOUT_PAGE_MARGIN + 'px'],
+          scale: [1, 1],
+          duration: PAGE_TRANSITION_DURATION / 2,
+        });
+      }, PAGE_TRANSITION_DURATION / 2);
+    }
+  };
+
+  // Animate stripe when going back to home page.
+  const doStripeAnimationReverse = () => {
+    if (!!stripeRef.current) {
+      let el = stripeRef.current as any;
+
+      anime({
+        targets: el,
+        easing: "easeOutCirc",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        duration: PAGE_TRANSITION_DURATION / 2,
+      });
+
+      setTimeout(() => {
+        let el = stripeRef.current as any;
+        el.style.width = BACKGROUND_STRIPE_WIDTH + 'px';
+        el.style.top = 0;
+        el.style.bottom = 0;
+        el.style.left = 'auto';
+        el.style.right = BACKGROUND_STRIPE_RIGHT + 'px';
+        anime({
+          targets: el,
+          scale: [window.innerWidth / BACKGROUND_STRIPE_WIDTH, 1],
+          backgroundColor: theme.orange,
+          skew: [0, BACKGROUND_STRIPE_SKEW],
+          easing: "easeOutCirc",
+          duration: PAGE_TRANSITION_DURATION / 2,
+        });
+      }, PAGE_TRANSITION_DURATION / 2);
+    }
+  };
+
   const setActivePage = page => {
-    // We need to remove the HorizontalScroll plugin in About, otherwise
-    // we aren't able to prevent scrolling on the About page.
     if (page === 'about') {
+      // We need to remove the HorizontalScroll plugin in About, otherwise
+      // we aren't able to prevent scrolling on the About page.
       horizontalController?.current?.destroy();
+      setIsTransitioning(true);
+      doStripeAnimation();
+
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setActivePageInternal(page);
+      }, PAGE_TRANSITION_DURATION)
+
     } else if (page === 'home') {
       horizontalController?.current?.destroy();
       horizontalController.current = new HorizontalScroll({});
+
+      setIsTransitioning(true);
+      doStripeAnimationReverse();
+
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setActivePageInternal(page);
+      }, PAGE_TRANSITION_DURATION)
     }
-    setActivePageInternal(page);
+
   };
 
   const goToAbout = () => setActivePage('about');
 
+  const rightPos = BACKGROUND_STRIPE_RIGHT;
+  const width = BACKGROUND_STRIPE_WIDTH;
 
   return (
     <>
@@ -53,27 +140,38 @@ const Home: React.FC<PageProps> = props => {
         </InnerContainer>
       </Container>
 
-      {activePage === 'about' &&
+      {activePage === 'about' && !isTransitioning &&
         <About {...props}/>
       }
 
       <Header>
-        <NavText active={activePage === 'home'} onClick={() => setActivePage('home')}>Work</NavText>
-        <NavText active={activePage === 'about'} onClick={() => setActivePage('about')}>About</NavText>
+        <NavText
+          active={(activePage === 'home' && !isTransitioning) || (activePage == 'about' && isTransitioning)}
+          onClick={() => activePage === 'about' && !isTransitioning && setActivePage('home')}
+        >
+            Work
+        </NavText>
+        <NavText
+          active={(activePage === 'about' && !isTransitioning) || (activePage == 'home' && isTransitioning)}
+          onClick={() => activePage == 'home' && !isTransitioning && setActivePage('about')}
+        >
+          About
+        </NavText>
       </Header>
 
+      <div style={{display: isTransitioning ? 'block' : 'none'}}>
+        <TransitionBackground/>
+        <BackgroundStripe right={rightPos} width={width} ref={stripeRef} zindex={999}/>
+      </div>
     </>
   )
 }
 
 export default Home;
 
-const MARGIN_LEFT = '8.4vw';
+const PAGE_TRANSITION_DURATION = 2000;
 
-const fadeInAnimation = keyframes`
-  from { opacity: 0; }
-  to { opacity: 1; }
-`;
+const MARGIN_LEFT = '8.4vw';
 
 const Container = styled(PageContainer)<any>`
   padding-left: ${MARGIN_LEFT};
@@ -111,4 +209,13 @@ export const Singh = styled(NameBrandText)`
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: 3px;
   -webkit-text-stroke-color: black;
+`;
+
+const TransitionBackground = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
 `;

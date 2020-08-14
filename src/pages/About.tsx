@@ -3,9 +3,9 @@ import Img from 'gatsby-image';
 import React, { useContext, useRef } from "react";
 import ScrollMagic from "scrollmagic";
 import styled from 'styled-components';
-import { useBounceInEffect, useFlyInEffect } from "util/animations";
+import { useBounceInEffect, useFlyInEffect, fadeInAnimation } from "util/animations";
 import AppContext from "util/AppContext";
-import { BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH, PageContainer, MyText } from '../util/styles';
+import { BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH, PageContainer, MyText, theme } from '../util/styles';
 import { GlobalStyle } from "./App";
 import { H1, H3, BodyRegular, scaleOnHover } from "util/textStyles";
 import Touchable from "components/Touchable";
@@ -89,6 +89,8 @@ export const query = graphql`
   }
 `;
 
+export const ABOUT_PAGE_MARGIN = 20;
+
 const Container = styled(PageContainer)<any>`
   position: fixed;
   top: 0;
@@ -96,25 +98,28 @@ const Container = styled(PageContainer)<any>`
   bottom: 0;
   left: 0;
   z-index: 10;
+  margin: ${ABOUT_PAGE_MARGIN}px;
+  box-sizing: border-box;
   background-color: white;
   overflow: hidden;
 `;
 
 const InnerContainer = styled.div`
-  width: 96vw;
-  height: 96vh;
   display: flex;
+  width: calc(100vw - ${ABOUT_PAGE_MARGIN * 2}px);
+  height: calc(100vh - ${ABOUT_PAGE_MARGIN * 2}px);
+  box-sizing: border-box;
   flex-direction: column;
   align-items: center;
-  margin: 2vh 2vw 2vh 2vw;
-  box-sizing: border-box;
-  background-color: #cecece;
+  background-color: ${theme.bgColorAbout};
 `;
 
 const MainContainer = styled.div`
   width: 60vw;
   margin-top: 20vh;
   display: flex;
+  animation-name: ${fadeInAnimation};
+  animation-duration: 1s;
 `;
 
 const MainLeft = styled.div`
@@ -207,7 +212,6 @@ if (typeof window !== `undefined`) {
 
   // call this to Disable
   disableScroll = () => {
-    console.log('disabling');
     window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
     window.addEventListener(wheelEvent as any, preventDefault, wheelOpt); // modern desktop
     window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
