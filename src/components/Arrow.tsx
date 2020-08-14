@@ -93,6 +93,7 @@ export const ArrowBottomRight = styled.div`
   position: absolute;
   right: ${PROJECT_MARGIN_RIGHT}vw;
   bottom: 10vh;
+  z-index: 1;
 `;
 
 const ArrowIconCss = css<any>`

@@ -7,6 +7,7 @@ export const theme = {
   gray30: 'rgba(0, 0, 0, .30)',
   purple: '#6319ff',
   bgColor: '#b4b4b4',
+  bgColorHome: '#ffffff',
 };
 
 export const PushRight = styled.span`

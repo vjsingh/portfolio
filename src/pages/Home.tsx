@@ -2,7 +2,7 @@ import { Link, PageProps } from "gatsby";
 import React, { useContext, useEffect, useRef } from "react";
 import styled, { keyframes } from 'styled-components';
 import { NameBrandText, NavText } from "util/textStyles";
-import { PageContainer } from '../util/styles';
+import { PageContainer, theme } from '../util/styles';
 import HomeInner from "./HomeInner";
 import About from "./About";
 import AppContext from "util/AppContext";
@@ -75,7 +75,7 @@ const fadeInAnimation = keyframes`
 
 const Container = styled(PageContainer)<any>`
   padding-left: ${MARGIN_LEFT};
-  background-color: white;
+  background-color: ${theme.bgColorHome};
 `;
 
 const InnerContainer = styled.div`
