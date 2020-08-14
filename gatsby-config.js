@@ -32,7 +32,12 @@ module.exports = {
     resolve: "gatsby-plugin-react-svg",
     options: {
       rule: {
-        include: `${__dirname}/src/data/svgs/`
+        include: `${__dirname}/src/data/svgs/`,
+        omitKeys: ['xmlnsDc', 'xmlnsCc', 'xmlnsRdf', 'xmlnsSvg', 'xmlnsSodipodi', 'xmlnsInkscape',
+          'rdfResource', 'rdfAbout', 'inkscapePageopacity', 'inkscapePageshadow', 'inkscapeWindowWidth',
+          'inkscapeWindowHeight', 'inkscapeZoom', 'inkscapeCx', 'inkscapeCy', 'inkscapeWindowX',
+          'inkscapeWindowY', 'inkscapeWindowMaximized', 'inkscapeCurrentLayer', 'inkscapeConnectorCurvature',
+          'inkscapeVersion', 'sodipodiDocname']
       }
     }
   }

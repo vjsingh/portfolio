@@ -29,7 +29,6 @@ export const PROJECT_SCENE_DURATION = 600;
 const Project: React.FC<InputProps> = props => {
   const [scene, setScene] = React.useState(null);
   const [scroll, setScroll] = React.useState(null);
-  const containerEl = useRef(null);
 
   const { active } = props;
 
@@ -56,9 +55,6 @@ const Project: React.FC<InputProps> = props => {
   }, [context?.scrollMagicController]);
 
   useHandleScroll(setScroll); // Re-render the view on scroll.
-
-  useEffect(() => {
-  }, [containerEl]);
 
   let progress = scene?.progress();
   let bgColor = getPageColor(props.name);
@@ -94,7 +90,7 @@ const Project: React.FC<InputProps> = props => {
   const isLast = isLastPage(props.name);
 
   return (
-    <Container id={props.name} name={props.name} active={active} ref={containerEl}>
+    <Container id={props.name} name={props.name} active={active}>
       <ProjectBackground active={active} collapsing={props.collapsing} color={bgColor} left={leftPos} angle={angle}/>
       <ContainerInner>
         {props.children}
@@ -207,8 +203,6 @@ export const SubheaderText = styled(H3)`
 `;
 
 const Container = styled(PageContainer)<any>`
-  ${p => p.active ? `
-  ` : ''}
 `;
 
 const PROJECT_BACKGROUND_LEFT_START = -20;

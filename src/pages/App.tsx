@@ -16,10 +16,14 @@ import Clog from './projects/Clog';
 import DataTourism from './projects/dataTourism';
 import Pansaari from './projects/Pansaari';
 import TranscriptionHub from './projects/TranscriptionHub';
+import useWindowSize from 'components/useWindowSize';
+import Mobile from './Mobile';
 
 const App: React.FC<PageProps> = props => {
   const [controller, setController] = React.useState(null as any);
   const [loading, setLoading] = React.useState(IS_DEVELOPMENT ? false : true);
+  const [size, setSize] = React.useState(null);
+  const sizeFromEffect = useWindowSize();
 
   // Initialize ScrolLMagic controller.
   React.useEffect(() => {
@@ -33,6 +37,20 @@ const App: React.FC<PageProps> = props => {
   const context = {
     scrollMagicController: controller,
   };
+
+  React.useEffect(() => {
+    setSize(sizeFromEffect);
+  }, [sizeFromEffect]);
+
+  console.log(size);
+  if (size?.width < 550) {
+    return (
+      <>
+        <GlobalStyle/>
+        <Mobile/>
+      </>
+    );
+  }
 
   return (
     <AppContext.Provider value={context}>

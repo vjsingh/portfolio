@@ -46,10 +46,10 @@ const Arrow: React.FC<InputProps> = props => {
       isLarge={props.isLarge}
     >
       {props.isDouble ?
-        <ArrowDoubleIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+        <ArrowDoubleIconStyled width={iconSize} height={iconSize} hover={props.hover ? 1 : 0} orientation={props.orientation}/>
         : props.isX ?
-        <XIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
-        : <ArrowIconStyled width={iconSize} height={iconSize} hover={props.hover} orientation={props.orientation}/>
+        <XIconStyled width={iconSize} height={iconSize} hover={props.hover ? 1 : 0} orientation={props.orientation}/>
+        : <ArrowIconStyled width={iconSize} height={iconSize} hover={props.hover ? 1 : 0} orientation={props.orientation}/>
       }
     </Container>
   );

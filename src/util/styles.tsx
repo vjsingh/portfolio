@@ -57,7 +57,7 @@ export const BackgroundStripe = styled.div<any>`
   bottom: 0;
   width: ${p => (p.width ?? BACKGROUND_STRIPE_WIDTH) + 'px'};
   background-color: ${theme.orange};
-  z-index: 0;
+  z-index: -1;
   transform: skew(-20deg);
   transform-origin: 100% 0;
 `;
