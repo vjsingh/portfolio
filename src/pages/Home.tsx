@@ -73,24 +73,24 @@ const Home: React.FC<PageProps> = props => {
         right: 0,
         bottom: 0,
         duration: PAGE_TRANSITION_DURATION / 2,
-      });
 
-      setTimeout(() => {
-        let el = stripeRef.current as any;
-        el.style.width = BACKGROUND_STRIPE_WIDTH + 'px';
-        el.style.top = 0;
-        el.style.bottom = 0;
-        el.style.left = 'auto';
-        el.style.right = BACKGROUND_STRIPE_RIGHT + 'px';
-        anime({
-          targets: el,
-          scale: [window.innerWidth / BACKGROUND_STRIPE_WIDTH, 1],
-          backgroundColor: theme.orange,
-          skew: [0, BACKGROUND_STRIPE_SKEW],
-          easing: "easeOutCirc",
-          duration: PAGE_TRANSITION_DURATION / 2,
-        });
-      }, PAGE_TRANSITION_DURATION / 2);
+        complete: () => {
+          let el = stripeRef.current as any;
+          el.style.width = BACKGROUND_STRIPE_WIDTH + 'px';
+          el.style.top = 0;
+          el.style.bottom = 0;
+          el.style.left = 'auto';
+          el.style.right = BACKGROUND_STRIPE_RIGHT + 'px';
+          anime({
+            targets: el,
+            scale: [window.innerWidth / BACKGROUND_STRIPE_WIDTH, 1],
+            backgroundColor: theme.orange,
+            skew: [0, BACKGROUND_STRIPE_SKEW],
+            easing: "easeOutCirc",
+            duration: PAGE_TRANSITION_DURATION / 2,
+          });
+        },
+      });
     }
   };
 
