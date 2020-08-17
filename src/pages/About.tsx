@@ -12,7 +12,7 @@ import Touchable from "components/Touchable";
 import withHover from "components/withHover";
 
 export const HOME_SCENE_DURATION = 600;
-const RESUME_LINK = 'https://drive.google.com/file/d/1R5MhreefV2aTY-1Ndh1EsvcnOhFi_dZK/view?usp=sharing';
+const RESUME_LINK = 'https://drive.google.com/file/d/1Rm6UK9anBacerO-eICUWuua9wTWsO6vK/view?usp=sharing';
 const LINKEDIN_LINK = 'https://www.linkedin.com/in/varun-singh-665ba5115/';
 const MOUNTAINPROJECT_LINK = 'https://www.mountainproject.com/user/110592577/varun-singh';
 
