@@ -11,8 +11,8 @@ export const PAGES = [
   'virion',
   'clog',
   'dataTourism',
-  'pansaari',
   'transcriptionHub',
+  'pansaari',
 ];
 
 // Note: Must be a 6-digit Hex! For mixing.
@@ -23,8 +23,8 @@ export const PAGE_COLORS = [
   '#870308',
   '#000000',
   '#8D8D8D',
-  '#C75528',
   '#e8d600', 
+  '#C75528',
 ];
 
 export const getPageIx = (page: string) => PAGES.indexOf(page);

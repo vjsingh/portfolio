@@ -10,7 +10,7 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
 const name = 'virion';
 const headerText = 'Virion';
-const subheaderText = 'Immersive online immunology game';
+const subheaderText = 'Enchanting online immunology game.';
 const linkHref = 'http://www.itsvirion.com';
 
 const Virion: React.FC<PageProps> = props => {

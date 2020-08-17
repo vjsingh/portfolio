@@ -10,7 +10,7 @@ import { PAGE_COLORS, getPageIx, PAGES } from "util/pageUtil";
 
 const name = 'clog';
 const headerText = 'Clog the Internet';
-const subheaderText = 'Subversive online protesting tool';
+const subheaderText = 'Subversive digital protesting tool for the #BLM movement.';
 const linkHref = 'http://www.clogtheinternet.com';
 
 const Clog: React.FC<PageProps> = props => {

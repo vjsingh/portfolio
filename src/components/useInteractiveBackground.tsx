@@ -16,7 +16,7 @@ export default function useInteractiveBackground() {
           direction2: {x:-100,y:0,z:0},
           life: 5.3,
           power: .5,
-          number: 50,
+          number: 100,
         },
         environment: {
           sensitivity: 0.29,

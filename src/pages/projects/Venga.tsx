@@ -10,7 +10,7 @@ import ProjectImage from "./ProjectImage";
 
 const name = 'venga';
 const headerText = 'VENGA CLIMB';
-const subheaderText = 'Digital membership engagement platform for rock climbing gyms';
+const subheaderText = 'Digital membership engagement platform for rock climbing gyms.';
 const linkHref = 'http://www.vengaclimb.com';
 
 const Venga: React.FC<PageProps> = props => {
