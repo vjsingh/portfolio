@@ -191,7 +191,7 @@ const Header = styled.div`
   top: 5.8vh;
   left: ${MARGIN_LEFT};
   display: flex;
-  z-index: 20;
+  z-index: 1000;
   animation-name: ${fadeInAnimation};
   animation-duration: 2s;
 `;
