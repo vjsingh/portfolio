@@ -49,7 +49,7 @@ const HomeInner: React.FC<InputProps> = props => {
   useFlyInEffect(lifeTextEl, 1100);
 
   // Only show the nacker.back background effect when scrolling.
-  if (!!document.getElementsByTagName('canvas')[0]) {
+  if (typeof document !== `undefined` && !!document.getElementsByTagName('canvas')[0]) {
     if (scrollPos > 20) {
       document.getElementsByTagName('canvas')[0].style.visibility = 'visible';
     } else {
