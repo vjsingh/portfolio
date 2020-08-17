@@ -1,5 +1,3 @@
-<h1 align="center">
-  varun-singh.com
-</h1>
+### varun-singh.com
 
 Welcome! Thanks for checking out the repo ;-)
