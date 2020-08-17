@@ -9,6 +9,7 @@ import About, { ABOUT_PAGE_MARGIN } from "./About";
 import AppContext from "util/AppContext";
 import HorizontalScroll from "@oberon-amsterdam/horizontal";
 import { fadeInAnimation } from "util/animations";
+import useInteractiveBackground from "components/useInteractiveBackground";
 
 export const HOME_SCENE_DURATION = 600;
 
@@ -19,6 +20,8 @@ const Home: React.FC<PageProps> = props => {
   const context = useContext(AppContext);
 
   const horizontalController = useRef(null);
+
+  useInteractiveBackground();
 
   // Turn vertical scrolling into horizontal scrolling.
   useEffect(() => {
