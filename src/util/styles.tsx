@@ -59,7 +59,7 @@ export const BackgroundStripe = styled.div<any>`
   bottom: 0;
   width: ${p => (p.width ?? BACKGROUND_STRIPE_WIDTH) + 'px'};
   background-color: ${theme.orange};
-  zindex: ${p => p.zindex ? p.zindex : -1};
+  z-index: ${p => p.zindex ?? 0};
   transform: skew(${BACKGROUND_STRIPE_SKEW});
   transform-origin: 100% 0;
 `;

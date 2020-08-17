@@ -76,7 +76,7 @@ const HomeInner: React.FC<InputProps> = props => {
         <Arrow isLarge nextPage={getNextPage('home')}/>
       </ArrowBottomRightStyled>
 
-      <BackgroundStripe right={rightPos} width={width}/>
+      <BackgroundStripe right={rightPos} width={width} zindex={-1}/>
     </>
   );
 };

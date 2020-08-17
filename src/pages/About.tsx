@@ -7,7 +7,7 @@ import { useBounceInEffect, useFlyInEffect, fadeInAnimation } from "util/animati
 import AppContext from "util/AppContext";
 import { BACKGROUND_STRIPE_RIGHT, BACKGROUND_STRIPE_WIDTH, BACKGROUND_TRIANGLE_RIGHT, BACKGROUND_TRIANGLE_WIDTH, PageContainer, MyText, theme } from '../util/styles';
 import { GlobalStyle } from "./App";
-import { H1, H3, BodyRegular, scaleOnHover } from "util/textStyles";
+import { H1, H3, BodyRegular, scaleOnHover, LinkText } from "util/textStyles";
 import Touchable from "components/Touchable";
 import withHover from "components/withHover";
 
@@ -68,6 +68,13 @@ const About: React.FC<PageProps> = props => {
               />
             </MainRight>
           </MainContainer>
+          <FooterText>
+            Design & development by Varun Singh. Fork me&nbsp;
+            <LinkText onClick={() => window.open('https://github.com/vjsingh/portfolio')}>
+              on Github
+            </LinkText>
+            .
+          </FooterText>
 
         </InnerContainer>
       </Container>
@@ -175,9 +182,16 @@ const LabelValueInner = styled(MyText)<any>`
   font-size: 15px;
   margin-bottom: 12px;
   font-weight: bold;
-  letter-spacing: .05em;
   letter-spacing: .1em;
   ${scaleOnHover}
+`;
+
+const FooterText = styled(MyText)`
+  margin-top: auto;
+  margin-bottom: 8vh;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: .1em;
 `;
 
 // ********************** Prevent Scrolling ************************/
