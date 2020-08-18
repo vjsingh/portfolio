@@ -7,11 +7,15 @@ import { theme } from '../../util/styles';
 import { HeaderText, MainContainer, SubheaderText, ViewProjectButton, makeProjectInner, ProjectPlaceholder } from './Project';
 import ProjectContainer, { ProjectInnerProps } from "./ProjectContainer";
 import ProjectImage from "./ProjectImage";
+import Background from "./views/Background";
+import { getPageColor } from "util/pageUtil";
 
 const name = 'venga';
 const headerText = 'VENGA CLIMB';
 const subheaderText = 'Digital membership engagement platform for rock climbing gyms.';
 const linkHref = 'http://www.vengaclimb.com';
+const overviewText = `Venga Climb is a digital membership engagement platform for rock climbing gyms. My co-founder and I built the business to over 40 clients across the United States and Canada. We received a post-COVID investment at a $500k valuation, as well as an NC IDEA MICRO grant.\n\nDuring my time at Venga I learned about lean startup methodologies and product-market fit, as well as experience building out our iPhone, Android, and web apps. I leveraged React Native, React Native Web, and GraphQL + Prisma, to enable us to build all three of these platforms with only one developer.`;
+const color = getPageColor(name);
 
 const Venga: React.FC<PageProps> = props => {
   const ProjectInner = makeProjectInner(name, headerText, subheaderText, linkHref);
@@ -21,7 +25,8 @@ const Venga: React.FC<PageProps> = props => {
       name='venga'
       renderPage={(onExpand, active) => <ProjectInner onExpand={onExpand} active={active}/>}
       renderExpandedScreens={[
-        () => <VengaOverview/>,
+        () => <Background headerText='VENGA CLIMB' overviewText={overviewText} color={color}/>,
+        () => <VengaTimeline/>,
         () => <ProjectPlaceholder/>,
       ]}
     />
@@ -29,7 +34,7 @@ const Venga: React.FC<PageProps> = props => {
 }
 export default Venga;
 
-const VengaOverview: React.FC = props => {
+const VengaTimeline: React.FC = props => {
   const data = useStaticQuery(query);
 
   return (
@@ -46,8 +51,8 @@ const VengaOverview: React.FC = props => {
 }
 
 const OverviewContainer = styled.div`
-  flex: 1;
   display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
   padding: 0 10vw;
