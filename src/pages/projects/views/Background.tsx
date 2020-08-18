@@ -10,10 +10,7 @@ interface InputProps {
 }
 
 const Background: React.FC<InputProps> = props => {
-
-  const overviewText = props.overviewText.split('\n').map((item, key) => {
-    return <span key={key}>{item}<br/></span>
-  });
+  const overviewText = insertLineBreaks(props.overviewText);
 
   return (
     <Container>
@@ -135,3 +132,7 @@ export const Singh = styled(NameBrandText)`
   -webkit-text-stroke-width: .03em;
   -webkit-text-stroke-color: black;
 `;
+
+function insertLineBreaks(str: string) {
+  return (str as any)?.split('\n').map((item, key) => (<span key={key}>{item}<br/></span>));
+}
