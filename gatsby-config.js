@@ -29,17 +29,28 @@ module.exports = {
       }
     },
     {
-    resolve: "gatsby-plugin-react-svg",
-    options: {
-      rule: {
-        include: `${__dirname}/src/data/svgs/`,
-        omitKeys: ['xmlnsDc', 'xmlnsCc', 'xmlnsRdf', 'xmlnsSvg', 'xmlnsSodipodi', 'xmlnsInkscape',
-          'rdfResource', 'rdfAbout', 'inkscapePageopacity', 'inkscapePageshadow', 'inkscapeWindowWidth',
-          'inkscapeWindowHeight', 'inkscapeZoom', 'inkscapeCx', 'inkscapeCy', 'inkscapeWindowX',
-          'inkscapeWindowY', 'inkscapeWindowMaximized', 'inkscapeCurrentLayer', 'inkscapeConnectorCurvature',
-          'inkscapeVersion', 'sodipodiDocname']
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: `${__dirname}/src/data/svgs/`,
+          omitKeys: ['xmlnsDc', 'xmlnsCc', 'xmlnsRdf', 'xmlnsSvg', 'xmlnsSodipodi', 'xmlnsInkscape',
+            'rdfResource', 'rdfAbout', 'inkscapePageopacity', 'inkscapePageshadow', 'inkscapeWindowWidth',
+            'inkscapeWindowHeight', 'inkscapeZoom', 'inkscapeCx', 'inkscapeCy', 'inkscapeWindowX',
+            'inkscapeWindowY', 'inkscapeWindowMaximized', 'inkscapeCurrentLayer', 'inkscapeConnectorCurvature',
+            'inkscapeVersion', 'sodipodiDocname']
+        }
       }
-    }
-  }
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // The property ID; the tracking code won't be generated without it
+        trackingId: "UA-175797849-1",
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
+        head: false,
+        // Defers execution of google analytics script after page load
+        defer: true,
+      },
+    },
   ],
 }
