@@ -39,17 +39,26 @@ const About: React.FC<PageProps> = props => {
       <Container name='about'>
         <InnerContainer>
           <MainContainer>
-            <MainLeft>
-              <AboutMeText>About Me</AboutMeText>
-              <HeaderText>Software engineer interested in Typescript and React.</HeaderText>
+            <Row>
+              <MainLeft>
+                <AboutMeText>About Me</AboutMeText>
+                <HeaderText>Software engineer interested in Typescript and React.</HeaderText>
+                <BodyText>10+ years of experience building apps & websites at Google, Facebook, Venmo, and my baby Venga Climb. I'm interested in building experiences that help the world and delight users.</BodyText>
+              </MainLeft>
+              <MainRight>
+                <Img
+                  fluid={data['profile']?.childImageSharp.fluid}
+                  alt='Profile picture'
+                  style={{flex: 1, width: '25vw', maxWidth: '355px'}}
+                  imgStyle={{ objectFit: "contain" }}
+                />
+              </MainRight>
+            </Row>
+            <Row>
               <LabelContainer>
                 <Column>
                   <Label>Mail</Label>
                   <LabelValue onClick={() => location.href = 'mailto:varun101@gmail.com'}>varun101[at]gmail.com</LabelValue>
-                  <Column style={{marginTop: '8px'}}>
-                    <Label>Resume</Label>
-                    <LabelValue onClick={() => window.open(RESUME_LINK)}>View resume</LabelValue>
-                  </Column>
                 </Column>
                 <Column>
                   <Label>Social</Label>
@@ -57,16 +66,12 @@ const About: React.FC<PageProps> = props => {
                   <LabelValue onClick={() => window.open('https://github.com/vjsingh')}>Github</LabelValue>
                   <LabelValue onClick={() => window.open(MOUNTAINPROJECT_LINK)}>Mountain Project</LabelValue>
                 </Column>
+                <Column>
+                  <Label>Resume</Label>
+                  <LabelValue onClick={() => window.open(RESUME_LINK)}>View resume</LabelValue>
+                </Column>
               </LabelContainer>
-            </MainLeft>
-            <MainRight>
-              <Img
-                fluid={data['profile']?.childImageSharp.fluid}
-                alt='Profile picture'
-                style={{flex: 1, width: '25vw', maxWidth: '355px'}}
-                imgStyle={{ objectFit: "contain" }}
-              />
-            </MainRight>
+            </Row>
           </MainContainer>
           <FooterText>
             Design & development by Varun Singh. Fork me&nbsp;
@@ -125,8 +130,14 @@ const MainContainer = styled.div`
   width: 60vw;
   margin-top: 20vh;
   display: flex;
+  flex-direction: column;
   animation-name: ${fadeInAnimation};
   animation-duration: 1s;
+`;
+
+const Row = styled.div`
+  display: flex;
+  margin-bottom: 24px;
 `;
 
 const MainLeft = styled.div`
@@ -149,7 +160,14 @@ const AboutMeText = styled(MyText)`
 const HeaderText = styled(MyText)`
   font-size: 30px;
   letter-spacing: .1em;
-  margin-bottom: 75px;
+  margin-bottom: 25px;
+`;
+
+const BodyText = styled(MyText)`
+  font-size: 14px;
+  letter-spacing: .1em;
+  margin-bottom: 50px;
+  color: black;
 `;
 
 const Column = styled.div`
@@ -160,6 +178,7 @@ const Column = styled.div`
 
 const LabelContainer = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const Label = styled(MyText)`
