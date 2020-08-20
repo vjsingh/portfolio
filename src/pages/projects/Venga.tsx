@@ -43,7 +43,7 @@ const VengaTimeline: React.FC = props => {
       <Img
         fluid={data['vengaTimeline']?.childImageSharp.fluid}
         alt="Venga Timeline"
-        style={{flex: 1, maxHeight: '70vh', width: '30vw'}}
+        style={{flex: 1, maxHeight: '50vh', width: '30vw'}}
         imgStyle={{ objectFit: "contain" }}
       />
     </OverviewContainer>
@@ -61,7 +61,7 @@ const OverviewContainer = styled.div`
 
 const TimelineHeaderText = styled(H1)`
   position: absolute;
-  top: 10vh;
+  top: 7.5vh;
   color: white;
 `;
 
