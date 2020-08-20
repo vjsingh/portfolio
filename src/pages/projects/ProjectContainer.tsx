@@ -59,7 +59,7 @@ const ProjectContainer: React.FC<InputProps> = props => {
                 {renderPage(() => {}, expanding || active)}
               </Project>
               {props.renderExpandedScreens.map((renderScreen, ix)=> (
-                <ProjectScreen {...projectProps} isLastScreen={ix === props.renderExpandedScreens.length - 1} key={ix}>
+                <ProjectScreen {...projectProps} isLastScreen={ix === props.renderExpandedScreens.length - 1} key={ix} ix={ix}>
                   {renderScreen()}
                 </ProjectScreen>
               ))}

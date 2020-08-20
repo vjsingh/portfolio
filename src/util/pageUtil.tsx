@@ -90,3 +90,22 @@ export function scrollUpOnePage() {
     });
   }
 }
+
+export function doScrollInProject(ix: number) {
+  if (ix === -1) {
+    animateScroll.scrollTo(0, {
+      ...scrollerArgs,
+      horizontal: false,
+      containerId: 'ProjectContainer',
+    });
+  } else {
+    const newId = `ProjectScreen${ix}`;
+
+    scroller.scrollTo(newId, {
+      ...scrollerArgs,
+      horizontal: false,
+      containerId: 'ProjectContainer',
+    });
+  }
+}
+

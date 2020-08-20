@@ -22,10 +22,11 @@ export const MyText = styled.span`
 
 interface PageContainerProps {
   name: string;
+  id: string;
 }
 
 export const PageContainer: React.FC<PageContainerProps> = props => (
-  <PageContainerView id={props.name} {...props}>
+  <PageContainerView id={props.id ?? props.name} {...props}>
     {props.children}
   </PageContainerView>
 );
