@@ -58,4 +58,5 @@ const NameBrand = styled.div`
 const SinghStyled = styled(Singh)`
   margin-left: 2em;
   margin-top: -0.7em;
+  -webkit-text-stroke-width: .025em;
 `;

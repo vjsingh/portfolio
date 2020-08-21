@@ -280,7 +280,7 @@ export const Varun = styled(NameBrandText)`
 
 export const Singh = styled(NameBrandText)`
   margin-left: 2.8em;
-  margin-top: -0.5em;
+  margin-top: -0.75em;
   -webkit-text-fill-color: transparent;
   -webkit-text-stroke-width: .03em;
   -webkit-text-stroke-color: black;
